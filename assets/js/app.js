@@ -80,7 +80,9 @@
     }
 
     root.innerHTML = view.html;
-    document.title = (view.title ? view.title + ' — ' : '') + S.getStore().name;
+    const shopName = S.getStore().name;
+    document.title =
+      view.title && view.title !== shopName ? view.title + ' — ' + shopName : shopName;
 
     if (view.mount) view.mount(root, ctx);
     renderChrome(route);
