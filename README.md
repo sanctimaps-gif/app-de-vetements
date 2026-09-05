@@ -6,6 +6,24 @@ Application web de la boutique **Globo Loco Shop** — mode et prêt-à-porter,
 Catalogue complet (catégories → sous-catégories → articles), fiches produit avec
 photos modifiables, avis, plans d’accès et espace administrateur protégé par code.
 
+## Informations relevées en ligne
+
+Les informations publiées par défaut proviennent de sources publiques et sont
+**toutes modifiables** depuis l’espace administrateur :
+
+| Donnée | Valeur | Source |
+|---|---|---|
+| Instagram | [@globo.shop](https://www.instagram.com/globo.shop/) « Globo Loco Shop since 1996 » | compte officiel |
+| Site web propre | aucun trouvé | recherche web |
+| Horaires | Lun 14h-19h · Mar-Ven 10h-12h30 / 14h-19h · Sam 10h-19h · Dim fermé | annuaires concordants |
+| Téléphone | 02 35 15 00 58 (**à confirmer** : d’autres numéros circulent) | annuaires |
+| Marques | Carhartt, Obey, Dickies, The North Face, Vans, Adidas… | guides locaux |
+
+Une page Facebook « Globo Shop | Rouen » existe également ; elle n’a pas été
+publiée faute de certitude sur son rattachement. Elle peut être ajoutée en
+quelques secondes depuis l’onglet **Magasin & accès** (section « Réseaux
+sociaux »).
+
 ## Lancer l’application
 
 Aucune installation, aucune dépendance, aucun serveur : c’est une application
@@ -54,9 +72,9 @@ vidage du stockage local du navigateur) rétablit le code par défaut.
   redimensionnées avant stockage.
 - **Avis** : supprimer un avis depuis la fiche produit.
 - **Magasin** : nom, accroche, adresse, coordonnées GPS, téléphone, e-mail,
-  horaires, texte de présentation.
+  horaires, texte de présentation, marques distribuées et réseaux sociaux.
 - **Plans d’accès** : ajouter, modifier, supprimer les fiches (métro, bus, train,
-  voiture, stationnement, vélo, à pied, accessibilité…).
+  voiture, stationnement, vélo, à pied…).
 - **Données** : export JSON, import JSON, réinitialisation du catalogue ou totale.
 
 ## Structure du catalogue
@@ -94,7 +112,7 @@ La page **Plans d’accès** (`#/acces`) regroupe :
 - des liens d’itinéraire vers OpenStreetMap, Google Maps, Plans (Apple) et le GPS
   de l’appareil (`geo:`) ;
 - une fiche par mode d’accès : métro, bus/TEOR, train, voiture, stationnement,
-  vélo, à pied, accessibilité.
+  vélo et à pied.
 
 > Les informations de transport et de stationnement sont **indicatives** et
 > entièrement modifiables depuis l’espace administrateur. Vérifiez les dessertes
@@ -108,7 +126,10 @@ avis, informations magasin) ; la session administrateur utilise le
 partagées entre navigateurs — utilisez l’export/import JSON pour les transférer.
 
 Au premier lancement, un catalogue de démonstration est généré (marques et
-articles fictifs, prix cohérents par rayon).
+articles fictifs, prix cohérents par rayon). Les données déjà enregistrées en
+version 1 sont migrées automatiquement vers la version 2 : retrait de la fiche
+« Accessibilité », horaires vérifiés, lien Instagram et liste de marques ajoutés
+— sans écraser les valeurs déjà modifiées depuis l’espace administrateur.
 
 ## Organisation du code
 

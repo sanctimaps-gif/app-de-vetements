@@ -806,6 +806,19 @@ const GLS_ADMIN = (function (U, S, D) {
       '<label>Latitude<input type="number" step="0.000001" name="lat" value="' + h(store.lat) + '"></label>' +
       '<label>Longitude<input type="number" step="0.000001" name="lng" value="' + h(store.lng) + '"></label>' +
       '<label class="wide">À propos<textarea name="about" rows="4">' + h(store.about) + '</textarea></label>' +
+      '<label class="wide">Marques en boutique<textarea name="brands" rows="3" ' +
+      'placeholder="Carhartt, Obey, Vans…">' + h((store.brands || []).join(', ')) +
+      '</textarea><span class="field__hint">Séparées par des virgules. Laisser vide pour masquer ' +
+      'la section.</span></label>' +
+      '<div class="field wide"><span class="field__label">Réseaux sociaux</span>' +
+      '<div id="social-rows">' +
+      ((store.social || []).length
+        ? store.social.map(socialRow).join('')
+        : socialRow({ label: '', url: '' })) +
+      '</div>' +
+      '<p class="field__hint"><button type="button" class="chip" id="social-add">' +
+      '+ Ajouter un réseau</button></p>' +
+      '</div>' +
       '<div class="field wide"><span class="field__label">Horaires</span>' +
       '<div class="hours-edit">' +
       store.hours
@@ -869,6 +882,18 @@ const GLS_ADMIN = (function (U, S, D) {
       html: html,
       mount: function (root, ctx) {
         const storeForm = U.el('#store-form', root);
+
+        const socialRows = U.el('#social-rows', storeForm);
+        U.el('#social-add', storeForm).addEventListener('click', function () {
+          socialRows.insertAdjacentHTML('beforeend', socialRow({ label: '', url: '' }));
+        });
+        socialRows.addEventListener('click', function (event) {
+          const btn = event.target.closest('[data-social-remove]');
+          if (!btn) return;
+          const row = btn.closest('.social-row');
+          if (row) row.remove();
+        });
+
         storeForm.addEventListener('submit', function (event) {
           event.preventDefault();
           const fd = new FormData(storeForm);
@@ -878,6 +903,16 @@ const GLS_ADMIN = (function (U, S, D) {
               value: U.el('[data-hour-value="' + i + '"]', storeForm).value
             };
           });
+          const social = U.els('.social-row', storeForm)
+            .map(function (row) {
+              return {
+                label: String(U.el('[data-social-label]', row).value || '').trim(),
+                url: String(U.el('[data-social-url]', row).value || '').trim()
+              };
+            })
+            .filter(function (s) {
+              return s.label && s.url;
+            });
           S.updateStore({
             name: String(fd.get('name') || '').trim(),
             tagline: String(fd.get('tagline') || '').trim(),
@@ -890,7 +925,9 @@ const GLS_ADMIN = (function (U, S, D) {
             lat: Number(fd.get('lat')) || 0,
             lng: Number(fd.get('lng')) || 0,
             about: String(fd.get('about') || '').trim(),
-            hours: hours
+            hours: hours,
+            brands: U.parseList(fd.get('brands')),
+            social: social
           });
           U.toast('Informations du magasin enregistrées.', 'success');
           ctx.rerender();
@@ -926,6 +963,16 @@ const GLS_ADMIN = (function (U, S, D) {
         });
       }
     };
+  }
+
+  function socialRow(social) {
+    return (
+      '<div class="social-row">' +
+      '<input type="text" value="' + h(social.label || '') + '" placeholder="Instagram" data-social-label>' +
+      '<input type="url" value="' + h(social.url || '') + '" placeholder="https://…" data-social-url>' +
+      '<button type="button" class="btn btn--tiny btn--danger-ghost" data-social-remove>Retirer</button>' +
+      '</div>'
+    );
   }
 
   function findPlan(store, id) {

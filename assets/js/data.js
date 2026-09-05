@@ -17,34 +17,55 @@ const GLS_DATA = (function () {
 
   const STORE = {
     name: 'Globo Loco Shop',
-    tagline: 'Boutique de mode et de prêt-à-porter',
+    tagline: 'Streetwear et prêt-à-porter depuis 1996',
     address: '59 rue Jeanne d’Arc',
     postalCode: '76000',
     city: 'Rouen',
     country: 'France',
-    phone: '02 35 00 00 00',
-    email: 'contact@globolocoshop.fr',
+    // Numéro relevé dans les annuaires en ligne : à confirmer auprès de la
+    // boutique et à corriger depuis l'espace administrateur si besoin.
+    phone: '02 35 15 00 58',
+    email: '',
     // Coordonnées approximatives du 59 rue Jeanne d'Arc, à vérifier / ajuster
     // depuis l'espace administrateur (onglet « Magasin »).
     lat: 49.4425,
     lng: 1.0928,
     about:
-      'Globo Loco Shop est une boutique indépendante de mode et de prêt-à-porter ' +
-      'installée en plein cœur de Rouen, sur la rue Jeanne d’Arc. Vêtements, ' +
-      'chaussures, accessoires, sous-vêtements, sport et bagagerie : on habille ' +
-      'toute la famille, de la basket du quotidien à la pièce qui change la tenue.',
+      'Globo Loco Shop est une boutique indépendante de streetwear et de ' +
+      'prêt-à-porter installée depuis 1996 en plein cœur de Rouen, sur la rue ' +
+      'Jeanne d’Arc. Homme, femme et enfant : vêtements, chaussures, accessoires ' +
+      'et bagagerie, du basique du quotidien à la pièce qui change la tenue.',
     hours: [
       { day: 'Lundi', value: '14h00 – 19h00' },
-      { day: 'Mardi', value: '10h00 – 19h00' },
-      { day: 'Mercredi', value: '10h00 – 19h00' },
-      { day: 'Jeudi', value: '10h00 – 19h00' },
-      { day: 'Vendredi', value: '10h00 – 19h00' },
-      { day: 'Samedi', value: '10h00 – 19h30' },
+      { day: 'Mardi', value: '10h00 – 12h30 / 14h00 – 19h00' },
+      { day: 'Mercredi', value: '10h00 – 12h30 / 14h00 – 19h00' },
+      { day: 'Jeudi', value: '10h00 – 12h30 / 14h00 – 19h00' },
+      { day: 'Vendredi', value: '10h00 – 12h30 / 14h00 – 19h00' },
+      { day: 'Samedi', value: '10h00 – 19h00' },
       { day: 'Dimanche', value: 'Fermé' }
     ],
     social: [
-      { label: 'Instagram', url: 'https://instagram.com/' },
-      { label: 'Facebook', url: 'https://facebook.com/' }
+      { label: 'Instagram', url: 'https://www.instagram.com/globo.shop/' }
+    ],
+    // Marques citées par les annuaires et guides locaux : à ajuster depuis
+    // l'espace administrateur selon les arrivages.
+    brands: [
+      'Carhartt',
+      'Obey',
+      'Dickies',
+      'The North Face',
+      'Deus Ex Machina',
+      'Santa Cruz',
+      'Volcom',
+      'Columbia',
+      'Vans',
+      'Adidas',
+      'Reebok',
+      'Asics',
+      'DC Shoes',
+      'Etnies',
+      'New Era',
+      'Eastpak'
     ],
     // Les plans d'accès. Chaque entrée est librement modifiable par l'admin.
     access: [
@@ -124,17 +145,6 @@ const GLS_DATA = (function () {
           'Depuis la Cathédrale Notre-Dame : environ 6 minutes par la rue du Gros-Horloge.',
           'Depuis la place du Vieux-Marché : environ 6 minutes.',
           'Depuis les quais de Seine : remonter la rue Jeanne d’Arc, environ 4 minutes.'
-        ]
-      },
-      {
-        id: 'acc-pmr',
-        icon: '♿',
-        title: 'Accessibilité',
-        summary: 'Accès et confort de visite',
-        steps: [
-          'Boutique de plain-pied, entrée accessible depuis le trottoir.',
-          'Allées dégagées permettant la circulation en fauteuil.',
-          'Une question sur l’accessibilité ? Contactez-nous avant votre venue.'
         ]
       }
     ]
@@ -628,7 +638,7 @@ const GLS_DATA = (function () {
   function defaultData() {
     const catalog = buildCatalog();
     return {
-      version: 1,
+      version: 2,
       store: JSON.parse(JSON.stringify(STORE)),
       categories: catalog.categories,
       products: catalog.products,

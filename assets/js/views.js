@@ -133,9 +133,21 @@ const GLS_VIEWS = (function (U, S) {
         .join('') +
       '</ul>' +
       '<p class="hero__contact">' +
-      h(store.address) + '<br>' + h(store.postalCode) + ' ' + h(store.city) + '<br>' +
-      h(store.phone) +
+      h(store.address) + '<br>' + h(store.postalCode) + ' ' + h(store.city) +
+      (store.phone ? '<br>' + h(store.phone) : '') +
       '</p>' +
+      ((store.social || []).length
+        ? '<p class="hero__social">' +
+          store.social
+            .map(function (s) {
+              return (
+                '<a class="btn btn--ghost btn--small" href="' + h(s.url) +
+                '" target="_blank" rel="noopener">Suivre sur ' + h(s.label) + ' ↗</a>'
+              );
+            })
+            .join(' ') +
+          '</p>'
+        : '') +
       '</div>' +
       '</section>' +
       '<section class="section">' +
@@ -869,13 +881,20 @@ const GLS_VIEWS = (function (U, S) {
       '<section class="panel"><h2>Coordonnées</h2>' +
       '<p>' + h(store.address) + '<br>' + h(store.postalCode) + ' ' + h(store.city) + '<br>' +
       h(store.country) + '</p>' +
-      '<p><a href="tel:' + h(String(store.phone).replace(/\s/g, '')) + '">' + h(store.phone) + '</a><br>' +
-      '<a href="mailto:' + h(store.email) + '">' + h(store.email) + '</a></p>' +
+      '<p>' +
+      (store.phone
+        ? '<a href="tel:' + h(String(store.phone).replace(/\s/g, '')) + '">' + h(store.phone) + '</a>'
+        : '') +
+      (store.phone && store.email ? '<br>' : '') +
+      (store.email ? '<a href="mailto:' + h(store.email) + '">' + h(store.email) + '</a>' : '') +
+      '</p>' +
       (store.social && store.social.length
         ? '<p class="social">' +
           store.social
             .map(function (s) {
-              return '<a href="' + h(s.url) + '" target="_blank" rel="noopener">' + h(s.label) + '</a>';
+              return (
+                '<a href="' + h(s.url) + '" target="_blank" rel="noopener">' + h(s.label) + ' ↗</a>'
+              );
             })
             .join(' · ') +
           '</p>'
@@ -888,9 +907,35 @@ const GLS_VIEWS = (function (U, S) {
         })
         .join('') +
       '</ul></section>' +
+      ((store.brands || []).length
+        ? '<section class="panel panel--full"><h2>Marques en boutique</h2>' +
+          '<ul class="brand-list">' +
+          store.brands
+            .map(function (b) {
+              return '<li>' + h(b) + '</li>';
+            })
+            .join('') +
+          '</ul>' +
+          '<p class="muted">Sélection variable selon les arrivages.</p>' +
+          '</section>'
+        : '') +
       '</div>' +
-      '<p class="cta-line"><a class="btn btn--primary" href="#/acces">Voir tous les plans d’accès</a></p>';
+      '<p class="cta-line"><a class="btn btn--primary" href="#/acces">Voir tous les plans d’accès</a></p>' +
+      creditBlock();
     return { html: html, title: 'La boutique' };
+  }
+
+  /* --------------------------- Crédit / contact ---------------------- */
+
+  // Encart de contact du créateur du site.
+  function creditBlock() {
+    return (
+      '<aside class="credit">' +
+      '<h2>Un site comme celui-ci pour votre commerce ?</h2>' +
+      '<p>Ce site a été conçu sur mesure. Pour contacter le créateur du site, il suffit ' +
+      'd’envoyer un mail à <a href="mailto:Sanctimaps@gmail.com">Sanctimaps@gmail.com</a>.</p>' +
+      '</aside>'
+    );
   }
 
   /* ------------------------------- 404 ------------------------------- */

@@ -79,6 +79,7 @@ const GLS_STORE = (function (U, D) {
     // Compléments de structure pour les données anciennes.
     if (!data.reviews) data.reviews = [];
     if (!data.store.access) data.store.access = [];
+    if (migrate()) writeJSON(DATA_KEY, data);
 
     admin = readJSON(ADMIN_KEY);
     if (!admin || !admin.hash) {
@@ -95,6 +96,59 @@ const GLS_STORE = (function (U, D) {
       });
     }
     return Promise.resolve();
+  }
+
+  /* ---------------------------- Migrations --------------------------- */
+
+  // Valeurs livrées en version 1 du jeu de données. Une donnée encore égale à
+  // sa valeur d'origine est considérée comme non modifiée par le commerçant :
+  // elle peut être remplacée sans écraser un réglage volontaire.
+  const V1_DEFAULTS = {
+    tagline: 'Boutique de mode et de prêt-à-porter',
+    phone: '02 35 00 00 00',
+    email: 'contact@globolocoshop.fr',
+    hours: [
+      { day: 'Lundi', value: '14h00 – 19h00' },
+      { day: 'Mardi', value: '10h00 – 19h00' },
+      { day: 'Mercredi', value: '10h00 – 19h00' },
+      { day: 'Jeudi', value: '10h00 – 19h00' },
+      { day: 'Vendredi', value: '10h00 – 19h00' },
+      { day: 'Samedi', value: '10h00 – 19h30' },
+      { day: 'Dimanche', value: 'Fermé' }
+    ],
+    social: [
+      { label: 'Instagram', url: 'https://instagram.com/' },
+      { label: 'Facebook', url: 'https://facebook.com/' }
+    ]
+  };
+
+  function sameAs(value, reference) {
+    return JSON.stringify(value) === JSON.stringify(reference);
+  }
+
+  function migrate() {
+    if ((data.version || 1) >= 2) return false;
+    const fresh = D.defaultData().store;
+
+    // La fiche « Accessibilité » a été retirée des plans d'accès.
+    data.store.access = (data.store.access || []).filter(function (plan) {
+      return plan.id !== 'acc-pmr';
+    });
+
+    // Horaires, coordonnées et réseaux sociaux vérifiés : on ne remplace que
+    // ce qui n'a jamais été modifié depuis l'espace administrateur.
+    ['tagline', 'phone', 'email'].forEach(function (key) {
+      if (data.store[key] === V1_DEFAULTS[key]) data.store[key] = fresh[key];
+    });
+    if (sameAs(data.store.hours, V1_DEFAULTS.hours)) data.store.hours = fresh.hours;
+    if (sameAs(data.store.social, V1_DEFAULTS.social)) data.store.social = fresh.social;
+    if (!data.store.brands) data.store.brands = fresh.brands;
+    if (/boutique indépendante de mode et de prêt-à-porter/.test(data.store.about || '')) {
+      data.store.about = fresh.about;
+    }
+
+    data.version = 2;
+    return true;
   }
 
   function resetAll() {
@@ -623,6 +677,8 @@ const GLS_STORE = (function (U, D) {
     if (!parsed.reviews) parsed.reviews = [];
     if (!parsed.store) parsed.store = D.defaultData().store;
     if (!parsed.store.access) parsed.store.access = [];
+    if (!parsed.store.brands) parsed.store.brands = [];
+    if (!parsed.store.social) parsed.store.social = [];
     data = parsed;
     persist();
     return { ok: true };

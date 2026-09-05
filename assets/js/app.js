@@ -133,26 +133,35 @@
       (admin ? '● Administration' : 'Administration') + '</a>' +
       '</nav>' +
       '</div>' +
+      // Chaque rayon est replié : on le déplie pour voir ses sous-catégories.
       '<nav class="megamenu" id="megamenu" hidden>' +
+      '<div class="megamenu__inner">' +
       cats
         .map(function (cat) {
+          const subs = S.getSubcategories(cat.id);
           return (
-            '<div class="megamenu__col">' +
-            '<a class="megamenu__cat" href="#/categorie/' + cat.id + '">' +
-            U.escapeHtml(cat.emoji) + ' ' + U.escapeHtml(cat.name) + '</a>' +
+            '<details class="megamenu__group">' +
+            '<summary>' +
+            '<span class="megamenu__emoji" aria-hidden="true">' + U.escapeHtml(cat.emoji) + '</span>' +
+            '<span class="megamenu__name">' + U.escapeHtml(cat.name) + '</span>' +
+            '<span class="megamenu__count">' + subs.length + ' sous-catégories</span>' +
+            '<span class="megamenu__chevron" aria-hidden="true">▾</span>' +
+            '</summary>' +
             '<ul>' +
-            S.getSubcategories(cat.id)
+            subs
               .map(function (sub) {
                 return (
                   '<li><a href="#/sous-categorie/' + sub.id + '">' + U.escapeHtml(sub.name) + '</a></li>'
                 );
               })
               .join('') +
+            '<li class="megamenu__all"><a href="#/categorie/' + cat.id + '">Voir tout le rayon →</a></li>' +
             '</ul>' +
-            '</div>'
+            '</details>'
           );
         })
         .join('') +
+      '</div>' +
       '</nav>';
 
     const searchForm = U.el('#search-form', header);
@@ -186,13 +195,30 @@
       if (event.target.closest('a')) closeMenu();
     });
 
+    // Un seul rayon déplié à la fois.
+    const groups = U.els('.megamenu__group', header);
+    groups.forEach(function (group) {
+      group.addEventListener('toggle', function () {
+        if (!group.open) return;
+        groups.forEach(function (other) {
+          if (other !== group) other.open = false;
+        });
+      });
+    });
+
     renderFooter();
   }
 
   function closeMenu() {
     const menu = U.el('#megamenu', header);
     const burger = U.el('#burger', header);
-    if (menu) menu.hidden = true;
+    if (menu) {
+      menu.hidden = true;
+      // On referme les rayons pour rouvrir le menu dans son état replié.
+      U.els('.megamenu__group', menu).forEach(function (group) {
+        group.open = false;
+      });
+    }
     if (burger) {
       burger.setAttribute('aria-expanded', 'false');
       burger.textContent = '☰';
@@ -213,8 +239,20 @@
       '<div>' +
       '<h2>' + U.escapeHtml(store.name) + '</h2>' +
       '<p>' + U.escapeHtml(store.address) + '<br>' +
-      U.escapeHtml(store.postalCode) + ' ' + U.escapeHtml(store.city) + '<br>' +
-      U.escapeHtml(store.phone) + '</p>' +
+      U.escapeHtml(store.postalCode) + ' ' + U.escapeHtml(store.city) +
+      (store.phone ? '<br>' + U.escapeHtml(store.phone) : '') + '</p>' +
+      ((store.social || []).length
+        ? '<p class="footer__social">' +
+          store.social
+            .map(function (s) {
+              return (
+                '<a href="' + U.escapeHtml(s.url) + '" target="_blank" rel="noopener">' +
+                U.escapeHtml(s.label) + ' ↗</a>'
+              );
+            })
+            .join('') +
+          '</p>'
+        : '') +
       '</div>' +
       '<div>' +
       '<h2>Rayons</h2>' +
@@ -245,6 +283,9 @@
       '</ul>' +
       '</div>' +
       '</div>' +
+      '<p class="footer__credit">Vous aussi, offrez un site à votre commerce. Ce site a été ' +
+      'conçu sur mesure : pour contacter le créateur du site, il suffit d’envoyer un mail à ' +
+      '<a href="mailto:Sanctimaps@gmail.com">Sanctimaps@gmail.com</a>.</p>' +
       '<p class="footer__legal">© ' + new Date().getFullYear() + ' ' + U.escapeHtml(store.name) +
       ' — Application de démonstration. Les données sont enregistrées localement dans ce navigateur.</p>';
   }
