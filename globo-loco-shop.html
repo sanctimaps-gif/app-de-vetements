@@ -1,0 +1,5302 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Globo Loco Shop — Boutique de mode et de prêt-à-porter, Rouen</title>
+    <meta name="description" content="Globo Loco Shop, boutique de mode et de prêt-à-porter au 59 rue Jeanne d’Arc à Rouen. Catalogue vêtements, chaussures, accessoires, sous-vêtements, sport et bagagerie.">
+    <meta name="theme-color" content="#1b1b1f">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23b8342f'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' font-weight='700' text-anchor='middle' fill='%23fff'%3EGL%3C/text%3E%3C/svg%3E">
+    <style>
+/* =========================================================================
+   Globo Loco Shop — Feuille de style
+   ========================================================================= */
+
+:root {
+  --ink: #1f1e1c;
+  --ink-soft: #5f5b54;
+  --ink-mute: #8b857b;
+  --paper: #faf8f4;
+  --surface: #ffffff;
+  --line: #e4dfd6;
+  --accent: #b8342f;
+  --accent-dark: #8f2622;
+  --accent-soft: #fbeceb;
+  --green: #3f7a4f;
+  --radius: 14px;
+  --radius-sm: 9px;
+  --shadow: 0 1px 2px rgba(31, 30, 28, 0.05), 0 8px 24px rgba(31, 30, 28, 0.06);
+  --shadow-lift: 0 2px 6px rgba(31, 30, 28, 0.08), 0 18px 40px rgba(31, 30, 28, 0.1);
+  --max: 1200px;
+  --font: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --serif: Georgia, "Times New Roman", serif;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  /* L'en-tête est collant : on décale les ancres pour qu'il ne les masque pas. */
+  scroll-padding-top: 92px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; }
+
+h1, h2, h3 { font-family: var(--serif); line-height: 1.2; margin: 0 0 0.4em; }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  background: var(--ink);
+  color: #fff;
+  padding: 0.7rem 1rem;
+  z-index: 100;
+}
+.skip-link:focus { left: 1rem; top: 1rem; }
+
+/* ------------------------------ En-tête ------------------------------ */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(250, 248, 244, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+.header__bar {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0.7rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.burger {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  width: 40px;
+  height: 40px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  flex: none;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  flex: none;
+}
+.brand__mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-family: var(--serif);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.brand__text { display: flex; flex-direction: column; line-height: 1.15; }
+.brand__text b { font-family: var(--serif); font-size: 1.12rem; }
+.brand__text em { font-style: normal; font-size: 0.74rem; color: var(--ink-mute); }
+
+.search {
+  flex: 1 1 auto;
+  display: flex;
+  min-width: 140px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.search input {
+  flex: 1;
+  border: 0;
+  padding: 0.6rem 1rem;
+  font: inherit;
+  background: transparent;
+  outline: none;
+  min-width: 0;
+}
+.search button {
+  border: 0;
+  background: transparent;
+  padding: 0 1rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: var(--ink-soft);
+}
+
+.header__links { display: flex; align-items: center; gap: 1.1rem; flex: none; }
+.header__links a {
+  text-decoration: none;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  padding: 0.3rem 0;
+  border-bottom: 2px solid transparent;
+}
+.header__links a:hover { color: var(--ink); }
+.header__links a.is-active { color: var(--ink); border-bottom-color: var(--accent); }
+.header__admin {
+  border: 1px solid var(--line) !important;
+  border-radius: 999px;
+  padding: 0.34rem 0.85rem !important;
+  background: var(--surface);
+}
+
+/* `display: grid` l'emporterait sur l'attribut hidden : on le neutralise. */
+.megamenu[hidden] { display: none; }
+
+.megamenu {
+  display: block;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  max-height: 76vh;
+  overflow: auto;
+}
+.megamenu__inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0.75rem 1.25rem 1.1rem;
+}
+
+/* Rayons repliés : on déplie pour voir les sous-catégories. */
+.megamenu__group { border-bottom: 1px solid var(--line); }
+.megamenu__group:last-child { border-bottom: 0; }
+.megamenu__group summary {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.75rem 0.25rem;
+  cursor: pointer;
+  list-style: none;
+}
+.megamenu__group summary::-webkit-details-marker { display: none; }
+.megamenu__group summary:hover .megamenu__name { color: var(--accent); }
+.megamenu__emoji { font-size: 1.25rem; }
+.megamenu__name { font-family: var(--serif); font-size: 1.08rem; }
+.megamenu__count { font-size: 0.76rem; color: var(--ink-mute); margin-left: auto; }
+.megamenu__chevron {
+  color: var(--ink-mute);
+  font-size: 0.8rem;
+  transition: transform 0.15s ease;
+}
+.megamenu__group[open] .megamenu__chevron { transform: rotate(180deg); }
+.megamenu__group[open] summary { border-bottom: 1px dashed var(--line); }
+
+.megamenu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.7rem 0 1rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 0.1rem 1rem;
+}
+.megamenu li a {
+  text-decoration: none;
+  font-size: 0.87rem;
+  color: var(--ink-soft);
+  display: block;
+  padding: 0.22rem 0;
+}
+.megamenu li a:hover { color: var(--accent); }
+.megamenu__all a { color: var(--accent); font-weight: 600; }
+
+/* ------------------------------ Layout ------------------------------- */
+
+.main {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1.6rem 1.25rem 4rem;
+  outline: none;
+}
+
+.section { margin: 3rem 0; }
+.section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+.section__head h2 { margin: 0; font-size: 1.6rem; }
+.link { text-decoration: none; color: var(--accent); font-size: 0.9rem; }
+
+.page-head { margin: 0.6rem 0 1.8rem; max-width: 70ch; }
+.page-head h1 { font-size: 2.2rem; }
+.page-head p { color: var(--ink-soft); margin: 0.3rem 0; }
+.page-head__note { font-size: 0.9rem; color: var(--ink-mute); font-style: italic; }
+
+.breadcrumb ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 1rem;
+  padding: 0;
+  font-size: 0.82rem;
+  color: var(--ink-mute);
+}
+.breadcrumb li + li::before { content: "›"; margin-right: 0.4rem; }
+.breadcrumb a { color: var(--ink-soft); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--ink-mute);
+  background: var(--surface);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+}
+.muted { color: var(--ink-mute); }
+
+/* ------------------------------- Hero -------------------------------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 2.4rem;
+  box-shadow: var(--shadow);
+}
+.hero__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  color: var(--accent);
+  margin: 0 0 0.6rem;
+}
+.hero h1 { font-size: 3rem; margin: 0 0 0.2rem; }
+.hero__tagline { font-size: 1.1rem; color: var(--ink-soft); margin: 0 0 1rem; }
+.hero__about { max-width: 58ch; color: var(--ink-soft); }
+.hero__actions { display: flex; gap: 0.7rem; flex-wrap: wrap; margin: 1.4rem 0; }
+.hero__stats {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  padding: 1.2rem 0 0;
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+.hero__stats strong { display: block; font-size: 1.5rem; font-family: var(--serif); }
+.hero__stats span { font-size: 0.78rem; color: var(--ink-mute); }
+.hero__card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.4rem;
+}
+.hero__card h2 { font-size: 1.15rem; }
+.hero__contact { font-size: 0.9rem; color: var(--ink-soft); margin-top: 1rem; }
+
+.hours { list-style: none; margin: 0; padding: 0; font-size: 0.88rem; }
+.hours li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.28rem 0;
+  border-bottom: 1px dashed var(--line);
+}
+.hours li:last-child { border-bottom: 0; }
+.hours span { color: var(--ink-soft); }
+
+.band {
+  background: var(--ink);
+  color: #f4f1ea;
+  border-radius: var(--radius);
+  padding: 2rem 2.4rem;
+}
+.band__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.band h2 { color: #fff; margin: 0 0 0.3rem; }
+.band p { margin: 0; color: #c9c3b7; max-width: 60ch; }
+
+/* ---------------------------- Catégories ----------------------------- */
+
+.cats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: 1rem;
+}
+.cat {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.4rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.cat:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lift);
+  border-color: #d5cec1;
+}
+.cat__emoji { font-size: 1.9rem; }
+.cat__name { font-family: var(--serif); font-size: 1.25rem; }
+.cat__desc { font-size: 0.87rem; color: var(--ink-soft); }
+.cat__count { font-size: 0.76rem; color: var(--ink-mute); margin-top: auto; padding-top: 0.5rem; }
+.cats--large .cat { padding: 1.8rem; }
+
+.subs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.7rem;
+}
+.sub {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 0.95rem 1.1rem;
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.sub:hover { border-color: var(--accent); background: var(--accent-soft); }
+.sub__name { font-weight: 600; font-size: 0.95rem; }
+.sub__count { font-size: 0.74rem; color: var(--ink-mute); white-space: nowrap; }
+
+/* ------------------------------ Cartes ------------------------------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.2rem;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+.card__media { position: relative; aspect-ratio: 4 / 5; background: #eee9e0; }
+.card__media img { width: 100%; height: 100%; object-fit: cover; }
+.badge {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.7rem;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+}
+.badge--out { background: var(--ink-soft); left: auto; right: 0.7rem; }
+.card__body { padding: 0.9rem 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.15rem; flex: 1; }
+.card__brand {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-mute);
+  margin: 0;
+}
+.card__title { font-size: 1.02rem; margin: 0.1rem 0; }
+.card__meta { font-size: 0.78rem; color: var(--ink-mute); margin: 0; }
+.card__footer {
+  margin-top: auto;
+  padding-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.price { font-weight: 700; font-size: 1rem; }
+.price s { font-weight: 400; color: var(--ink-mute); font-size: 0.82rem; margin-left: 0.3rem; }
+.card__rating { margin: 0.35rem 0 0; font-size: 0.78rem; color: var(--ink-mute); }
+
+.dots { display: inline-flex; align-items: center; gap: 3px; }
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+.dots__more { font-size: 0.7rem; color: var(--ink-mute); font-style: normal; }
+
+.stars { color: #c8993a; letter-spacing: 1px; }
+.stars--empty { color: var(--line); }
+
+/* ------------------------------ Filtres ------------------------------ */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: flex-end;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem 1.15rem;
+  margin-bottom: 1rem;
+}
+.filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.filters select {
+  font: inherit;
+  font-size: 0.9rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink);
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  min-width: 150px;
+}
+.result-count { font-size: 0.85rem; color: var(--ink-mute); margin: 0 0 1rem; }
+
+/* ---------------------------- Fiche produit -------------------------- */
+
+.product { display: block; }
+
+.product__gallery {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  margin-bottom: 1.6rem;
+}
+.gallery__main {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  aspect-ratio: 4 / 5;
+  background: #eee9e0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.gallery__main img { width: 100%; height: 100%; object-fit: contain; }
+.gallery__thumbs {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.9rem;
+  flex-wrap: wrap;
+}
+.gallery__note { text-align: center; }
+.thumb {
+  position: relative;
+  width: 78px;
+  height: 96px;
+  padding: 0;
+  border: 2px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: #eee9e0;
+  cursor: pointer;
+}
+.thumb.is-active { border-color: var(--accent); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.thumb__tools {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  justify-content: space-between;
+  background: rgba(31, 30, 28, 0.75);
+}
+.thumb__tools i {
+  color: #fff;
+  font-style: normal;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.3rem;
+  cursor: pointer;
+}
+.thumb__tools i:hover { background: var(--accent); }
+.gallery__note { font-size: 0.78rem; color: var(--ink-mute); margin: 0.7rem 0 0; }
+
+.gallery__admin {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--line);
+}
+.gallery__admin-title {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-mute);
+  margin: 0 0 0.6rem;
+}
+.gallery__admin-row { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
+.gallery__admin-row input[type="url"] {
+  flex: 1 1 260px;
+  font: inherit;
+  font-size: 0.88rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+}
+
+.product__info {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  margin-bottom: 1.6rem;
+}
+.product__brand {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.74rem;
+  color: var(--ink-mute);
+  margin: 0;
+}
+.product__info h1 { font-size: 2rem; margin: 0.2rem 0 0.5rem; }
+.product__price { font-size: 1.5rem; font-weight: 700; margin: 0 0 0.35rem; }
+.product__price s { font-size: 1rem; font-weight: 400; color: var(--ink-mute); }
+.product__rating { margin: 0 0 0.5rem; font-size: 0.88rem; color: var(--ink-soft); }
+.product__stock { font-size: 0.85rem; margin: 0 0 1.4rem; }
+.product__stock.in { color: var(--green); }
+.product__stock.out { color: var(--accent); }
+
+.specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.3rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1.4rem;
+}
+.spec h2 {
+  font-family: var(--font);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-mute);
+  margin: 0 0 0.5rem;
+}
+.spec p { margin: 0; color: var(--ink-soft); }
+.spec--wide { grid-column: 1 / -1; }
+
+.sizes { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; }
+.sizes li {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.7rem;
+  font-size: 0.85rem;
+  background: var(--paper);
+}
+
+.colors { list-style: none; display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0; padding: 0; }
+.color {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem 0.25rem 0.3rem;
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.color.is-active { border-color: var(--accent); background: var(--accent-soft); }
+.color i {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+}
+
+.details { list-style: none; margin: 0; padding: 0; font-size: 0.88rem; }
+.details li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px dashed var(--line);
+}
+.details span { color: var(--ink-mute); }
+
+.product__admin-link { margin: 1.4rem 0 0; }
+
+/* ------------------------------- Avis -------------------------------- */
+
+.product__reviews,
+.product__similar {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  margin-bottom: 1.6rem;
+}
+.product__reviews h2,
+.product__similar h2 { font-size: 1.35rem; }
+
+.reviews { list-style: none; margin: 0 0 1.6rem; padding: 0; }
+.review { border-bottom: 1px solid var(--line); padding: 0.9rem 0; }
+.review:last-child { border-bottom: 0; }
+.review__head { display: flex; align-items: center; gap: 0.6rem; margin: 0 0 0.25rem; font-size: 0.9rem; }
+.review__head time { color: var(--ink-mute); font-size: 0.78rem; margin-left: auto; }
+.review__body { margin: 0; color: var(--ink-soft); }
+
+.review-form {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.review-form h3 { font-size: 1.05rem; margin: 0; }
+.review-form__row { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+.review-form label { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.82rem; color: var(--ink-soft); flex: 1 1 200px; }
+.review-form input,
+.review-form select,
+.review-form textarea {
+  font: inherit;
+  font-size: 0.92rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+}
+.review-form button { align-self: flex-start; }
+
+/* -------------------------- Produits similaires ---------------------- */
+
+.similar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+.similar-list a {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.9rem 0.5rem 0.5rem;
+  background: var(--paper);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.similar-list a:hover { border-color: var(--accent); background: var(--accent-soft); }
+.similar-list img { width: 54px; height: 66px; object-fit: cover; border-radius: 6px; flex: none; }
+.similar__text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.similar__text b { font-size: 0.95rem; }
+.similar__text em { font-style: normal; font-size: 0.78rem; color: var(--ink-mute); }
+.similar__price { font-weight: 700; white-space: nowrap; }
+
+/* --------------------------- Plans d'accès --------------------------- */
+
+.map {
+  margin: 0 0 1.4rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem;
+  overflow: hidden;
+}
+.map svg { width: 100%; height: auto; border-radius: var(--radius-sm); }
+.map figcaption { font-size: 0.78rem; color: var(--ink-mute); margin-top: 0.7rem; text-align: center; }
+
+.itineraries { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2rem; }
+
+.access-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1rem;
+}
+.access {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.4rem;
+}
+.access h2 { font-size: 1.2rem; margin: 0 0 0.2rem; }
+.access__summary { font-size: 0.85rem; color: var(--ink-mute); margin: 0 0 0.8rem; }
+.access ul { margin: 0; padding-left: 1.1rem; font-size: 0.9rem; color: var(--ink-soft); }
+.access li { margin-bottom: 0.4rem; }
+
+.disclaimer {
+  margin-top: 2rem;
+  font-size: 0.82rem;
+  color: var(--ink-mute);
+  background: var(--surface);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+}
+
+/* ------------------------------ Magasin ------------------------------ */
+
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.cta-line { margin-top: 1.6rem; }
+.social a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.social a:hover { text-decoration: underline; }
+.panel--full { grid-column: 1 / -1; }
+
+.brand-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 0.8rem;
+  padding: 0;
+}
+.brand-list li {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.84rem;
+}
+
+/* Encart de contact du créateur du site. */
+.credit {
+  margin-top: 2rem;
+  background: var(--accent-soft);
+  border: 1px solid #eecfcd;
+  border-radius: var(--radius);
+  padding: 1.4rem 1.6rem;
+}
+.credit h2 { font-size: 1.15rem; margin: 0 0 0.3rem; }
+.credit p { margin: 0; color: var(--ink-soft); font-size: 0.92rem; }
+.credit a { color: var(--accent); font-weight: 600; }
+
+.hero__social { margin: 0.9rem 0 0; }
+
+/* ------------------------------ Boutons ------------------------------ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.6rem 1.25rem;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  background: var(--surface);
+  color: var(--ink);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.btn--primary { background: var(--accent); color: #fff; }
+.btn--primary:hover { background: var(--accent-dark); }
+.btn--ghost { background: transparent; border-color: var(--line); color: var(--ink); }
+.btn--ghost:hover { border-color: var(--ink-soft); }
+.btn--danger-ghost { background: transparent; border-color: #e6c4c2; color: var(--accent); }
+.btn--danger-ghost:hover { background: var(--accent-soft); }
+.btn--small { padding: 0.4rem 0.9rem; font-size: 0.84rem; }
+.btn--tiny { padding: 0.24rem 0.6rem; font-size: 0.76rem; border-radius: 7px; }
+.btn input[type="file"] { display: none; }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 0.18rem 0.6rem;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--ink-soft);
+  margin: 0.12rem 0.05rem;
+}
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+.chip i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.chip--all { border-style: dashed; }
+
+/* --------------------------- Administration -------------------------- */
+
+.admin-gate {
+  max-width: 480px;
+  margin: 3rem auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 2.2rem;
+  box-shadow: var(--shadow);
+}
+.admin-gate h1 { font-size: 1.7rem; }
+.gate-form { display: flex; flex-direction: column; gap: 0.8rem; margin: 1.4rem 0; }
+.gate-form label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.85rem; color: var(--ink-soft); }
+.gate-form input {
+  font: inherit;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink);
+}
+.gate-error {
+  color: var(--accent);
+  font-size: 0.85rem;
+  background: var(--accent-soft);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.8rem;
+  margin: 0;
+}
+.gate-hint { font-size: 0.82rem; color: var(--ink-mute); }
+.gate-hint code {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0.1rem 0.4rem;
+}
+
+.admin__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+.admin__head h1 { font-size: 1.9rem; margin: 0; }
+.admin__head p { margin: 0.2rem 0 0; color: var(--ink-mute); font-size: 0.88rem; }
+
+.admin__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 1.5rem;
+}
+.admin__tab {
+  text-decoration: none;
+  font-size: 0.88rem;
+  padding: 0.55rem 0.95rem;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  color: var(--ink-soft);
+  margin-bottom: -1px;
+}
+.admin__tab.is-active {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+.panel h2 { font-size: 1.2rem; }
+.panel--narrow { max-width: 520px; }
+.panel hr { border: 0; border-top: 1px solid var(--line); margin: 1.2rem 0; }
+
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.8rem; margin-bottom: 1.2rem; }
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.3rem;
+}
+.kpi strong { display: block; font-family: var(--serif); font-size: 1.9rem; }
+.kpi span { font-size: 0.78rem; color: var(--ink-mute); }
+
+.checklist { margin: 0; padding-left: 1.1rem; font-size: 0.9rem; color: var(--ink-soft); }
+.checklist li { margin-bottom: 0.3rem; }
+
+.bars { list-style: none; margin: 0; padding: 0; }
+.bars li { display: flex; align-items: center; gap: 0.8rem; padding: 0.3rem 0; font-size: 0.88rem; }
+.bars span { flex: 0 0 190px; }
+.bars i { height: 10px; background: var(--accent); border-radius: 999px; opacity: 0.8; }
+.bars b { margin-left: auto; color: var(--ink-mute); font-weight: 500; }
+
+.warn {
+  background: #fdf6e3;
+  border: 1px solid #ecd9a5;
+  border-radius: var(--radius-sm);
+  padding: 0.8rem 1rem;
+  font-size: 0.85rem;
+  color: #6c5820;
+}
+
+/* --------------------------- Formulaires admin ------------------------ */
+
+.form { display: grid; gap: 0.9rem; }
+.form--inline { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); align-items: end; }
+.form--grid { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); align-items: start; }
+.form label, .field { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.8rem; color: var(--ink-soft); }
+.form .wide, .field.wide { grid-column: 1 / -1; }
+.form .small { max-width: 110px; }
+.form input[type="text"],
+.form input[type="url"],
+.form input[type="email"],
+.form input[type="number"],
+.form select,
+.form textarea {
+  font: inherit;
+  font-size: 0.92rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink);
+  width: 100%;
+}
+.form textarea { resize: vertical; }
+.field__label { font-size: 0.8rem; color: var(--ink-soft); }
+.field__hint { font-size: 0.78rem; color: var(--ink-mute); margin: 0.3rem 0 0; }
+.form__actions { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; }
+.check { flex-direction: row !important; align-items: center; gap: 0.5rem !important; font-size: 0.88rem; }
+.check input { width: auto; }
+
+.color-row { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.4rem; }
+.color-row input[type="color"] {
+  width: 44px;
+  height: 36px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+}
+.color-row input[type="text"] { flex: 1; }
+
+.hours-edit { display: grid; gap: 0.4rem; }
+.hours-edit__row { display: flex; gap: 0.5rem; }
+.hours-edit__row input { flex: 1; }
+
+.social-row { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.4rem; }
+.social-row input[type="text"] { flex: 0 0 150px; }
+.social-row input[type="url"] { flex: 1; }
+
+.admin-photos { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.3rem 0; }
+.admin-photo { margin: 0; width: 96px; }
+.admin-photo img {
+  width: 96px;
+  height: 118px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  margin-bottom: 0.3rem;
+}
+
+/* ------------------------------ Tableaux ----------------------------- */
+
+.table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.table th {
+  text-align: left;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-mute);
+  border-bottom: 1px solid var(--line);
+  padding: 0.5rem 0.6rem;
+}
+.table td { padding: 0.55rem 0.6rem; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.table tr:last-child td { border-bottom: 0; }
+.table a { color: var(--ink); }
+.table__actions { display: flex; gap: 0.35rem; justify-content: flex-end; }
+
+/* ---------------------------- Arborescence --------------------------- */
+
+.tree__cat { border: 1px solid var(--line); border-radius: var(--radius-sm); margin-bottom: 0.5rem; }
+.tree__cat summary {
+  cursor: pointer;
+  padding: 0.7rem 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.tree__title { font-weight: 600; }
+.tree__count { font-size: 0.76rem; color: var(--ink-mute); white-space: nowrap; }
+.tree__tools { display: flex; gap: 0.35rem; padding: 0 1rem 0.6rem; flex-wrap: wrap; }
+.tree__subs { list-style: none; margin: 0; padding: 0 1rem 0.8rem; }
+.tree__subs li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.35rem 0;
+  border-top: 1px dashed var(--line);
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+}
+.tree__sub-name { text-decoration: none; flex: 1 1 160px; }
+.tree__sub-name:hover { color: var(--accent); }
+.tree__subs .tree__tools { padding: 0; }
+
+.plan-list { list-style: none; margin: 0; padding: 0; }
+.plan-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px dashed var(--line);
+  flex-wrap: wrap;
+}
+.plan-list__title { font-weight: 600; font-size: 0.92rem; flex: 0 0 190px; }
+.plan-list__summary { font-size: 0.82rem; color: var(--ink-mute); flex: 1 1 200px; }
+.plan-list__tools { display: flex; gap: 0.35rem; }
+
+/* ------------------------------- Pied -------------------------------- */
+
+.footer {
+  background: var(--ink);
+  color: #cfc9bd;
+  padding: 3rem 1.25rem 1.5rem;
+  margin-top: 3rem;
+}
+.footer__inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 2rem;
+}
+.footer h2 { color: #fff; font-size: 1rem; margin-bottom: 0.6rem; }
+.footer p { font-size: 0.86rem; margin: 0; }
+.footer ul { list-style: none; margin: 0; padding: 0; font-size: 0.86rem; }
+.footer li { padding: 0.15rem 0; }
+.footer a { color: #cfc9bd; text-decoration: none; }
+.footer a:hover { color: #fff; }
+.footer .hours li { border-color: rgba(255, 255, 255, 0.12); }
+.footer .hours span { color: #a49d90; }
+.footer__social { margin-top: 0.7rem; display: flex; flex-wrap: wrap; gap: 0.8rem; }
+.footer__social a { color: #fff; font-size: 0.86rem; font-weight: 600; }
+
+.footer__credit {
+  max-width: var(--max);
+  margin: 2.5rem auto 0;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.86rem;
+  color: #cfc9bd;
+}
+.footer__credit a { color: #fff; font-weight: 600; text-decoration: underline; }
+
+.footer__legal {
+  max-width: var(--max);
+  margin: 0.8rem auto 0;
+  font-size: 0.76rem;
+  color: #8d8679;
+}
+.footer__rev {
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 0.05rem 0.55rem;
+  margin-left: 0.4rem;
+  color: #b8b1a3;
+}
+
+/* ------------------------------ Toast -------------------------------- */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translate(-50%, 200%);
+  visibility: hidden;
+  pointer-events: none;
+  background: var(--ink);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  box-shadow: var(--shadow-lift);
+  transition: transform 0.25s ease;
+  z-index: 90;
+  max-width: 90vw;
+  text-align: center;
+}
+.toast.is-visible { transform: translate(-50%, 0); visibility: visible; }
+.toast--success { background: var(--green); }
+.toast--error { background: var(--accent); }
+
+/* ----------------------------- Responsive ---------------------------- */
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; padding: 1.6rem; }
+  .hero h1 { font-size: 2.2rem; }
+  .header__links a:not(.header__admin) { display: none; }
+  .bars span { flex: 0 0 120px; }
+}
+
+@media (max-width: 620px) {
+  .header__bar { flex-wrap: wrap; }
+  .search { order: 3; flex-basis: 100%; }
+  .brand__text em { display: none; }
+  .main { padding: 1.2rem 0.9rem 3rem; }
+  .page-head h1 { font-size: 1.7rem; }
+  .product__info, .product__reviews, .product__similar { padding: 1.2rem; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.8rem; }
+  .table { font-size: 0.8rem; }
+  .table__actions { flex-direction: column; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+  html { scroll-behavior: auto; }
+}
+
+    </style>
+    <meta name="generator" content="Globo Loco Shop — fichier unique, généré le 2026-09-05">
+  </head>
+  <body>
+    <a class="skip-link" href="#view">Aller au contenu</a>
+
+    <header class="header" id="site-header"></header>
+
+    <main class="main" id="view" tabindex="-1"></main>
+
+    <footer class="footer" id="site-footer"></footer>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <noscript>
+      <p style="padding:2rem;text-align:center">
+        Cette application nécessite JavaScript. Globo Loco Shop — 59 rue Jeanne d’Arc, 76000 Rouen.
+      </p>
+    </noscript>
+
+    <script>
+/* =========================================================================
+   Globo Loco Shop — Données par défaut
+   -------------------------------------------------------------------------
+   Ce fichier contient :
+     - les informations du magasin (modifiables depuis l'espace admin)
+     - l'arborescence catégories / sous-catégories
+     - le générateur du catalogue produit (déterministe)
+   Toutes ces données sont copiées dans le localStorage au premier lancement.
+   ========================================================================= */
+
+const GLS_DATA = (function () {
+  'use strict';
+
+  /* ---------------------------------------------------------------------
+     1. Informations du magasin
+     --------------------------------------------------------------------- */
+
+  const STORE = {
+    name: 'Globo Loco Shop',
+    tagline: 'Streetwear et prêt-à-porter depuis 1996',
+    address: '59 rue Jeanne d’Arc',
+    postalCode: '76000',
+    city: 'Rouen',
+    country: 'France',
+    // Numéro relevé dans les annuaires en ligne : à confirmer auprès de la
+    // boutique et à corriger depuis l'espace administrateur si besoin.
+    phone: '02 35 15 00 58',
+    email: '',
+    // Coordonnées approximatives du 59 rue Jeanne d'Arc, à vérifier / ajuster
+    // depuis l'espace administrateur (onglet « Magasin »).
+    lat: 49.4425,
+    lng: 1.0928,
+    about:
+      'Globo Loco Shop est une boutique indépendante de streetwear et de ' +
+      'prêt-à-porter installée depuis 1996 en plein cœur de Rouen, sur la rue ' +
+      'Jeanne d’Arc. Homme, femme et enfant : vêtements, chaussures, accessoires ' +
+      'et bagagerie, du basique du quotidien à la pièce qui change la tenue.',
+    hours: [
+      { day: 'Lundi', value: '14h00 – 19h00' },
+      { day: 'Mardi', value: '10h00 – 12h30 / 14h00 – 19h00' },
+      { day: 'Mercredi', value: '10h00 – 12h30 / 14h00 – 19h00' },
+      { day: 'Jeudi', value: '10h00 – 12h30 / 14h00 – 19h00' },
+      { day: 'Vendredi', value: '10h00 – 12h30 / 14h00 – 19h00' },
+      { day: 'Samedi', value: '10h00 – 19h00' },
+      { day: 'Dimanche', value: 'Fermé' }
+    ],
+    social: [
+      { label: 'Instagram', url: 'https://www.instagram.com/globo.shop/' }
+    ],
+    // Marques citées par les annuaires et guides locaux : à ajuster depuis
+    // l'espace administrateur selon les arrivages.
+    brands: [
+      'Carhartt',
+      'Obey',
+      'Dickies',
+      'The North Face',
+      'Deus Ex Machina',
+      'Santa Cruz',
+      'Volcom',
+      'Columbia',
+      'Vans',
+      'Adidas',
+      'Reebok',
+      'Asics',
+      'DC Shoes',
+      'Etnies',
+      'New Era',
+      'Eastpak'
+    ],
+    // Les plans d'accès. Chaque entrée est librement modifiable par l'admin.
+    access: [
+      {
+        id: 'acc-metro',
+        icon: '🚇',
+        title: 'En métro',
+        summary: 'Ligne de métro de Rouen (réseau Astuce)',
+        steps: [
+          'Station « Palais de Justice » : sortir et remonter la rue Jeanne d’Arc — environ 2 minutes à pied.',
+          'Station « Théâtre des Arts » : descendre la rue Jeanne d’Arc vers le nord — environ 4 minutes à pied.',
+          'Station « Gare-Rue Verte » : la rue Jeanne d’Arc part de la gare et descend directement jusqu’à la boutique — environ 8 minutes à pied.'
+        ]
+      },
+      {
+        id: 'acc-bus',
+        icon: '🚌',
+        title: 'En bus / TEOR',
+        summary: 'Arrêts desservis à moins de 5 minutes à pied',
+        steps: [
+          'Lignes TEOR T1 / T2 / T3 : arrêt « Théâtre des Arts », puis remonter la rue Jeanne d’Arc.',
+          'Arrêt « Palais de Justice » : à une rue de la boutique.',
+          'Plusieurs lignes du réseau Astuce desservent le centre-ville et la rue Jeanne d’Arc.'
+        ]
+      },
+      {
+        id: 'acc-train',
+        icon: '🚆',
+        title: 'En train',
+        summary: 'Gare de Rouen-Rive-Droite',
+        steps: [
+          'Depuis la gare de Rouen-Rive-Droite, descendre la rue Jeanne d’Arc tout droit.',
+          'Environ 900 m, soit 10 à 12 minutes à pied, entièrement en descente.',
+          'Possibilité de prendre le métro à « Gare-Rue Verte » jusqu’à « Palais de Justice ».'
+        ]
+      },
+      {
+        id: 'acc-voiture',
+        icon: '🚗',
+        title: 'En voiture',
+        summary: 'Centre-ville, circulation réglementée',
+        steps: [
+          'Depuis l’A150 ou l’A13, suivre « Rouen Centre » puis « Rive Droite ».',
+          'La rue Jeanne d’Arc est un axe central : suivre la signalisation « Théâtre des Arts » ou « Palais de Justice ».',
+          'Attention : une partie du centre-ville est en zone à circulation apaisée, privilégier les parkings.'
+        ]
+      },
+      {
+        id: 'acc-parking',
+        icon: '🅿️',
+        title: 'Stationnement',
+        summary: 'Parkings publics à proximité immédiate',
+        steps: [
+          'Parking Espace du Palais — le plus proche, à quelques dizaines de mètres.',
+          'Parking du Vieux-Marché — environ 6 minutes à pied.',
+          'Parking Hôtel de Ville — environ 8 minutes à pied.',
+          'Stationnement de surface payant sur les rues adjacentes.'
+        ]
+      },
+      {
+        id: 'acc-velo',
+        icon: '🚲',
+        title: 'À vélo',
+        summary: 'Stations de vélos en libre-service et arceaux',
+        steps: [
+          'Plusieurs stations de vélos en libre-service jalonnent la rue Jeanne d’Arc.',
+          'Arceaux de stationnement vélo devant et autour de la boutique.',
+          'Les quais de Seine et les pistes cyclables du centre mènent directement à la rue Jeanne d’Arc.'
+        ]
+      },
+      {
+        id: 'acc-pied',
+        icon: '🚶',
+        title: 'À pied',
+        summary: 'Depuis les principaux points du centre',
+        steps: [
+          'Depuis la Cathédrale Notre-Dame : environ 6 minutes par la rue du Gros-Horloge.',
+          'Depuis la place du Vieux-Marché : environ 6 minutes.',
+          'Depuis les quais de Seine : remonter la rue Jeanne d’Arc, environ 4 minutes.'
+        ]
+      }
+    ]
+  };
+
+  /* ---------------------------------------------------------------------
+     2. Catégories et sous-catégories
+     --------------------------------------------------------------------- */
+
+  // sizeType : détermine les tailles proposées par défaut pour la sous-catégorie
+  //   clothing | bottoms | shoes | onesize | socks | bra | belt | none
+  const CATEGORY_TREE = [
+    {
+      name: 'Vêtements',
+      emoji: '👕',
+      description:
+        'Hauts, bas, pièces à enfiler et manteaux : la garde-robe complète, du basique de tous les jours à la pièce forte.',
+      subcategories: [
+        { name: 'T-shirts', sizeType: 'clothing', price: [12, 39] },
+        { name: 'Débardeurs', sizeType: 'clothing', price: [9, 29] },
+        { name: 'Tops', sizeType: 'clothing', price: [15, 45] },
+        { name: 'Polos', sizeType: 'clothing', price: [25, 65] },
+        { name: 'Chemises', sizeType: 'clothing', price: [29, 89] },
+        { name: 'Pulls', sizeType: 'clothing', price: [35, 110] },
+        { name: 'Sweats', sizeType: 'clothing', price: [30, 85] },
+        { name: 'Gilets', sizeType: 'clothing', price: [35, 95] },
+        { name: 'Cardigans', sizeType: 'clothing', price: [39, 105] },
+        { name: 'Vestes', sizeType: 'clothing', price: [59, 189] },
+        { name: 'Blousons', sizeType: 'clothing', price: [69, 199] },
+        { name: 'Manteaux', sizeType: 'clothing', price: [89, 259] },
+        { name: 'Doudounes', sizeType: 'clothing', price: [79, 229] },
+        { name: 'Parkas', sizeType: 'clothing', price: [89, 239] },
+        { name: 'Pantalons', sizeType: 'bottoms', price: [35, 99] },
+        { name: 'Jeans', sizeType: 'bottoms', price: [45, 129] },
+        { name: 'Jogging', sizeType: 'clothing', price: [29, 79] },
+        { name: 'Leggings', sizeType: 'clothing', price: [15, 45] },
+        { name: 'Shorts', sizeType: 'bottoms', price: [19, 55] },
+        { name: 'Bermudas', sizeType: 'bottoms', price: [25, 65] },
+        { name: 'Jupes', sizeType: 'clothing', price: [25, 79] },
+        { name: 'Robes', sizeType: 'clothing', price: [35, 139] },
+        { name: 'Combinaisons', sizeType: 'clothing', price: [45, 129] },
+        { name: 'Maillots de bain', sizeType: 'clothing', price: [19, 59] },
+        { name: 'Vêtements de nuit', sizeType: 'clothing', price: [19, 59] },
+        { name: 'Vêtements de sport', sizeType: 'clothing', price: [25, 89] }
+      ]
+    },
+    {
+      name: 'Chaussures',
+      emoji: '👟',
+      description:
+        'De la sneaker du quotidien à la chaussure de randonnée : tous les modèles, du 36 au 47.',
+      subcategories: [
+        { name: 'Baskets / sneakers', sizeType: 'shoes', price: [49, 179] },
+        { name: 'Chaussures de ville', sizeType: 'shoes', price: [69, 199] },
+        { name: 'Chaussures de sport', sizeType: 'shoes', price: [55, 159] },
+        { name: 'Bottines', sizeType: 'shoes', price: [59, 169] },
+        { name: 'Bottes', sizeType: 'shoes', price: [69, 199] },
+        { name: 'Chaussures montantes', sizeType: 'shoes', price: [65, 175] },
+        { name: 'Mocassins', sizeType: 'shoes', price: [59, 165] },
+        { name: 'Chaussures bateau', sizeType: 'shoes', price: [55, 145] },
+        { name: 'Sandales', sizeType: 'shoes', price: [29, 95] },
+        { name: 'Tongs', sizeType: 'shoes', price: [12, 39] },
+        { name: 'Claquettes', sizeType: 'shoes', price: [15, 49] },
+        { name: 'Chaussons', sizeType: 'shoes', price: [15, 49] },
+        { name: 'Chaussures de randonnée', sizeType: 'shoes', price: [79, 219] }
+      ]
+    },
+    {
+      name: 'Accessoires',
+      emoji: '🧢',
+      description:
+        'Le détail qui fait la tenue : couvre-chefs, maroquinerie, bijoux et petits sacs.',
+      subcategories: [
+        { name: 'Casquettes', sizeType: 'onesize', price: [15, 45] },
+        { name: 'Bonnets', sizeType: 'onesize', price: [12, 39] },
+        { name: 'Chapeaux', sizeType: 'onesize', price: [19, 59] },
+        { name: 'Écharpes', sizeType: 'onesize', price: [15, 55] },
+        { name: 'Gants', sizeType: 'gloves', price: [12, 49] },
+        { name: 'Ceintures', sizeType: 'belt', price: [19, 65] },
+        { name: 'Portefeuilles', sizeType: 'onesize', price: [19, 79] },
+        { name: 'Sacs à main', sizeType: 'onesize', price: [35, 149] },
+        { name: 'Sacs à dos', sizeType: 'onesize', price: [29, 119] },
+        { name: 'Sacs banane', sizeType: 'onesize', price: [19, 69] },
+        { name: 'Sacs de sport', sizeType: 'onesize', price: [25, 89] },
+        { name: 'Lunettes', sizeType: 'onesize', price: [19, 89] },
+        { name: 'Bijoux / accessoires de mode', sizeType: 'onesize', price: [9, 79] }
+      ]
+    },
+    {
+      name: 'Sous-vêtements',
+      emoji: '🩲',
+      description:
+        'La base de la garde-robe : coton peigné, coupes confortables et lots avantageux.',
+      subcategories: [
+        { name: 'Boxers', sizeType: 'clothing', price: [9, 39] },
+        { name: 'Slips', sizeType: 'clothing', price: [8, 32] },
+        { name: 'Culottes', sizeType: 'clothing', price: [8, 35] },
+        { name: 'Soutiens-gorge', sizeType: 'bra', price: [19, 59] },
+        { name: 'Brassières', sizeType: 'clothing', price: [15, 45] },
+        { name: 'Chaussettes', sizeType: 'socks', price: [5, 25] },
+        { name: 'Collants', sizeType: 'clothing', price: [7, 29] },
+        { name: 'Pyjamas / lingerie de nuit', sizeType: 'clothing', price: [19, 69] }
+      ]
+    },
+    {
+      name: 'Sport',
+      emoji: '🏃',
+      description:
+        'Running, salle, terrain : des matières techniques et respirantes pour bouger sans y penser.',
+      subcategories: [
+        { name: 'T-shirts de sport', sizeType: 'clothing', price: [15, 49] },
+        { name: 'Shorts de sport', sizeType: 'clothing', price: [15, 49] },
+        { name: 'Pantalons de sport', sizeType: 'clothing', price: [29, 79] },
+        { name: 'Sweats de sport', sizeType: 'clothing', price: [35, 89] },
+        { name: 'Vestes de sport', sizeType: 'clothing', price: [45, 129] },
+        { name: 'Leggings', sizeType: 'clothing', price: [19, 59] },
+        { name: 'Brassières de sport', sizeType: 'clothing', price: [19, 55] },
+        { name: 'Maillots', sizeType: 'clothing', price: [25, 89] },
+        { name: 'Chaussures de sport', sizeType: 'shoes', price: [55, 165] },
+        { name: 'Accessoires sportifs', sizeType: 'onesize', price: [9, 69] }
+      ]
+    },
+    {
+      name: 'Autres',
+      emoji: '🧳',
+      description:
+        'Bagagerie et maroquinerie : de quoi partir en week-end ou pour trois semaines.',
+      subcategories: [
+        { name: 'Valises', sizeType: 'luggage', price: [69, 249] },
+        { name: 'Sacs de voyage', sizeType: 'onesize', price: [39, 149] },
+        { name: 'Articles de maroquinerie', sizeType: 'onesize', price: [19, 129] }
+      ]
+    }
+  ];
+
+  /* ---------------------------------------------------------------------
+     3. Vocabulaire de génération du catalogue
+     --------------------------------------------------------------------- */
+
+  // Marques maison, volontairement fictives.
+  const BRANDS = [
+    'Atelier 76',
+    'Seine & Co',
+    'Loco Basics',
+    'Maison Jeanne',
+    'Nord Denim',
+    'Rouen Street',
+    'Cauchois',
+    'Vertigo Wear',
+    'Bleu Cauchoise',
+    'Globo Signature',
+    'Armada',
+    'Petit Quevilly Co',
+    'Horloge Studio',
+    'Cap Nord'
+  ];
+
+  const COLOR_POOL = [
+    { name: 'Noir', hex: '#1b1b1f' },
+    { name: 'Blanc', hex: '#f6f5f1' },
+    { name: 'Écru', hex: '#e8dfcd' },
+    { name: 'Gris chiné', hex: '#9b9ea3' },
+    { name: 'Bleu marine', hex: '#1f2c4c' },
+    { name: 'Bleu ciel', hex: '#7fa8d1' },
+    { name: 'Denim brut', hex: '#3a4d66' },
+    { name: 'Kaki', hex: '#5d6144' },
+    { name: 'Vert sapin', hex: '#28453a' },
+    { name: 'Bordeaux', hex: '#5c1f2b' },
+    { name: 'Rouge', hex: '#b8342f' },
+    { name: 'Terracotta', hex: '#b96a4a' },
+    { name: 'Moutarde', hex: '#c8993a' },
+    { name: 'Camel', hex: '#a97d4f' },
+    { name: 'Beige', hex: '#cdbba4' },
+    { name: 'Rose poudré', hex: '#dfa9ad' },
+    { name: 'Violet', hex: '#5b4780' },
+    { name: 'Orange', hex: '#d9762b' }
+  ];
+
+  const MATERIALS = [
+    'coton bio',
+    'coton peigné',
+    'maille douce',
+    'molleton gratté',
+    'lin lavé',
+    'denim stretch',
+    'laine mélangée',
+    'nylon recyclé',
+    'jersey respirant',
+    'twill de coton',
+    'polaire recyclée',
+    'cuir de vachette',
+    'toile enduite'
+  ];
+
+  const CUTS = [
+    'coupe droite',
+    'coupe ajustée',
+    'coupe oversize',
+    'coupe classique',
+    'coupe décontractée',
+    'coupe cintrée',
+    'coupe ample'
+  ];
+
+  // Noms de modèles, façon collection.
+  const MODEL_NAMES = [
+    'Arc',
+    'Boieldieu',
+    'Cauchoise',
+    'Corneille',
+    'Darnétal',
+    'Duclair',
+    'Écluse',
+    'Estuaire',
+    'Falaise',
+    'Gros-Horloge',
+    'Hangar 23',
+    'Île Lacroix',
+    'Jeanne',
+    'Lafayette',
+    'Malraux',
+    'Martainville',
+    'Mont-Riboudet',
+    'Normandie',
+    'Panorama',
+    'Quai Bas',
+    'Rive Droite',
+    'Rive Gauche',
+    'Saint-Sever',
+    'Sotteville',
+    'Vieux-Marché',
+    'Yainville'
+  ];
+
+  const QUALIFIERS = [
+    'Essentiel',
+    'Signature',
+    'Heritage',
+    'Daily',
+    'Studio',
+    'Classic',
+    'Origine',
+    'Atelier',
+    'Nomade',
+    'Confort'
+  ];
+
+  const SIZE_SETS = {
+    clothing: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    bottoms: ['36', '38', '40', '42', '44', '46', '48'],
+    shoes: ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46'],
+    onesize: ['Taille unique'],
+    socks: ['35-38', '39-42', '43-46'],
+    bra: ['85A', '85B', '90B', '90C', '95B', '95C'],
+    belt: ['85 cm', '90 cm', '95 cm', '100 cm', '105 cm'],
+    gloves: ['S', 'M', 'L', 'XL'],
+    luggage: ['Cabine 55 cm', 'Moyenne 65 cm', 'Grande 75 cm']
+  };
+
+  /* ---------------------------------------------------------------------
+     4. Utilitaires de génération
+     --------------------------------------------------------------------- */
+
+  function slugify(str) {
+    return String(str)
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[’']/g, '-')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
+
+  // Hash 32 bits déterministe (pour semer le générateur pseudo-aléatoire).
+  function seedFrom(str) {
+    let h = 2166136261;
+    for (let i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  // Générateur pseudo-aléatoire déterministe (mulberry32).
+  function rng(seed) {
+    let a = seed >>> 0;
+    return function () {
+      a |= 0;
+      a = (a + 0x6d2b79f5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function pick(rand, arr) {
+    return arr[Math.floor(rand() * arr.length)];
+  }
+
+  function pickMany(rand, arr, count) {
+    const copy = arr.slice();
+    const out = [];
+    const n = Math.min(count, copy.length);
+    for (let i = 0; i < n; i++) {
+      out.push(copy.splice(Math.floor(rand() * copy.length), 1)[0]);
+    }
+    return out;
+  }
+
+  // Singulier approximatif d'un nom de sous-catégorie, pour les descriptions.
+  function singular(name) {
+    const base = name.split('/')[0].trim();
+    if (/eaux$/.test(base)) return base.replace(/x$/, '');
+    if (/s$/.test(base) && !/^(Jogging|Sport)$/.test(base)) return base.replace(/s$/, '');
+    return base;
+  }
+
+  function priceIn(rand, range) {
+    const [min, max] = range;
+    const raw = min + rand() * (max - min);
+    // Prix en .90 / .00 / .50
+    const endings = [0.9, 0, 0.5];
+    const whole = Math.floor(raw);
+    return Math.max(min, whole + endings[Math.floor(rand() * endings.length)]);
+  }
+
+  function buildDescription(rand, subName, brand, material, cut) {
+    const item = singular(subName).toLowerCase();
+    const openers = [
+      `Un ${item} pensé pour durer, en ${material}.`,
+      `Le ${item} ${brand} que l’on reprend saison après saison, en ${material}.`,
+      `${brand} revisite le ${item} avec une ${cut} et un ${material} agréable à porter.`,
+      `Une valeur sûre du rayon : ce ${item} en ${material}, ${cut}.`
+    ];
+    const middles = [
+      'Les finitions sont soignées, les coutures renforcées aux points de tension.',
+      'La matière garde sa tenue lavage après lavage.',
+      'Un modèle facile à associer, qui se glisse dans toutes les tenues.',
+      'Fabrication soignée et matières sélectionnées avec attention.'
+    ];
+    const closers = [
+      'Disponible en boutique au 59 rue Jeanne d’Arc à Rouen, essayage possible sur place.',
+      'Passez l’essayer en boutique, l’équipe vous conseille sur la taille.',
+      'Existe en plusieurs coloris, voir les disponibilités en magasin.',
+      'Conseil de l’équipe : prenez votre taille habituelle, la coupe est fidèle.'
+    ];
+    return [pick(rand, openers), pick(rand, middles), pick(rand, closers)].join(' ');
+  }
+
+  const CARE_LINES = [
+    'Lavage en machine à 30°C sur l’envers.',
+    'Lavage à 30°C, ne pas utiliser de sèche-linge.',
+    'Nettoyage à la main recommandé, séchage à plat.',
+    'Entretien à sec conseillé pour préserver la matière.',
+    'Nettoyer avec un chiffon doux légèrement humide.'
+  ];
+
+  /* ---------------------------------------------------------------------
+     5. Construction du catalogue par défaut
+     --------------------------------------------------------------------- */
+
+  function buildCatalog() {
+    const categories = [];
+    const products = [];
+
+    CATEGORY_TREE.forEach(function (cat, ci) {
+      const catId = 'cat-' + slugify(cat.name);
+      const category = {
+        id: catId,
+        name: cat.name,
+        emoji: cat.emoji,
+        slug: slugify(cat.name),
+        description: cat.description,
+        order: ci,
+        subcategories: []
+      };
+
+      cat.subcategories.forEach(function (sub, si) {
+        const subId = 'sub-' + slugify(cat.name) + '-' + slugify(sub.name);
+        const subcategory = {
+          id: subId,
+          categoryId: catId,
+          name: sub.name,
+          slug: slugify(sub.name),
+          sizeType: sub.sizeType,
+          order: si,
+          description:
+            'Notre sélection ' +
+            sub.name.toLowerCase() +
+            ' — ' +
+            cat.name.toLowerCase() +
+            '. Toutes les pièces sont disponibles à l’essayage en boutique.'
+        };
+        category.subcategories.push(subcategory);
+
+        // Produits de la sous-catégorie
+        const rand = rng(seedFrom(subId));
+        const count = 4 + Math.floor(rand() * 4); // 4 à 7 produits
+        const usedNames = new Set();
+
+        for (let p = 0; p < count; p++) {
+          const brand = pick(rand, BRANDS);
+          const model = pick(rand, MODEL_NAMES);
+          const qualifier = pick(rand, QUALIFIERS);
+          const material = pick(rand, MATERIALS);
+          const cut = pick(rand, CUTS);
+
+          let name = singular(sub.name) + ' ' + model;
+          if (usedNames.has(name)) name = singular(sub.name) + ' ' + model + ' ' + qualifier;
+          if (usedNames.has(name)) name = singular(sub.name) + ' ' + model + ' ' + (p + 1);
+          usedNames.add(name);
+
+          const colors = pickMany(rand, COLOR_POOL, 2 + Math.floor(rand() * 4));
+          const sizeSet = SIZE_SETS[sub.sizeType] || SIZE_SETS.clothing;
+          const sizes =
+            sizeSet.length <= 3
+              ? sizeSet.slice()
+              : sizeSet.filter(function () {
+                  return rand() > 0.18;
+                });
+          const price = priceIn(rand, sub.price);
+          const onSale = rand() > 0.82;
+
+          products.push({
+            id: 'prd-' + slugify(sub.name) + '-' + slugify(name) + '-' + p,
+            subcategoryId: subId,
+            categoryId: catId,
+            name: name,
+            brand: brand,
+            collection: qualifier,
+            price: Math.round(price * 100) / 100,
+            oldPrice: onSale ? Math.round(price * 1.25 * 100) / 100 : null,
+            description: buildDescription(rand, sub.name, brand, material, cut),
+            material: material,
+            cut: cut,
+            care: pick(rand, CARE_LINES),
+            reference: 'GLS-' + String(seedFrom(name + subId) % 100000).padStart(5, '0'),
+            sizes: sizes.length ? sizes : sizeSet.slice(0, 3),
+            colors: colors,
+            images: [], // vide = visuel généré automatiquement
+            inStock: rand() > 0.08,
+            featured: rand() > 0.9,
+            createdAt: '2026-01-01T00:00:00.000Z'
+          });
+        }
+      });
+
+      categories.push(category);
+    });
+
+    return { categories: categories, products: products };
+  }
+
+  /* ---------------------------------------------------------------------
+     6. Avis de démonstration
+     --------------------------------------------------------------------- */
+
+  const REVIEW_AUTHORS = ['Camille', 'Yanis', 'Sophie', 'Marc', 'Leïla', 'Thomas', 'Anaïs', 'Karim'];
+  const REVIEW_TEXTS = [
+    'Très bonne qualité, la taille est fidèle. Je recommande.',
+    'Acheté en boutique, l’équipe a été de bon conseil sur la taille.',
+    'Belle matière, rien à redire après plusieurs lavages.',
+    'Conforme à la description, coupe agréable au quotidien.',
+    'Bon rapport qualité-prix, je repasserai.',
+    'Un peu juste à la taille, je conseille de prendre au-dessus.'
+  ];
+
+  function buildReviews(products) {
+    const reviews = [];
+    products.forEach(function (product) {
+      const rand = rng(seedFrom('rev-' + product.id));
+      const count = Math.floor(rand() * 3); // 0 à 2 avis
+      for (let i = 0; i < count; i++) {
+        reviews.push({
+          id: 'rev-' + product.id + '-' + i,
+          productId: product.id,
+          author: pick(rand, REVIEW_AUTHORS),
+          rating: 3 + Math.floor(rand() * 3),
+          comment: pick(rand, REVIEW_TEXTS),
+          date: '2026-0' + (1 + Math.floor(rand() * 8)) + '-1' + (1 + Math.floor(rand() * 8))
+        });
+      }
+    });
+    return reviews;
+  }
+
+  /* ---------------------------------------------------------------------
+     7. Export
+     --------------------------------------------------------------------- */
+
+  function defaultData() {
+    const catalog = buildCatalog();
+    return {
+      version: 2,
+      store: JSON.parse(JSON.stringify(STORE)),
+      categories: catalog.categories,
+      products: catalog.products,
+      reviews: buildReviews(catalog.products)
+    };
+  }
+
+  return {
+    defaultData: defaultData,
+    slugify: slugify,
+    COLOR_POOL: COLOR_POOL,
+    SIZE_SETS: SIZE_SETS,
+    BRANDS: BRANDS
+  };
+})();
+
+    </script>
+    <script>
+/* =========================================================================
+   Globo Loco Shop — Utilitaires
+   ========================================================================= */
+
+const GLS_UTILS = (function () {
+  'use strict';
+
+  /* ------------------------------- DOM ------------------------------- */
+
+  function el(selector, root) {
+    return (root || document).querySelector(selector);
+  }
+
+  function els(selector, root) {
+    return Array.prototype.slice.call((root || document).querySelectorAll(selector));
+  }
+
+  function escapeHtml(value) {
+    return String(value === null || value === undefined ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function escapeAttr(value) {
+    return escapeHtml(value);
+  }
+
+  /* ------------------------------ Divers ----------------------------- */
+
+  function uid(prefix) {
+    return (
+      (prefix || 'id') +
+      '-' +
+      Date.now().toString(36) +
+      '-' +
+      Math.random().toString(36).slice(2, 8)
+    );
+  }
+
+  function formatPrice(value) {
+    if (value === null || value === undefined || isNaN(value)) return '—';
+    return Number(value).toFixed(2).replace('.', ',') + ' €';
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return String(iso);
+    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
+  }
+
+  // Normalise une chaîne pour la recherche (sans accents, minuscules).
+  function normalize(str) {
+    return String(str || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+  }
+
+  function slugify(str) {
+    return normalize(str)
+      .replace(/[’']/g, '-')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
+
+  function parseList(value) {
+    return String(value || '')
+      .split(/[,\n;]/)
+      .map(function (s) {
+        return s.trim();
+      })
+      .filter(Boolean);
+  }
+
+  /* --------------------------- Visuel produit ------------------------ */
+
+  // Hash déterministe utilisé pour varier les visuels générés.
+  function hashString(str) {
+    let h = 2166136261;
+    for (let i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  function contrastOn(hex) {
+    const clean = String(hex || '#888888').replace('#', '');
+    if (clean.length < 6) return '#ffffff';
+    const r = parseInt(clean.slice(0, 2), 16);
+    const g = parseInt(clean.slice(2, 4), 16);
+    const b = parseInt(clean.slice(4, 6), 16);
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return luminance > 0.62 ? '#22222a' : '#ffffff';
+  }
+
+  // Génère un visuel SVG (data URI) pour les produits sans photo.
+  // Aucune requête réseau : l'application fonctionne hors ligne.
+  function placeholderImage(product, colorHex) {
+    const base = colorHex || (product.colors && product.colors[0] && product.colors[0].hex) || '#8a8f98';
+    const seed = hashString(product.id || product.name || 'produit');
+    const angle = seed % 90;
+    const ink = contrastOn(base);
+    const initials = String(product.name || '?')
+      .split(/\s+/)
+      .slice(0, 2)
+      .map(function (w) {
+        return w.charAt(0).toUpperCase();
+      })
+      .join('');
+    const brand = String(product.brand || 'Globo Loco Shop');
+
+    const svg =
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" width="600" height="750">' +
+      '<defs>' +
+      '<linearGradient id="g" gradientTransform="rotate(' + angle + ')">' +
+      '<stop offset="0%" stop-color="' + base + '"/>' +
+      '<stop offset="100%" stop-color="' + base + '" stop-opacity="0.55"/>' +
+      '</linearGradient>' +
+      '<pattern id="p" width="46" height="46" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">' +
+      '<rect width="46" height="46" fill="none"/>' +
+      '<circle cx="10" cy="10" r="1.6" fill="' + ink + '" fill-opacity="0.16"/>' +
+      '</pattern>' +
+      '</defs>' +
+      '<rect width="600" height="750" fill="url(#g)"/>' +
+      '<rect width="600" height="750" fill="url(#p)"/>' +
+      '<circle cx="300" cy="318" r="132" fill="' + ink + '" fill-opacity="0.10"/>' +
+      '<text x="300" y="360" font-family="Georgia, serif" font-size="112" font-weight="700" ' +
+      'text-anchor="middle" fill="' + ink + '" fill-opacity="0.85">' + escapeHtml(initials) + '</text>' +
+      '<text x="300" y="620" font-family="Helvetica, Arial, sans-serif" font-size="26" ' +
+      'letter-spacing="6" text-anchor="middle" fill="' + ink + '" fill-opacity="0.75">' +
+      escapeHtml(brand.toUpperCase()) + '</text>' +
+      '<text x="300" y="662" font-family="Helvetica, Arial, sans-serif" font-size="17" ' +
+      'letter-spacing="3" text-anchor="middle" fill="' + ink + '" fill-opacity="0.55">' +
+      'GLOBO LOCO SHOP</text>' +
+      '</svg>';
+
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+
+  // Liste des visuels d'un produit : photos ajoutées, sinon visuels générés
+  // (un par couleur, dans la limite de 4).
+  function productImages(product) {
+    if (product.images && product.images.length) return product.images.slice();
+    const colors = (product.colors || []).slice(0, 4);
+    if (!colors.length) return [placeholderImage(product, null)];
+    return colors.map(function (c) {
+      return placeholderImage(product, c.hex);
+    });
+  }
+
+  function productCover(product) {
+    return productImages(product)[0];
+  }
+
+  /* ------------------------- Redimensionnement ----------------------- */
+
+  // Réduit une image importée avant stockage (le localStorage est limité).
+  function readImageFile(file, maxSize) {
+    const limit = maxSize || 1000;
+    return new Promise(function (resolve, reject) {
+      if (!file || !/^image\//.test(file.type)) {
+        reject(new Error('Le fichier sélectionné n’est pas une image.'));
+        return;
+      }
+      const reader = new FileReader();
+      reader.onerror = function () {
+        reject(new Error('Impossible de lire le fichier.'));
+      };
+      reader.onload = function () {
+        const img = new Image();
+        img.onerror = function () {
+          reject(new Error('Image illisible.'));
+        };
+        img.onload = function () {
+          let w = img.naturalWidth;
+          let h = img.naturalHeight;
+          const ratio = Math.min(1, limit / Math.max(w, h));
+          w = Math.round(w * ratio);
+          h = Math.round(h * ratio);
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, w, h);
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL('image/jpeg', 0.78));
+          } catch (err) {
+            // Canvas indisponible : on retombe sur l'image d'origine.
+            resolve(String(reader.result));
+          }
+        };
+        img.src = String(reader.result);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  /* ------------------------------ Hash ------------------------------- */
+
+  // Hachage du code administrateur. SHA-256 via Web Crypto quand disponible,
+  // repli déterministe sinon (contextes non sécurisés).
+  function hashSecret(secret, salt) {
+    const input = String(salt || '') + '::' + String(secret || '');
+    if (window.crypto && window.crypto.subtle && window.TextEncoder) {
+      try {
+        return window.crypto.subtle
+          .digest('SHA-256', new TextEncoder().encode(input))
+          .then(function (buffer) {
+            return (
+              'sha256:' +
+              Array.prototype.map
+                .call(new Uint8Array(buffer), function (b) {
+                  return b.toString(16).padStart(2, '0');
+                })
+                .join('')
+            );
+          })
+          .catch(function () {
+            return Promise.resolve(fallbackHash(input));
+          });
+      } catch (err) {
+        return Promise.resolve(fallbackHash(input));
+      }
+    }
+    return Promise.resolve(fallbackHash(input));
+  }
+
+  function fallbackHash(input) {
+    let h1 = 0x811c9dc5;
+    let h2 = 0xc2b2ae35;
+    for (let i = 0; i < input.length; i++) {
+      const c = input.charCodeAt(i);
+      h1 = Math.imul(h1 ^ c, 16777619) >>> 0;
+      h2 = Math.imul(h2 ^ (c + i), 2246822519) >>> 0;
+    }
+    return 'fnv:' + h1.toString(16).padStart(8, '0') + h2.toString(16).padStart(8, '0');
+  }
+
+  function randomSalt() {
+    if (window.crypto && window.crypto.getRandomValues) {
+      const arr = new Uint8Array(16);
+      window.crypto.getRandomValues(arr);
+      return Array.prototype.map
+        .call(arr, function (b) {
+          return b.toString(16).padStart(2, '0');
+        })
+        .join('');
+    }
+    return Math.random().toString(36).slice(2) + Date.now().toString(36);
+  }
+
+  /* ----------------------------- Toasts ------------------------------ */
+
+  let toastTimer = null;
+
+  function toast(message, kind) {
+    let holder = el('#toast');
+    if (!holder) {
+      holder = document.createElement('div');
+      holder.id = 'toast';
+      document.body.appendChild(holder);
+    }
+    holder.className = 'toast toast--' + (kind || 'info') + ' is-visible';
+    holder.textContent = message;
+    holder.setAttribute('role', 'status');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      holder.classList.remove('is-visible');
+    }, 3200);
+  }
+
+  return {
+    el: el,
+    els: els,
+    escapeHtml: escapeHtml,
+    escapeAttr: escapeAttr,
+    uid: uid,
+    formatPrice: formatPrice,
+    formatDate: formatDate,
+    normalize: normalize,
+    slugify: slugify,
+    parseList: parseList,
+    hashString: hashString,
+    contrastOn: contrastOn,
+    placeholderImage: placeholderImage,
+    productImages: productImages,
+    productCover: productCover,
+    readImageFile: readImageFile,
+    hashSecret: hashSecret,
+    randomSalt: randomSalt,
+    toast: toast
+  };
+})();
+
+    </script>
+    <script>
+/* =========================================================================
+   Globo Loco Shop — État de l'application et persistance
+   -------------------------------------------------------------------------
+   Toutes les données (catalogue, photos, avis, informations magasin, code
+   administrateur) vivent dans le localStorage du navigateur. Il n'y a pas de
+   serveur : l'application est entièrement autonome.
+   ========================================================================= */
+
+const GLS_STORE = (function (U, D) {
+  'use strict';
+
+  const DATA_KEY = 'globoloco.data.v1';
+  const ADMIN_KEY = 'globoloco.admin.v1';
+  const SESSION_KEY = 'globoloco.session.v1';
+
+  // Code administrateur livré par défaut. Il doit obligatoirement être changé
+  // à la première connexion (voir `mustChange`).
+  const DEFAULT_ADMIN_CODE = 'GLOBO2026';
+
+  let data = null;
+  let admin = null;
+  const listeners = [];
+
+  /* ------------------------- Persistance bas niveau ------------------ */
+
+  function readJSON(key) {
+    try {
+      const raw = window.localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function writeJSON(key, value) {
+    try {
+      window.localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch (err) {
+      U.toast(
+        'Espace de stockage saturé : allégez les photos ou exportez vos données.',
+        'error'
+      );
+      return false;
+    }
+  }
+
+  function persist() {
+    writeJSON(DATA_KEY, data);
+    emit();
+  }
+
+  function persistAdmin() {
+    writeJSON(ADMIN_KEY, admin);
+  }
+
+  function emit() {
+    listeners.forEach(function (fn) {
+      try {
+        fn();
+      } catch (err) {
+        /* un abonné en erreur ne doit pas bloquer les autres */
+      }
+    });
+  }
+
+  function subscribe(fn) {
+    listeners.push(fn);
+  }
+
+  /* ------------------------------ Init ------------------------------- */
+
+  function init() {
+    data = readJSON(DATA_KEY);
+    if (!data || !data.categories || !data.products) {
+      data = D.defaultData();
+      writeJSON(DATA_KEY, data);
+    }
+    // Compléments de structure pour les données anciennes.
+    if (!data.reviews) data.reviews = [];
+    if (!data.store.access) data.store.access = [];
+    if (migrate()) writeJSON(DATA_KEY, data);
+
+    admin = readJSON(ADMIN_KEY);
+    if (!admin || !admin.hash) {
+      const salt = U.randomSalt();
+      return U.hashSecret(DEFAULT_ADMIN_CODE, salt).then(function (hash) {
+        admin = {
+          salt: salt,
+          hash: hash,
+          mustChange: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: null
+        };
+        persistAdmin();
+      });
+    }
+    return Promise.resolve();
+  }
+
+  /* ---------------------------- Migrations --------------------------- */
+
+  // Valeurs livrées en version 1 du jeu de données. Une donnée encore égale à
+  // sa valeur d'origine est considérée comme non modifiée par le commerçant :
+  // elle peut être remplacée sans écraser un réglage volontaire.
+  const V1_DEFAULTS = {
+    tagline: 'Boutique de mode et de prêt-à-porter',
+    phone: '02 35 00 00 00',
+    email: 'contact@globolocoshop.fr',
+    hours: [
+      { day: 'Lundi', value: '14h00 – 19h00' },
+      { day: 'Mardi', value: '10h00 – 19h00' },
+      { day: 'Mercredi', value: '10h00 – 19h00' },
+      { day: 'Jeudi', value: '10h00 – 19h00' },
+      { day: 'Vendredi', value: '10h00 – 19h00' },
+      { day: 'Samedi', value: '10h00 – 19h30' },
+      { day: 'Dimanche', value: 'Fermé' }
+    ],
+    social: [
+      { label: 'Instagram', url: 'https://instagram.com/' },
+      { label: 'Facebook', url: 'https://facebook.com/' }
+    ]
+  };
+
+  function sameAs(value, reference) {
+    return JSON.stringify(value) === JSON.stringify(reference);
+  }
+
+  function migrate() {
+    if ((data.version || 1) >= 2) return false;
+    const fresh = D.defaultData().store;
+
+    // La fiche « Accessibilité » a été retirée des plans d'accès.
+    data.store.access = (data.store.access || []).filter(function (plan) {
+      return plan.id !== 'acc-pmr';
+    });
+
+    // Horaires, coordonnées et réseaux sociaux vérifiés : on ne remplace que
+    // ce qui n'a jamais été modifié depuis l'espace administrateur.
+    ['tagline', 'phone', 'email'].forEach(function (key) {
+      if (data.store[key] === V1_DEFAULTS[key]) data.store[key] = fresh[key];
+    });
+    if (sameAs(data.store.hours, V1_DEFAULTS.hours)) data.store.hours = fresh.hours;
+    if (sameAs(data.store.social, V1_DEFAULTS.social)) data.store.social = fresh.social;
+    if (!data.store.brands) data.store.brands = fresh.brands;
+    if (/boutique indépendante de mode et de prêt-à-porter/.test(data.store.about || '')) {
+      data.store.about = fresh.about;
+    }
+
+    data.version = 2;
+    return true;
+  }
+
+  function resetAll() {
+    try {
+      window.localStorage.removeItem(DATA_KEY);
+      window.localStorage.removeItem(ADMIN_KEY);
+      window.sessionStorage.removeItem(SESSION_KEY);
+    } catch (err) {
+      /* ignore */
+    }
+  }
+
+  function resetCatalog() {
+    data = D.defaultData();
+    persist();
+  }
+
+  /* ----------------------------- Lecture ----------------------------- */
+
+  function getStore() {
+    return data.store;
+  }
+
+  function getCategories() {
+    return data.categories.slice().sort(function (a, b) {
+      return (a.order || 0) - (b.order || 0);
+    });
+  }
+
+  function getCategory(id) {
+    return data.categories.filter(function (c) {
+      return c.id === id;
+    })[0] || null;
+  }
+
+  function getSubcategories(categoryId) {
+    const cat = getCategory(categoryId);
+    if (!cat) return [];
+    return cat.subcategories.slice().sort(function (a, b) {
+      return (a.order || 0) - (b.order || 0);
+    });
+  }
+
+  function allSubcategories() {
+    const out = [];
+    data.categories.forEach(function (cat) {
+      cat.subcategories.forEach(function (sub) {
+        out.push(sub);
+      });
+    });
+    return out;
+  }
+
+  function getSubcategory(id) {
+    return allSubcategories().filter(function (s) {
+      return s.id === id;
+    })[0] || null;
+  }
+
+  function getProducts(filter) {
+    let list = data.products.slice();
+    if (filter && filter.subcategoryId) {
+      list = list.filter(function (p) {
+        return p.subcategoryId === filter.subcategoryId;
+      });
+    }
+    if (filter && filter.categoryId) {
+      list = list.filter(function (p) {
+        return p.categoryId === filter.categoryId;
+      });
+    }
+    if (filter && filter.query) {
+      const q = U.normalize(filter.query);
+      list = list.filter(function (p) {
+        const sub = getSubcategory(p.subcategoryId);
+        const haystack = U.normalize(
+          [p.name, p.brand, p.description, sub ? sub.name : '', (p.colors || []).map(function (c) {
+            return c.name;
+          }).join(' ')].join(' ')
+        );
+        return haystack.indexOf(q) !== -1;
+      });
+    }
+    return list;
+  }
+
+  function getProduct(id) {
+    return data.products.filter(function (p) {
+      return p.id === id;
+    })[0] || null;
+  }
+
+  function countProducts(subcategoryId) {
+    return data.products.filter(function (p) {
+      return p.subcategoryId === subcategoryId;
+    }).length;
+  }
+
+  function countProductsInCategory(categoryId) {
+    return data.products.filter(function (p) {
+      return p.categoryId === categoryId;
+    }).length;
+  }
+
+  // Produits similaires : même sous-catégorie d'abord, puis même catégorie.
+  function similarProducts(product, limit) {
+    const max = limit || 6;
+    const sameSub = data.products.filter(function (p) {
+      return p.subcategoryId === product.subcategoryId && p.id !== product.id;
+    });
+    const sameCat = data.products.filter(function (p) {
+      return (
+        p.categoryId === product.categoryId &&
+        p.subcategoryId !== product.subcategoryId &&
+        p.id !== product.id
+      );
+    });
+    // On privilégie les produits partageant une couleur ou la marque.
+    const colorNames = (product.colors || []).map(function (c) {
+      return c.name;
+    });
+    function score(p) {
+      let s = 0;
+      if (p.brand === product.brand) s += 2;
+      (p.colors || []).forEach(function (c) {
+        if (colorNames.indexOf(c.name) !== -1) s += 1;
+      });
+      return s;
+    }
+    sameSub.sort(function (a, b) {
+      return score(b) - score(a);
+    });
+    return sameSub.concat(sameCat).slice(0, max);
+  }
+
+  function featuredProducts(limit) {
+    const featured = data.products.filter(function (p) {
+      return p.featured;
+    });
+    const pool = featured.length >= (limit || 8) ? featured : data.products;
+    return pool.slice(0, limit || 8);
+  }
+
+  function stats() {
+    return {
+      categories: data.categories.length,
+      subcategories: allSubcategories().length,
+      products: data.products.length,
+      reviews: data.reviews.length
+    };
+  }
+
+  /* ------------------------------ Avis ------------------------------- */
+
+  function getReviews(productId) {
+    return data.reviews
+      .filter(function (r) {
+        return r.productId === productId;
+      })
+      .sort(function (a, b) {
+        return String(b.date).localeCompare(String(a.date));
+      });
+  }
+
+  function averageRating(productId) {
+    const list = getReviews(productId);
+    if (!list.length) return null;
+    const sum = list.reduce(function (acc, r) {
+      return acc + Number(r.rating || 0);
+    }, 0);
+    return Math.round((sum / list.length) * 10) / 10;
+  }
+
+  function addReview(review) {
+    const entry = {
+      id: U.uid('rev'),
+      productId: review.productId,
+      author: review.author || 'Client anonyme',
+      rating: Math.min(5, Math.max(1, Number(review.rating) || 5)),
+      comment: review.comment || '',
+      date: new Date().toISOString().slice(0, 10)
+    };
+    data.reviews.push(entry);
+    persist();
+    return entry;
+  }
+
+  function deleteReview(id) {
+    data.reviews = data.reviews.filter(function (r) {
+      return r.id !== id;
+    });
+    persist();
+  }
+
+  /* --------------------------- Écriture admin ------------------------ */
+
+  function updateStore(patch) {
+    Object.keys(patch).forEach(function (key) {
+      data.store[key] = patch[key];
+    });
+    persist();
+  }
+
+  function saveAccessPlan(plan) {
+    const list = data.store.access;
+    const existing = list.filter(function (a) {
+      return a.id === plan.id;
+    })[0];
+    if (existing) {
+      Object.keys(plan).forEach(function (key) {
+        existing[key] = plan[key];
+      });
+    } else {
+      plan.id = plan.id || U.uid('acc');
+      list.push(plan);
+    }
+    persist();
+  }
+
+  function deleteAccessPlan(id) {
+    data.store.access = data.store.access.filter(function (a) {
+      return a.id !== id;
+    });
+    persist();
+  }
+
+  function saveCategory(input) {
+    if (input.id) {
+      const cat = getCategory(input.id);
+      if (!cat) return null;
+      cat.name = input.name;
+      cat.emoji = input.emoji;
+      cat.description = input.description;
+      cat.slug = U.slugify(input.name);
+      persist();
+      return cat;
+    }
+    const cat = {
+      id: U.uid('cat'),
+      name: input.name,
+      emoji: input.emoji || '🏷️',
+      slug: U.slugify(input.name),
+      description: input.description || '',
+      order: data.categories.length,
+      subcategories: []
+    };
+    data.categories.push(cat);
+    persist();
+    return cat;
+  }
+
+  // Supprime la catégorie, ses sous-catégories, ses produits et leurs avis.
+  function deleteCategory(id) {
+    const cat = getCategory(id);
+    if (!cat) return;
+    const subIds = cat.subcategories.map(function (s) {
+      return s.id;
+    });
+    const productIds = data.products
+      .filter(function (p) {
+        return subIds.indexOf(p.subcategoryId) !== -1;
+      })
+      .map(function (p) {
+        return p.id;
+      });
+    data.products = data.products.filter(function (p) {
+      return productIds.indexOf(p.id) === -1;
+    });
+    data.reviews = data.reviews.filter(function (r) {
+      return productIds.indexOf(r.productId) === -1;
+    });
+    data.categories = data.categories.filter(function (c) {
+      return c.id !== id;
+    });
+    persist();
+  }
+
+  function saveSubcategory(input) {
+    const cat = getCategory(input.categoryId);
+    if (!cat) return null;
+
+    if (input.id) {
+      const current = getSubcategory(input.id);
+      if (!current) return null;
+      // Changement de catégorie de rattachement
+      if (current.categoryId !== input.categoryId) {
+        const oldCat = getCategory(current.categoryId);
+        if (oldCat) {
+          oldCat.subcategories = oldCat.subcategories.filter(function (s) {
+            return s.id !== current.id;
+          });
+        }
+        current.categoryId = input.categoryId;
+        current.order = cat.subcategories.length;
+        cat.subcategories.push(current);
+        data.products.forEach(function (p) {
+          if (p.subcategoryId === current.id) p.categoryId = input.categoryId;
+        });
+      }
+      current.name = input.name;
+      current.description = input.description;
+      current.sizeType = input.sizeType || current.sizeType;
+      current.slug = U.slugify(input.name);
+      persist();
+      return current;
+    }
+
+    const sub = {
+      id: U.uid('sub'),
+      categoryId: cat.id,
+      name: input.name,
+      slug: U.slugify(input.name),
+      description: input.description || '',
+      sizeType: input.sizeType || 'clothing',
+      order: cat.subcategories.length
+    };
+    cat.subcategories.push(sub);
+    persist();
+    return sub;
+  }
+
+  function deleteSubcategory(id) {
+    const sub = getSubcategory(id);
+    if (!sub) return;
+    const cat = getCategory(sub.categoryId);
+    if (cat) {
+      cat.subcategories = cat.subcategories.filter(function (s) {
+        return s.id !== id;
+      });
+    }
+    const productIds = data.products
+      .filter(function (p) {
+        return p.subcategoryId === id;
+      })
+      .map(function (p) {
+        return p.id;
+      });
+    data.products = data.products.filter(function (p) {
+      return p.subcategoryId !== id;
+    });
+    data.reviews = data.reviews.filter(function (r) {
+      return productIds.indexOf(r.productId) === -1;
+    });
+    persist();
+  }
+
+  function saveProduct(input) {
+    const sub = getSubcategory(input.subcategoryId);
+    if (!sub) return null;
+
+    if (input.id) {
+      const product = getProduct(input.id);
+      if (!product) return null;
+      Object.keys(input).forEach(function (key) {
+        product[key] = input[key];
+      });
+      product.categoryId = sub.categoryId;
+      persist();
+      return product;
+    }
+
+    const product = {
+      id: U.uid('prd'),
+      subcategoryId: sub.id,
+      categoryId: sub.categoryId,
+      name: input.name,
+      brand: input.brand || '',
+      collection: input.collection || '',
+      price: Number(input.price) || 0,
+      oldPrice: input.oldPrice ? Number(input.oldPrice) : null,
+      description: input.description || '',
+      material: input.material || '',
+      cut: input.cut || '',
+      care: input.care || '',
+      reference: input.reference || 'GLS-' + String(U.hashString(input.name) % 100000).padStart(5, '0'),
+      sizes: input.sizes || [],
+      colors: input.colors || [],
+      images: input.images || [],
+      inStock: input.inStock !== false,
+      featured: !!input.featured,
+      createdAt: new Date().toISOString()
+    };
+    data.products.push(product);
+    persist();
+    return product;
+  }
+
+  function deleteProduct(id) {
+    data.products = data.products.filter(function (p) {
+      return p.id !== id;
+    });
+    data.reviews = data.reviews.filter(function (r) {
+      return r.productId !== id;
+    });
+    persist();
+  }
+
+  /* --------------------------- Photos produit ------------------------ */
+
+  function addProductImage(productId, dataUrl) {
+    const product = getProduct(productId);
+    if (!product) return false;
+    if (!product.images) product.images = [];
+    product.images.push(dataUrl);
+    persist();
+    return true;
+  }
+
+  function removeProductImage(productId, index) {
+    const product = getProduct(productId);
+    if (!product || !product.images) return false;
+    product.images.splice(index, 1);
+    persist();
+    return true;
+  }
+
+  function moveProductImage(productId, index, direction) {
+    const product = getProduct(productId);
+    if (!product || !product.images) return false;
+    const target = index + direction;
+    if (target < 0 || target >= product.images.length) return false;
+    const tmp = product.images[index];
+    product.images[index] = product.images[target];
+    product.images[target] = tmp;
+    persist();
+    return true;
+  }
+
+  /* ------------------------ Compte administrateur -------------------- */
+
+  function isLoggedIn() {
+    try {
+      return window.sessionStorage.getItem(SESSION_KEY) === 'open';
+    } catch (err) {
+      return false;
+    }
+  }
+
+  function mustChangeCode() {
+    return !!(admin && admin.mustChange);
+  }
+
+  function adminInfo() {
+    return {
+      mustChange: mustChangeCode(),
+      updatedAt: admin ? admin.updatedAt : null,
+      createdAt: admin ? admin.createdAt : null,
+      usingDefault: mustChangeCode()
+    };
+  }
+
+  function login(code) {
+    return U.hashSecret(code, admin.salt).then(function (hash) {
+      if (hash !== admin.hash) return false;
+      try {
+        window.sessionStorage.setItem(SESSION_KEY, 'open');
+      } catch (err) {
+        /* ignore */
+      }
+      emit();
+      return true;
+    });
+  }
+
+  function logout() {
+    try {
+      window.sessionStorage.removeItem(SESSION_KEY);
+    } catch (err) {
+      /* ignore */
+    }
+    emit();
+  }
+
+  // Change le code : l'ancien code est toujours exigé (y compris lors du
+  // changement obligatoire à la première connexion).
+  function changeCode(oldCode, newCode) {
+    return U.hashSecret(oldCode, admin.salt).then(function (hash) {
+      if (hash !== admin.hash) {
+        return { ok: false, error: 'Ancien code incorrect.' };
+      }
+      const validation = validateCode(newCode);
+      if (!validation.ok) return validation;
+      if (oldCode === newCode) {
+        return { ok: false, error: 'Le nouveau code doit être différent de l’ancien.' };
+      }
+      const salt = U.randomSalt();
+      return U.hashSecret(newCode, salt).then(function (newHash) {
+        admin.salt = salt;
+        admin.hash = newHash;
+        admin.mustChange = false;
+        admin.updatedAt = new Date().toISOString();
+        persistAdmin();
+        emit();
+        return { ok: true };
+      });
+    });
+  }
+
+  function validateCode(code) {
+    const value = String(code || '');
+    if (value.length < 8) {
+      return { ok: false, error: 'Le code doit contenir au moins 8 caractères.' };
+    }
+    if (!/[a-zA-Z]/.test(value) || !/[0-9]/.test(value)) {
+      return { ok: false, error: 'Le code doit contenir au moins une lettre et un chiffre.' };
+    }
+    return { ok: true };
+  }
+
+  /* --------------------------- Import / export ----------------------- */
+
+  function exportData() {
+    return JSON.stringify(data, null, 2);
+  }
+
+  function importData(json) {
+    let parsed;
+    try {
+      parsed = JSON.parse(json);
+    } catch (err) {
+      return { ok: false, error: 'Fichier JSON invalide.' };
+    }
+    if (!parsed || !Array.isArray(parsed.categories) || !Array.isArray(parsed.products)) {
+      return { ok: false, error: 'Structure inattendue : « categories » et « products » sont requis.' };
+    }
+    if (!parsed.reviews) parsed.reviews = [];
+    if (!parsed.store) parsed.store = D.defaultData().store;
+    if (!parsed.store.access) parsed.store.access = [];
+    if (!parsed.store.brands) parsed.store.brands = [];
+    if (!parsed.store.social) parsed.store.social = [];
+    data = parsed;
+    persist();
+    return { ok: true };
+  }
+
+  return {
+    DEFAULT_ADMIN_CODE: DEFAULT_ADMIN_CODE,
+    init: init,
+    subscribe: subscribe,
+    resetAll: resetAll,
+    resetCatalog: resetCatalog,
+
+    getStore: getStore,
+    getCategories: getCategories,
+    getCategory: getCategory,
+    getSubcategories: getSubcategories,
+    allSubcategories: allSubcategories,
+    getSubcategory: getSubcategory,
+    getProducts: getProducts,
+    getProduct: getProduct,
+    countProducts: countProducts,
+    countProductsInCategory: countProductsInCategory,
+    similarProducts: similarProducts,
+    featuredProducts: featuredProducts,
+    stats: stats,
+
+    getReviews: getReviews,
+    averageRating: averageRating,
+    addReview: addReview,
+    deleteReview: deleteReview,
+
+    updateStore: updateStore,
+    saveAccessPlan: saveAccessPlan,
+    deleteAccessPlan: deleteAccessPlan,
+    saveCategory: saveCategory,
+    deleteCategory: deleteCategory,
+    saveSubcategory: saveSubcategory,
+    deleteSubcategory: deleteSubcategory,
+    saveProduct: saveProduct,
+    deleteProduct: deleteProduct,
+
+    addProductImage: addProductImage,
+    removeProductImage: removeProductImage,
+    moveProductImage: moveProductImage,
+
+    isLoggedIn: isLoggedIn,
+    mustChangeCode: mustChangeCode,
+    adminInfo: adminInfo,
+    login: login,
+    logout: logout,
+    changeCode: changeCode,
+    validateCode: validateCode,
+
+    exportData: exportData,
+    importData: importData
+  };
+})(GLS_UTILS, GLS_DATA);
+
+    </script>
+    <script>
+/* =========================================================================
+   Globo Loco Shop — Vues publiques
+   ========================================================================= */
+
+const GLS_VIEWS = (function (U, S) {
+  'use strict';
+
+  const h = U.escapeHtml;
+
+  /* ---------------------------- Composants --------------------------- */
+
+  function stars(rating) {
+    if (rating === null || rating === undefined) {
+      return '<span class="stars stars--empty" aria-label="Aucun avis">☆☆☆☆☆</span>';
+    }
+    const full = Math.round(rating);
+    let out = '';
+    for (let i = 1; i <= 5; i++) out += i <= full ? '★' : '☆';
+    return (
+      '<span class="stars" aria-label="Note ' + h(rating) + ' sur 5">' + out + '</span>'
+    );
+  }
+
+  function breadcrumb(items) {
+    return (
+      '<nav class="breadcrumb" aria-label="Fil d’Ariane"><ol>' +
+      items
+        .map(function (item, i) {
+          const last = i === items.length - 1;
+          return (
+            '<li>' +
+            (last || !item.href
+              ? '<span aria-current="page">' + h(item.label) + '</span>'
+              : '<a href="' + h(item.href) + '">' + h(item.label) + '</a>') +
+            '</li>'
+          );
+        })
+        .join('') +
+      '</ol></nav>'
+    );
+  }
+
+  function colorDots(product, max) {
+    const colors = (product.colors || []).slice(0, max || 5);
+    if (!colors.length) return '';
+    return (
+      '<span class="dots" title="' +
+      h(
+        (product.colors || [])
+          .map(function (c) {
+            return c.name;
+          })
+          .join(', ')
+      ) +
+      '">' +
+      colors
+        .map(function (c) {
+          return '<i class="dot" style="background:' + h(c.hex) + '"></i>';
+        })
+        .join('') +
+      ((product.colors || []).length > colors.length
+        ? '<em class="dots__more">+' + ((product.colors || []).length - colors.length) + '</em>'
+        : '') +
+      '</span>'
+    );
+  }
+
+  function productCard(product) {
+    const rating = S.averageRating(product.id);
+    const sub = S.getSubcategory(product.subcategoryId);
+    return (
+      '<a class="card" href="#/produit/' + h(product.id) + '">' +
+      '<div class="card__media">' +
+      '<img loading="lazy" src="' + h(U.productCover(product)) + '" alt="' + h(product.name) + '">' +
+      (product.oldPrice ? '<span class="badge badge--sale">Promo</span>' : '') +
+      (!product.inStock ? '<span class="badge badge--out">Épuisé</span>' : '') +
+      '</div>' +
+      '<div class="card__body">' +
+      '<p class="card__brand">' + h(product.brand) + '</p>' +
+      '<h3 class="card__title">' + h(product.name) + '</h3>' +
+      '<p class="card__meta">' + h(sub ? sub.name : '') + '</p>' +
+      '<div class="card__footer">' +
+      '<span class="price">' +
+      U.formatPrice(product.price) +
+      (product.oldPrice ? ' <s>' + U.formatPrice(product.oldPrice) + '</s>' : '') +
+      '</span>' +
+      colorDots(product, 4) +
+      '</div>' +
+      (rating ? '<p class="card__rating">' + stars(rating) + ' <span>' + h(rating) + '/5</span></p>' : '') +
+      '</div>' +
+      '</a>'
+    );
+  }
+
+  function grid(products, emptyMessage) {
+    if (!products.length) {
+      return '<p class="empty">' + h(emptyMessage || 'Aucun article pour le moment.') + '</p>';
+    }
+    return '<div class="grid">' + products.map(productCard).join('') + '</div>';
+  }
+
+  /* ------------------------------ Accueil ---------------------------- */
+
+  function home() {
+    const store = S.getStore();
+    const categories = S.getCategories();
+    const st = S.stats();
+
+    const html =
+      '<section class="hero">' +
+      '<div class="hero__text">' +
+      '<p class="hero__eyebrow">' + h(store.city) + ' — ' + h(store.address) + '</p>' +
+      '<h1>' + h(store.name) + '</h1>' +
+      '<p class="hero__tagline">' + h(store.tagline) + '</p>' +
+      '<p class="hero__about">' + h(store.about) + '</p>' +
+      '<div class="hero__actions">' +
+      '<a class="btn btn--primary" href="#/categories">Voir le catalogue</a>' +
+      '<a class="btn btn--ghost" href="#/acces">Comment venir</a>' +
+      '</div>' +
+      '<ul class="hero__stats">' +
+      '<li><strong>' + st.categories + '</strong><span>catégories</span></li>' +
+      '<li><strong>' + st.subcategories + '</strong><span>sous-catégories</span></li>' +
+      '<li><strong>' + st.products + '</strong><span>articles</span></li>' +
+      '</ul>' +
+      '</div>' +
+      '<div class="hero__card">' +
+      '<h2>Horaires</h2>' +
+      '<ul class="hours">' +
+      store.hours
+        .map(function (row) {
+          return '<li><span>' + h(row.day) + '</span><b>' + h(row.value) + '</b></li>';
+        })
+        .join('') +
+      '</ul>' +
+      '<p class="hero__contact">' +
+      h(store.address) + '<br>' + h(store.postalCode) + ' ' + h(store.city) +
+      (store.phone ? '<br>' + h(store.phone) : '') +
+      '</p>' +
+      ((store.social || []).length
+        ? '<p class="hero__social">' +
+          store.social
+            .map(function (s) {
+              return (
+                '<a class="btn btn--ghost btn--small" href="' + h(s.url) +
+                '" target="_blank" rel="noopener">Suivre sur ' + h(s.label) + ' ↗</a>'
+              );
+            })
+            .join(' ') +
+          '</p>'
+        : '') +
+      '</div>' +
+      '</section>' +
+      '<section class="section">' +
+      '<div class="section__head"><h2>Nos rayons</h2>' +
+      '<a class="link" href="#/categories">Tout parcourir →</a></div>' +
+      '<div class="cats">' +
+      categories
+        .map(function (cat) {
+          return (
+            '<a class="cat" href="#/categorie/' + h(cat.id) + '">' +
+            '<span class="cat__emoji" aria-hidden="true">' + h(cat.emoji) + '</span>' +
+            '<span class="cat__name">' + h(cat.name) + '</span>' +
+            '<span class="cat__count">' + cat.subcategories.length + ' sous-catégories · ' +
+            S.countProductsInCategory(cat.id) + ' articles</span>' +
+            '</a>'
+          );
+        })
+        .join('') +
+      '</div>' +
+      '</section>' +
+      '<section class="section">' +
+      '<div class="section__head"><h2>Coups de cœur</h2></div>' +
+      grid(S.featuredProducts(8)) +
+      '</section>' +
+      '<section class="section band">' +
+      '<div class="band__inner">' +
+      '<div><h2>Venir à la boutique</h2>' +
+      '<p>Métro, bus, train, voiture, vélo ou à pied : tous les plans d’accès au ' +
+      h(store.address) + ', ' + h(store.postalCode) + ' ' + h(store.city) + '.</p></div>' +
+      '<a class="btn btn--primary" href="#/acces">Voir les plans d’accès</a>' +
+      '</div>' +
+      '</section>';
+
+    return { html: html, title: store.name };
+  }
+
+  /* --------------------------- Catégories ---------------------------- */
+
+  function categories() {
+    const cats = S.getCategories();
+    const html =
+      breadcrumb([{ label: 'Accueil', href: '#/' }, { label: 'Catalogue' }]) +
+      '<header class="page-head">' +
+      '<h1>Le catalogue</h1>' +
+      '<p>Choisissez un rayon, puis une sous-catégorie pour voir les articles.</p>' +
+      '</header>' +
+      '<div class="cats cats--large">' +
+      cats
+        .map(function (cat) {
+          return (
+            '<a class="cat" href="#/categorie/' + h(cat.id) + '">' +
+            '<span class="cat__emoji" aria-hidden="true">' + h(cat.emoji) + '</span>' +
+            '<span class="cat__name">' + h(cat.name) + '</span>' +
+            '<span class="cat__desc">' + h(cat.description) + '</span>' +
+            '<span class="cat__count">' + cat.subcategories.length + ' sous-catégories · ' +
+            S.countProductsInCategory(cat.id) + ' articles</span>' +
+            '</a>'
+          );
+        })
+        .join('') +
+      '</div>';
+    return { html: html, title: 'Catalogue' };
+  }
+
+  // Page catégorie : uniquement les sous-catégories, aucun article.
+  function category(id) {
+    const cat = S.getCategory(id);
+    if (!cat) return notFound('Catégorie introuvable.');
+    const subs = S.getSubcategories(cat.id);
+
+    const html =
+      breadcrumb([
+        { label: 'Accueil', href: '#/' },
+        { label: 'Catalogue', href: '#/categories' },
+        { label: cat.name }
+      ]) +
+      '<header class="page-head">' +
+      '<h1><span aria-hidden="true">' + h(cat.emoji) + '</span> ' + h(cat.name) + '</h1>' +
+      '<p>' + h(cat.description) + '</p>' +
+      '<p class="page-head__note">Les articles se trouvent dans les sous-catégories ci-dessous.</p>' +
+      '</header>' +
+      (subs.length
+        ? '<div class="subs">' +
+          subs
+            .map(function (sub) {
+              return (
+                '<a class="sub" href="#/sous-categorie/' + h(sub.id) + '">' +
+                '<span class="sub__name">' + h(sub.name) + '</span>' +
+                '<span class="sub__count">' + S.countProducts(sub.id) + ' articles</span>' +
+                '</a>'
+              );
+            })
+            .join('') +
+          '</div>'
+        : '<p class="empty">Aucune sous-catégorie pour l’instant.</p>');
+
+    return { html: html, title: cat.name };
+  }
+
+  /* ------------------------- Sous-catégorie -------------------------- */
+
+  function subcategory(id, params) {
+    const sub = S.getSubcategory(id);
+    if (!sub) return notFound('Sous-catégorie introuvable.');
+    const cat = S.getCategory(sub.categoryId);
+    let products = S.getProducts({ subcategoryId: sub.id });
+
+    // Options de filtre construites depuis le catalogue de la sous-catégorie.
+    const brands = uniq(
+      products.map(function (p) {
+        return p.brand;
+      })
+    ).sort();
+    const sizes = uniq(
+      products.reduce(function (acc, p) {
+        return acc.concat(p.sizes || []);
+      }, [])
+    );
+    const colors = uniq(
+      products.reduce(function (acc, p) {
+        return acc.concat(
+          (p.colors || []).map(function (c) {
+            return c.name;
+          })
+        );
+      }, [])
+    ).sort();
+
+    const fBrand = params.marque || '';
+    const fSize = params.taille || '';
+    const fColor = params.couleur || '';
+    const sort = params.tri || 'defaut';
+
+    if (fBrand) {
+      products = products.filter(function (p) {
+        return p.brand === fBrand;
+      });
+    }
+    if (fSize) {
+      products = products.filter(function (p) {
+        return (p.sizes || []).indexOf(fSize) !== -1;
+      });
+    }
+    if (fColor) {
+      products = products.filter(function (p) {
+        return (p.colors || []).some(function (c) {
+          return c.name === fColor;
+        });
+      });
+    }
+    if (sort === 'prix-asc') products.sort(byPrice(1));
+    if (sort === 'prix-desc') products.sort(byPrice(-1));
+    if (sort === 'nom') {
+      products.sort(function (a, b) {
+        return a.name.localeCompare(b.name, 'fr');
+      });
+    }
+    if (sort === 'note') {
+      products.sort(function (a, b) {
+        return (S.averageRating(b.id) || 0) - (S.averageRating(a.id) || 0);
+      });
+    }
+
+    function options(list, selected) {
+      return list
+        .map(function (v) {
+          return (
+            '<option value="' + h(v) + '"' + (v === selected ? ' selected' : '') + '>' + h(v) + '</option>'
+          );
+        })
+        .join('');
+    }
+
+    const html =
+      breadcrumb([
+        { label: 'Accueil', href: '#/' },
+        { label: 'Catalogue', href: '#/categories' },
+        { label: cat ? cat.name : '', href: cat ? '#/categorie/' + cat.id : '' },
+        { label: sub.name }
+      ]) +
+      '<header class="page-head">' +
+      '<h1>' + h(sub.name) + '</h1>' +
+      '<p>' + h(sub.description) + '</p>' +
+      '</header>' +
+      '<form class="filters" id="filters" data-sub="' + h(sub.id) + '">' +
+      '<label>Marque<select name="marque"><option value="">Toutes</option>' +
+      options(brands, fBrand) + '</select></label>' +
+      '<label>Taille<select name="taille"><option value="">Toutes</option>' +
+      options(sizes, fSize) + '</select></label>' +
+      '<label>Couleur<select name="couleur"><option value="">Toutes</option>' +
+      options(colors, fColor) + '</select></label>' +
+      '<label>Trier<select name="tri">' +
+      '<option value="defaut"' + (sort === 'defaut' ? ' selected' : '') + '>Sélection</option>' +
+      '<option value="prix-asc"' + (sort === 'prix-asc' ? ' selected' : '') + '>Prix croissant</option>' +
+      '<option value="prix-desc"' + (sort === 'prix-desc' ? ' selected' : '') + '>Prix décroissant</option>' +
+      '<option value="nom"' + (sort === 'nom' ? ' selected' : '') + '>Nom (A-Z)</option>' +
+      '<option value="note"' + (sort === 'note' ? ' selected' : '') + '>Mieux notés</option>' +
+      '</select></label>' +
+      '<button type="button" class="btn btn--ghost btn--small" id="filters-reset">Réinitialiser</button>' +
+      '</form>' +
+      '<p class="result-count">' + products.length + ' article' + (products.length > 1 ? 's' : '') + '</p>' +
+      grid(products, 'Aucun article ne correspond à ces filtres.');
+
+    return {
+      html: html,
+      title: sub.name,
+      mount: function (root, ctx) {
+        const form = U.el('#filters', root);
+        if (!form) return;
+        form.addEventListener('change', function () {
+          const q = [];
+          U.els('select', form).forEach(function (select) {
+            if (select.value && select.value !== 'defaut') {
+              q.push(encodeURIComponent(select.name) + '=' + encodeURIComponent(select.value));
+            }
+          });
+          ctx.navigate('#/sous-categorie/' + sub.id + (q.length ? '?' + q.join('&') : ''));
+        });
+        const reset = U.el('#filters-reset', root);
+        if (reset) {
+          reset.addEventListener('click', function () {
+            ctx.navigate('#/sous-categorie/' + sub.id);
+          });
+        }
+      }
+    };
+  }
+
+  function byPrice(dir) {
+    return function (a, b) {
+      return (a.price - b.price) * dir;
+    };
+  }
+
+  function uniq(list) {
+    const seen = {};
+    const out = [];
+    list.forEach(function (v) {
+      if (v && !seen[v]) {
+        seen[v] = true;
+        out.push(v);
+      }
+    });
+    return out;
+  }
+
+  /* ---------------------------- Fiche produit ------------------------ */
+
+  function product(id) {
+    const p = S.getProduct(id);
+    if (!p) return notFound('Article introuvable.');
+    const sub = S.getSubcategory(p.subcategoryId);
+    const cat = S.getCategory(p.categoryId);
+    const reviews = S.getReviews(p.id);
+    const rating = S.averageRating(p.id);
+    const similar = S.similarProducts(p, 6);
+    const isAdmin = S.isLoggedIn();
+    const images = U.productImages(p);
+    const generated = !(p.images && p.images.length);
+
+    const html =
+      breadcrumb([
+        { label: 'Accueil', href: '#/' },
+        { label: 'Catalogue', href: '#/categories' },
+        { label: cat ? cat.name : '', href: cat ? '#/categorie/' + cat.id : '' },
+        { label: sub ? sub.name : '', href: sub ? '#/sous-categorie/' + sub.id : '' },
+        { label: p.name }
+      ]) +
+      '<article class="product" data-product="' + h(p.id) + '">' +
+
+      /* ---- Photo (au-dessus des informations) ---- */
+      '<section class="product__gallery">' +
+      '<div class="gallery__main">' +
+      '<img id="gallery-main" src="' + h(images[0]) + '" alt="' + h(p.name) + '">' +
+      '</div>' +
+      '<div class="gallery__thumbs" id="gallery-thumbs">' +
+      images
+        .map(function (src, i) {
+          return (
+            '<button type="button" class="thumb' + (i === 0 ? ' is-active' : '') +
+            '" data-index="' + i + '" data-src="' + h(src) + '">' +
+            '<img src="' + h(src) + '" alt="Vue ' + (i + 1) + ' de ' + h(p.name) + '">' +
+            (isAdmin && !generated
+              ? '<span class="thumb__tools">' +
+                '<i data-photo-move="-1" data-index="' + i + '" title="Déplacer à gauche">◀</i>' +
+                '<i data-photo-remove="' + i + '" title="Retirer cette photo">✕</i>' +
+                '<i data-photo-move="1" data-index="' + i + '" title="Déplacer à droite">▶</i>' +
+                '</span>'
+              : '') +
+            '</button>'
+          );
+        })
+        .join('') +
+      '</div>' +
+      (generated
+        ? '<p class="gallery__note">Visuel généré automatiquement — ajoutez une photo depuis l’espace administrateur.</p>'
+        : '') +
+      (isAdmin
+        ? '<div class="gallery__admin">' +
+          '<p class="gallery__admin-title">Gestion des photos</p>' +
+          '<div class="gallery__admin-row">' +
+          '<label class="btn btn--small btn--ghost">Ajouter une photo' +
+          '<input type="file" accept="image/*" id="photo-file" hidden multiple></label>' +
+          '<input type="url" id="photo-url" placeholder="…ou coller une adresse d’image (https://)">' +
+          '<button type="button" class="btn btn--small" id="photo-url-add">Ajouter l’URL</button>' +
+          '</div>' +
+          (p.images && p.images.length
+            ? '<button type="button" class="btn btn--small btn--danger-ghost" id="photo-clear">Retirer toutes les photos</button>'
+            : '') +
+          '</div>'
+        : '') +
+      '</section>' +
+
+      /* ---- Informations sous la photo ---- */
+      '<section class="product__info">' +
+      '<p class="product__brand">' + h(p.brand) + (p.collection ? ' · ' + h(p.collection) : '') + '</p>' +
+      '<h1>' + h(p.name) + '</h1>' +
+      '<p class="product__price">' +
+      U.formatPrice(p.price) +
+      (p.oldPrice ? ' <s>' + U.formatPrice(p.oldPrice) + '</s>' : '') +
+      '</p>' +
+      '<p class="product__rating">' + stars(rating) +
+      (rating ? ' <span>' + h(rating) + '/5 · ' + reviews.length + ' avis</span>' : ' <span>Aucun avis</span>') +
+      '</p>' +
+      '<p class="product__stock ' + (p.inStock ? 'in' : 'out') + '">' +
+      (p.inStock ? 'Disponible en boutique' : 'Momentanément épuisé') + '</p>' +
+
+      '<div class="specs">' +
+      '<div class="spec"><h2>Marque</h2><p>' + h(p.brand) + '</p></div>' +
+      '<div class="spec"><h2>Tailles disponibles</h2>' +
+      '<ul class="sizes">' +
+      (p.sizes || [])
+        .map(function (s) {
+          return '<li>' + h(s) + '</li>';
+        })
+        .join('') +
+      '</ul>' +
+      (!(p.sizes || []).length ? '<p class="muted">Non renseigné</p>' : '') +
+      '</div>' +
+      '<div class="spec"><h2>Couleurs disponibles</h2>' +
+      '<ul class="colors">' +
+      (p.colors || [])
+        .map(function (c, i) {
+          return (
+            '<li><button type="button" class="color' + (i === 0 ? ' is-active' : '') +
+            '" data-color-index="' + i + '" data-hex="' + h(c.hex) + '">' +
+            '<i style="background:' + h(c.hex) + '"></i><span>' + h(c.name) + '</span></button></li>'
+          );
+        })
+        .join('') +
+      '</ul>' +
+      (!(p.colors || []).length ? '<p class="muted">Non renseigné</p>' : '') +
+      '</div>' +
+      '<div class="spec spec--wide"><h2>Description</h2><p>' + h(p.description) + '</p></div>' +
+      (p.material || p.cut || p.care || p.reference
+        ? '<div class="spec spec--wide"><h2>Détails</h2><ul class="details">' +
+          (p.material ? '<li><span>Matière</span><b>' + h(p.material) + '</b></li>' : '') +
+          (p.cut ? '<li><span>Coupe</span><b>' + h(p.cut) + '</b></li>' : '') +
+          (p.care ? '<li><span>Entretien</span><b>' + h(p.care) + '</b></li>' : '') +
+          (p.reference ? '<li><span>Référence</span><b>' + h(p.reference) + '</b></li>' : '') +
+          '</ul></div>'
+        : '') +
+      '</div>' +
+
+      (isAdmin
+        ? '<p class="product__admin-link"><a class="btn btn--small btn--ghost" href="#/admin?onglet=produits&produit=' +
+          h(p.id) + '">Modifier cet article</a></p>'
+        : '') +
+      '</section>' +
+
+      /* ---- Avis ---- */
+      '<section class="product__reviews" id="avis">' +
+      '<h2>Avis des client·es</h2>' +
+      (reviews.length
+        ? '<ul class="reviews">' +
+          reviews
+            .map(function (r) {
+              return (
+                '<li class="review">' +
+                '<p class="review__head"><b>' + h(r.author) + '</b> ' + stars(r.rating) +
+                '<time>' + h(U.formatDate(r.date)) + '</time></p>' +
+                '<p class="review__body">' + h(r.comment) + '</p>' +
+                (isAdmin
+                  ? '<button type="button" class="btn btn--tiny btn--danger-ghost" data-review-delete="' +
+                    h(r.id) + '">Supprimer</button>'
+                  : '') +
+                '</li>'
+              );
+            })
+            .join('') +
+          '</ul>'
+        : '<p class="empty">Aucun avis pour l’instant. Soyez la première personne à en laisser un.</p>') +
+      '<form class="review-form" id="review-form">' +
+      '<h3>Laisser un avis</h3>' +
+      '<div class="review-form__row">' +
+      '<label>Votre prénom<input type="text" name="author" maxlength="40" placeholder="Camille" required></label>' +
+      '<label>Note<select name="rating">' +
+      '<option value="5">★★★★★ — Excellent</option>' +
+      '<option value="4">★★★★☆ — Très bien</option>' +
+      '<option value="3">★★★☆☆ — Correct</option>' +
+      '<option value="2">★★☆☆☆ — Décevant</option>' +
+      '<option value="1">★☆☆☆☆ — Mauvais</option>' +
+      '</select></label>' +
+      '</div>' +
+      '<label>Votre avis<textarea name="comment" rows="3" maxlength="600" ' +
+      'placeholder="Taille, matière, confort…" required></textarea></label>' +
+      '<button type="submit" class="btn btn--primary">Publier mon avis</button>' +
+      '</form>' +
+      '</section>' +
+
+      /* ---- Produits similaires ---- */
+      '<section class="product__similar">' +
+      '<h2>Produits similaires</h2>' +
+      (similar.length
+        ? '<ul class="similar-list">' +
+          similar
+            .map(function (sp) {
+              const ssub = S.getSubcategory(sp.subcategoryId);
+              return (
+                '<li><a href="#/produit/' + h(sp.id) + '">' +
+                '<img src="' + h(U.productCover(sp)) + '" alt="" loading="lazy">' +
+                '<span class="similar__text">' +
+                '<b>' + h(sp.name) + '</b>' +
+                '<em>' + h(sp.brand) + ' · ' + h(ssub ? ssub.name : '') + '</em>' +
+                '</span>' +
+                '<span class="similar__price">' + U.formatPrice(sp.price) + '</span>' +
+                '</a></li>'
+              );
+            })
+            .join('') +
+          '</ul>'
+        : '<p class="empty">Aucun produit similaire pour le moment.</p>') +
+      '</section>' +
+      '</article>';
+
+    return {
+      html: html,
+      title: p.name,
+      mount: function (root, ctx) {
+        mountProduct(root, ctx, p);
+      }
+    };
+  }
+
+  function mountProduct(root, ctx, p) {
+    const main = U.el('#gallery-main', root);
+    const thumbs = U.el('#gallery-thumbs', root);
+    const isAdmin = S.isLoggedIn();
+
+    // Sélection d'une vignette
+    if (thumbs) {
+      thumbs.addEventListener('click', function (event) {
+        const removeBtn = event.target.closest('[data-photo-remove]');
+        if (removeBtn) {
+          event.preventDefault();
+          event.stopPropagation();
+          const index = Number(removeBtn.getAttribute('data-photo-remove'));
+          if (window.confirm('Retirer cette photo de la fiche ?')) {
+            S.removeProductImage(p.id, index);
+            U.toast('Photo retirée.', 'success');
+            ctx.rerender();
+          }
+          return;
+        }
+        const moveBtn = event.target.closest('[data-photo-move]');
+        if (moveBtn) {
+          event.preventDefault();
+          event.stopPropagation();
+          S.moveProductImage(
+            p.id,
+            Number(moveBtn.getAttribute('data-index')),
+            Number(moveBtn.getAttribute('data-photo-move'))
+          );
+          ctx.rerender();
+          return;
+        }
+        const btn = event.target.closest('.thumb');
+        if (!btn || !main) return;
+        main.src = btn.getAttribute('data-src');
+        U.els('.thumb', thumbs).forEach(function (t) {
+          t.classList.remove('is-active');
+        });
+        btn.classList.add('is-active');
+      });
+    }
+
+    // Sélection de couleur : met à jour le visuel généré quand il n'y a pas
+    // de photo réelle.
+    U.els('[data-color-index]', root).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        U.els('[data-color-index]', root).forEach(function (b) {
+          b.classList.remove('is-active');
+        });
+        btn.classList.add('is-active');
+        if (!(p.images && p.images.length) && main) {
+          const index = Number(btn.getAttribute('data-color-index'));
+          const src = U.placeholderImage(p, (p.colors[index] || {}).hex);
+          main.src = src;
+          const thumb = U.el('.thumb[data-index="' + index + '"]', root);
+          if (thumb) {
+            U.els('.thumb', root).forEach(function (t) {
+              t.classList.remove('is-active');
+            });
+            thumb.classList.add('is-active');
+          }
+        }
+      });
+    });
+
+    // Avis
+    const form = U.el('#review-form', root);
+    if (form) {
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const fd = new FormData(form);
+        const author = String(fd.get('author') || '').trim();
+        const comment = String(fd.get('comment') || '').trim();
+        if (!author || !comment) {
+          U.toast('Merci de renseigner votre prénom et votre avis.', 'error');
+          return;
+        }
+        S.addReview({
+          productId: p.id,
+          author: author,
+          rating: Number(fd.get('rating')),
+          comment: comment
+        });
+        U.toast('Merci, votre avis est publié.', 'success');
+        ctx.rerender('#avis');
+      });
+    }
+
+    U.els('[data-review-delete]', root).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (!window.confirm('Supprimer cet avis ?')) return;
+        S.deleteReview(btn.getAttribute('data-review-delete'));
+        U.toast('Avis supprimé.', 'success');
+        ctx.rerender('#avis');
+      });
+    });
+
+    if (!isAdmin) return;
+
+    // Ajout de photos (fichier)
+    const fileInput = U.el('#photo-file', root);
+    if (fileInput) {
+      fileInput.addEventListener('change', function () {
+        const files = Array.prototype.slice.call(fileInput.files || []);
+        if (!files.length) return;
+        Promise.all(
+          files.map(function (file) {
+            return U.readImageFile(file, 1000);
+          })
+        )
+          .then(function (urls) {
+            urls.forEach(function (url) {
+              S.addProductImage(p.id, url);
+            });
+            U.toast(urls.length + ' photo(s) ajoutée(s).', 'success');
+            ctx.rerender();
+          })
+          .catch(function (err) {
+            U.toast(err.message || 'Impossible d’ajouter cette image.', 'error');
+          });
+      });
+    }
+
+    // Ajout de photo (URL)
+    const urlAdd = U.el('#photo-url-add', root);
+    if (urlAdd) {
+      urlAdd.addEventListener('click', function () {
+        const input = U.el('#photo-url', root);
+        const value = String(input.value || '').trim();
+        if (!/^https?:\/\//i.test(value) && !/^data:image\//i.test(value)) {
+          U.toast('Adresse invalide : elle doit commencer par https:// .', 'error');
+          return;
+        }
+        S.addProductImage(p.id, value);
+        U.toast('Photo ajoutée.', 'success');
+        ctx.rerender();
+      });
+    }
+
+    const clear = U.el('#photo-clear', root);
+    if (clear) {
+      clear.addEventListener('click', function () {
+        if (!window.confirm('Retirer toutes les photos ? Le visuel généré sera réaffiché.')) return;
+        S.saveProduct({ id: p.id, subcategoryId: p.subcategoryId, images: [] });
+        U.toast('Photos retirées.', 'success');
+        ctx.rerender();
+      });
+    }
+  }
+
+  /* ---------------------------- Recherche ---------------------------- */
+
+  function search(params) {
+    const query = params.q || '';
+    const results = query ? S.getProducts({ query: query }) : [];
+    const html =
+      breadcrumb([{ label: 'Accueil', href: '#/' }, { label: 'Recherche' }]) +
+      '<header class="page-head"><h1>Recherche</h1>' +
+      (query ? '<p>' + results.length + ' résultat(s) pour « ' + h(query) + ' »</p>' : '<p>Saisissez un terme dans la barre de recherche.</p>') +
+      '</header>' +
+      (query ? grid(results, 'Aucun article ne correspond à cette recherche.') : '');
+    return { html: html, title: 'Recherche' };
+  }
+
+  /* ------------------------- Plans d'accès --------------------------- */
+
+  function accessMap(store) {
+    // Plan schématique du quartier (non à l'échelle), généré en SVG.
+    return (
+      '<figure class="map">' +
+      '<svg viewBox="0 0 720 460" role="img" aria-label="Plan schématique du quartier autour de la boutique">' +
+      '<rect width="720" height="460" fill="#f2efe9"/>' +
+      // Îlots
+      '<g fill="#e4ded2">' +
+      '<rect x="30" y="40" width="260" height="150" rx="6"/>' +
+      '<rect x="30" y="230" width="260" height="180" rx="6"/>' +
+      '<rect x="430" y="40" width="260" height="110" rx="6"/>' +
+      '<rect x="430" y="190" width="260" height="120" rx="6"/>' +
+      '<rect x="430" y="350" width="260" height="60" rx="6"/>' +
+      '</g>' +
+      // Rues transversales
+      '<g stroke="#ffffff" stroke-width="18" stroke-linecap="round">' +
+      '<line x1="30" y1="210" x2="690" y2="210"/>' +
+      '<line x1="30" y1="330" x2="690" y2="330"/>' +
+      '<line x1="430" y1="170" x2="690" y2="170"/>' +
+      '</g>' +
+      // Rue Jeanne d'Arc (axe principal)
+      '<line x1="360" y1="10" x2="360" y2="450" stroke="#ffffff" stroke-width="42"/>' +
+      '<line x1="360" y1="10" x2="360" y2="450" stroke="#cfc5b2" stroke-width="2" stroke-dasharray="12 14"/>' +
+      // Seine
+      '<rect x="0" y="425" width="720" height="35" fill="#a8c6d8"/>' +
+      '<text x="16" y="449" font-size="13" fill="#3d5c6e" font-family="Helvetica, Arial, sans-serif">La Seine</text>' +
+      // Libellés
+      '<text x="372" y="28" font-size="14" font-weight="700" fill="#33312c" font-family="Helvetica, Arial, sans-serif">↑ Gare de Rouen-Rive-Droite</text>' +
+      '<text x="346" y="205" font-size="13" fill="#6b6455" font-family="Helvetica, Arial, sans-serif" transform="rotate(-90 346 205)">Rue Jeanne d’Arc</text>' +
+      '<text x="40" y="204" font-size="12" fill="#7a7264" font-family="Helvetica, Arial, sans-serif">Rue Ganterie</text>' +
+      '<text x="40" y="324" font-size="12" fill="#7a7264" font-family="Helvetica, Arial, sans-serif">Rue du Gros-Horloge</text>' +
+      '<text x="440" y="164" font-size="12" fill="#7a7264" font-family="Helvetica, Arial, sans-serif">Rue aux Juifs · Palais de Justice</text>' +
+      // Points d'intérêt
+      poi(360, 268, '#b8342f', 'Globo Loco Shop — 59 rue Jeanne d’Arc', true) +
+      poi(360, 120, '#2b5d8a', 'Métro Gare-Rue Verte (vers le nord)') +
+      poi(360, 210, '#2b5d8a', 'Métro Palais de Justice') +
+      poi(360, 392, '#2b5d8a', 'Métro / TEOR Théâtre des Arts') +
+      poi(560, 312, '#3f7a4f', 'Parking Espace du Palais') +
+      poi(250, 330, '#3f7a4f', 'Parking Vieux-Marché') +
+      '</svg>' +
+      '<figcaption>Plan schématique du quartier — non à l’échelle. Les distances réelles sont indiquées dans les fiches ci-dessous.</figcaption>' +
+      '</figure>'
+    );
+  }
+
+  function poi(x, y, color, label, big) {
+    const r = big ? 13 : 8;
+    const anchor = x > 400 ? 'end' : 'start';
+    const dx = x > 400 ? -(r + 8) : r + 8;
+    return (
+      '<g>' +
+      '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + color + '" stroke="#fff" stroke-width="3"/>' +
+      (big ? '<circle cx="' + x + '" cy="' + y + '" r="' + (r + 8) + '" fill="' + color + '" opacity="0.18"/>' : '') +
+      '<text x="' + (x + dx) + '" y="' + (y + 4) + '" text-anchor="' + anchor + '" font-size="' +
+      (big ? 14 : 12) + '" font-weight="' + (big ? '700' : '500') + '" fill="#33312c" ' +
+      'font-family="Helvetica, Arial, sans-serif">' + h(label) + '</text>' +
+      '</g>'
+    );
+  }
+
+  function access() {
+    const store = S.getStore();
+    const fullAddress =
+      store.address + ', ' + store.postalCode + ' ' + store.city + ', ' + store.country;
+    const encoded = encodeURIComponent(fullAddress);
+    const geo = store.lat + ',' + store.lng;
+
+    const html =
+      breadcrumb([{ label: 'Accueil', href: '#/' }, { label: 'Plans d’accès' }]) +
+      '<header class="page-head">' +
+      '<h1>Venir à la boutique</h1>' +
+      '<p><strong>' + h(store.name) + '</strong> — ' + h(store.address) + ', ' +
+      h(store.postalCode) + ' ' + h(store.city) + '</p>' +
+      '</header>' +
+      accessMap(store) +
+      '<div class="itineraries">' +
+      '<a class="btn btn--primary" target="_blank" rel="noopener" ' +
+      'href="https://www.openstreetmap.org/?mlat=' + h(store.lat) + '&mlon=' + h(store.lng) + '#map=18/' +
+      h(store.lat) + '/' + h(store.lng) + '">Ouvrir dans OpenStreetMap</a>' +
+      '<a class="btn btn--ghost" target="_blank" rel="noopener" ' +
+      'href="https://www.google.com/maps/dir/?api=1&destination=' + encoded + '">Itinéraire Google Maps</a>' +
+      '<a class="btn btn--ghost" target="_blank" rel="noopener" ' +
+      'href="https://maps.apple.com/?daddr=' + encoded + '">Itinéraire Plans (Apple)</a>' +
+      '<a class="btn btn--ghost" href="geo:' + h(geo) + '?q=' + encoded + '">Ouvrir dans mon GPS</a>' +
+      '</div>' +
+      '<div class="access-grid">' +
+      store.access
+        .map(function (plan) {
+          return (
+            '<article class="access">' +
+            '<h2><span aria-hidden="true">' + h(plan.icon) + '</span> ' + h(plan.title) + '</h2>' +
+            '<p class="access__summary">' + h(plan.summary) + '</p>' +
+            '<ul>' +
+            (plan.steps || [])
+              .map(function (step) {
+                return '<li>' + h(step) + '</li>';
+              })
+              .join('') +
+            '</ul>' +
+            '</article>'
+          );
+        })
+        .join('') +
+      '</div>' +
+      '<p class="disclaimer">Les informations de transport et de stationnement sont indicatives et ' +
+      'modifiables depuis l’espace administrateur (onglet « Magasin »). Vérifiez les horaires ' +
+      'auprès des exploitants de réseau avant votre déplacement.</p>';
+
+    return { html: html, title: 'Plans d’accès' };
+  }
+
+  /* ------------------------------ Magasin ---------------------------- */
+
+  function storeInfo() {
+    const store = S.getStore();
+    const html =
+      breadcrumb([{ label: 'Accueil', href: '#/' }, { label: 'La boutique' }]) +
+      '<header class="page-head"><h1>La boutique</h1><p>' + h(store.tagline) + '</p></header>' +
+      '<div class="store-grid">' +
+      '<section class="panel"><h2>À propos</h2><p>' + h(store.about) + '</p></section>' +
+      '<section class="panel"><h2>Coordonnées</h2>' +
+      '<p>' + h(store.address) + '<br>' + h(store.postalCode) + ' ' + h(store.city) + '<br>' +
+      h(store.country) + '</p>' +
+      '<p>' +
+      (store.phone
+        ? '<a href="tel:' + h(String(store.phone).replace(/\s/g, '')) + '">' + h(store.phone) + '</a>'
+        : '') +
+      (store.phone && store.email ? '<br>' : '') +
+      (store.email ? '<a href="mailto:' + h(store.email) + '">' + h(store.email) + '</a>' : '') +
+      '</p>' +
+      (store.social && store.social.length
+        ? '<p class="social">' +
+          store.social
+            .map(function (s) {
+              return (
+                '<a href="' + h(s.url) + '" target="_blank" rel="noopener">' + h(s.label) + ' ↗</a>'
+              );
+            })
+            .join(' · ') +
+          '</p>'
+        : '') +
+      '</section>' +
+      '<section class="panel"><h2>Horaires</h2><ul class="hours">' +
+      store.hours
+        .map(function (row) {
+          return '<li><span>' + h(row.day) + '</span><b>' + h(row.value) + '</b></li>';
+        })
+        .join('') +
+      '</ul></section>' +
+      ((store.brands || []).length
+        ? '<section class="panel panel--full"><h2>Marques en boutique</h2>' +
+          '<ul class="brand-list">' +
+          store.brands
+            .map(function (b) {
+              return '<li>' + h(b) + '</li>';
+            })
+            .join('') +
+          '</ul>' +
+          '<p class="muted">Sélection variable selon les arrivages.</p>' +
+          '</section>'
+        : '') +
+      '</div>' +
+      '<p class="cta-line"><a class="btn btn--primary" href="#/acces">Voir tous les plans d’accès</a></p>' +
+      creditBlock();
+    return { html: html, title: 'La boutique' };
+  }
+
+  /* --------------------------- Crédit / contact ---------------------- */
+
+  // Encart de contact du créateur du site.
+  function creditBlock() {
+    return (
+      '<aside class="credit">' +
+      '<h2>Un site comme celui-ci pour votre commerce ?</h2>' +
+      '<p>Ce site a été conçu sur mesure. Pour contacter le créateur du site, il suffit ' +
+      'd’envoyer un mail à <a href="mailto:Sanctimaps@gmail.com">Sanctimaps@gmail.com</a>.</p>' +
+      '</aside>'
+    );
+  }
+
+  /* ------------------------------- 404 ------------------------------- */
+
+  function notFound(message) {
+    return {
+      html:
+        '<div class="page-head"><h1>Page introuvable</h1><p>' +
+        h(message || 'Cette page n’existe pas ou a été supprimée.') +
+        '</p><p><a class="btn btn--primary" href="#/">Retour à l’accueil</a></p></div>',
+      title: 'Page introuvable'
+    };
+  }
+
+  return {
+    home: home,
+    categories: categories,
+    category: category,
+    subcategory: subcategory,
+    product: product,
+    search: search,
+    access: access,
+    storeInfo: storeInfo,
+    notFound: notFound,
+    grid: grid,
+    stars: stars,
+    productCard: productCard
+  };
+})(GLS_UTILS, GLS_STORE);
+
+    </script>
+    <script>
+/* =========================================================================
+   Globo Loco Shop — Espace administrateur
+   -------------------------------------------------------------------------
+   Connexion par code, changement obligatoire à la première connexion, puis
+   gestion des catégories, sous-catégories, articles, photos, avis, des
+   informations du magasin et des plans d'accès.
+   ========================================================================= */
+
+const GLS_ADMIN = (function (U, S, D) {
+  'use strict';
+
+  const h = U.escapeHtml;
+
+  // Libellés lisibles des grilles de tailles proposées aux sous-catégories.
+  const SIZE_TYPE_LABELS = {
+    clothing: 'Vêtements',
+    bottoms: 'Bas (tailles chiffrées)',
+    shoes: 'Chaussures',
+    onesize: 'Taille unique',
+    socks: 'Chaussettes',
+    bra: 'Soutiens-gorge',
+    belt: 'Ceintures',
+    gloves: 'Gants',
+    luggage: 'Bagagerie'
+  };
+
+  const TABS = [
+    { id: 'tableau', label: 'Tableau de bord' },
+    { id: 'categories', label: 'Catégories' },
+    { id: 'produits', label: 'Articles' },
+    { id: 'magasin', label: 'Magasin & accès' },
+    { id: 'securite', label: 'Code d’accès' },
+    { id: 'donnees', label: 'Données' }
+  ];
+
+  /* ============================== Entrée ============================= */
+
+  function view(params) {
+    if (!S.isLoggedIn()) return loginView(params);
+    if (S.mustChangeCode()) return firstChangeView();
+    return dashboard(params);
+  }
+
+  /* ============================ Connexion ============================ */
+
+  function loginView(params) {
+    const info = S.adminInfo();
+    const html =
+      '<div class="admin-gate">' +
+      '<h1>Espace administrateur</h1>' +
+      '<p>Accès réservé à la gestion de la boutique.</p>' +
+      '<form id="login-form" class="gate-form">' +
+      '<label>Code administrateur' +
+      '<input type="password" name="code" autocomplete="current-password" required autofocus></label>' +
+      '<button type="submit" class="btn btn--primary">Se connecter</button>' +
+      '<p class="gate-error" id="login-error" hidden></p>' +
+      '</form>' +
+      (info.usingDefault
+        ? '<p class="gate-hint"><b>Première connexion</b> — le code livré par défaut est ' +
+          '<code>' + h(S.DEFAULT_ADMIN_CODE) + '</code>. Il devra être changé immédiatement après ' +
+          'la connexion.</p>'
+        : '<p class="gate-hint">Code oublié ? Il n’est pas récupérable : seule une réinitialisation ' +
+          'complète des données (onglet « Données » d’une session ouverte, ou vidage du stockage du ' +
+          'navigateur) rétablit le code par défaut.</p>') +
+      '</div>';
+
+    return {
+      html: html,
+      title: 'Administration',
+      mount: function (root, ctx) {
+        const form = U.el('#login-form', root);
+        const error = U.el('#login-error', root);
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+          const code = new FormData(form).get('code');
+          S.login(code).then(function (ok) {
+            if (!ok) {
+              error.hidden = false;
+              error.textContent = 'Code incorrect.';
+              return;
+            }
+            U.toast('Connexion réussie.', 'success');
+            ctx.rerender();
+          });
+        });
+      }
+    };
+  }
+
+  /* ================= Changement obligatoire du code ================== */
+
+  function firstChangeView() {
+    const html =
+      '<div class="admin-gate">' +
+      '<h1>Changez votre code</h1>' +
+      '<p>Pour votre sécurité, le code livré par défaut doit être remplacé avant ' +
+      'd’accéder à la gestion de la boutique.</p>' +
+      changeCodeForm('Définir mon nouveau code') +
+      '<p class="gate-hint">Le code devra contenir au moins 8 caractères, dont une lettre et un ' +
+      'chiffre. Il pourra être modifié à tout moment, à condition de connaître l’ancien code.</p>' +
+      '<p><button type="button" class="btn btn--ghost btn--small" id="gate-logout">Se déconnecter</button></p>' +
+      '</div>';
+
+    return {
+      html: html,
+      title: 'Changer le code',
+      mount: function (root, ctx) {
+        bindChangeCode(root, ctx);
+        U.el('#gate-logout', root).addEventListener('click', function () {
+          S.logout();
+          ctx.rerender();
+        });
+      }
+    };
+  }
+
+  function changeCodeForm(submitLabel) {
+    return (
+      '<form id="code-form" class="gate-form">' +
+      '<label>Ancien code<input type="password" name="old" autocomplete="current-password" required></label>' +
+      '<label>Nouveau code<input type="password" name="next" autocomplete="new-password" required></label>' +
+      '<label>Confirmer le nouveau code<input type="password" name="confirm" autocomplete="new-password" required></label>' +
+      '<button type="submit" class="btn btn--primary">' + h(submitLabel) + '</button>' +
+      '<p class="gate-error" id="code-error" hidden></p>' +
+      '</form>'
+    );
+  }
+
+  function bindChangeCode(root, ctx) {
+    const form = U.el('#code-form', root);
+    const error = U.el('#code-error', root);
+    if (!form) return;
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const fd = new FormData(form);
+      const oldCode = String(fd.get('old') || '');
+      const next = String(fd.get('next') || '');
+      const confirm = String(fd.get('confirm') || '');
+      error.hidden = true;
+
+      if (next !== confirm) {
+        error.hidden = false;
+        error.textContent = 'Les deux nouveaux codes ne correspondent pas.';
+        return;
+      }
+      S.changeCode(oldCode, next).then(function (result) {
+        if (!result.ok) {
+          error.hidden = false;
+          error.textContent = result.error;
+          return;
+        }
+        U.toast('Code administrateur mis à jour.', 'success');
+        ctx.rerender();
+      });
+    });
+  }
+
+  /* ============================ Tableau de bord ====================== */
+
+  function dashboard(params) {
+    const active = params.onglet || 'tableau';
+    const body = renderTab(active, params);
+
+    const html =
+      '<div class="admin">' +
+      '<header class="admin__head">' +
+      '<div><h1>Administration</h1><p>Connecté·e — toutes les modifications sont enregistrées ' +
+      'immédiatement dans ce navigateur.</p></div>' +
+      '<button type="button" class="btn btn--ghost btn--small" id="admin-logout">Se déconnecter</button>' +
+      '</header>' +
+      '<nav class="admin__tabs">' +
+      TABS.map(function (tab) {
+        return (
+          '<a class="admin__tab' + (tab.id === active ? ' is-active' : '') +
+          '" href="#/admin?onglet=' + tab.id + '">' + h(tab.label) + '</a>'
+        );
+      }).join('') +
+      '</nav>' +
+      '<div class="admin__body">' + body.html + '</div>' +
+      '</div>';
+
+    return {
+      html: html,
+      title: 'Administration',
+      mount: function (root, ctx) {
+        U.el('#admin-logout', root).addEventListener('click', function () {
+          S.logout();
+          U.toast('Déconnecté·e.', 'info');
+          ctx.navigate('#/');
+        });
+        if (body.mount) body.mount(root, ctx);
+      }
+    };
+  }
+
+  function renderTab(tab, params) {
+    if (tab === 'categories') return tabCategories(params);
+    if (tab === 'produits') return tabProducts(params);
+    if (tab === 'magasin') return tabStore(params);
+    if (tab === 'securite') return tabSecurity();
+    if (tab === 'donnees') return tabData();
+    return tabOverview();
+  }
+
+  /* --------------------------- Onglet : accueil ---------------------- */
+
+  function tabOverview() {
+    const st = S.stats();
+    const info = S.adminInfo();
+    const cats = S.getCategories();
+    const emptySubs = S.allSubcategories().filter(function (sub) {
+      return S.countProducts(sub.id) === 0;
+    });
+    const noPhoto = S.getProducts({}).filter(function (p) {
+      return !(p.images && p.images.length);
+    });
+
+    return {
+      html:
+        '<div class="kpis">' +
+        kpi(st.categories, 'catégories') +
+        kpi(st.subcategories, 'sous-catégories') +
+        kpi(st.products, 'articles') +
+        kpi(st.reviews, 'avis') +
+        '</div>' +
+        '<div class="panel">' +
+        '<h2>État du catalogue</h2>' +
+        '<ul class="checklist">' +
+        '<li>' + noPhoto.length + ' article(s) sans photo réelle (visuel généré automatiquement).</li>' +
+        '<li>' + emptySubs.length + ' sous-catégorie(s) sans article.</li>' +
+        '<li>Code administrateur ' +
+        (info.updatedAt
+          ? 'modifié le ' + h(U.formatDate(info.updatedAt)) + '.'
+          : 'jamais modifié.') +
+        '</li>' +
+        '</ul>' +
+        '</div>' +
+        '<div class="panel">' +
+        '<h2>Répartition par rayon</h2>' +
+        '<ul class="bars">' +
+        cats
+          .map(function (cat) {
+            const count = S.countProductsInCategory(cat.id);
+            const pct = st.products ? Math.round((count / st.products) * 100) : 0;
+            return (
+              '<li><span>' + h(cat.emoji) + ' ' + h(cat.name) + '</span>' +
+              '<i style="width:' + Math.max(pct, 2) + '%"></i>' +
+              '<b>' + count + '</b></li>'
+            );
+          })
+          .join('') +
+        '</ul>' +
+        '</div>'
+    };
+  }
+
+  function kpi(value, label) {
+    return '<div class="kpi"><strong>' + value + '</strong><span>' + h(label) + '</span></div>';
+  }
+
+  /* ------------------------ Onglet : catégories ---------------------- */
+
+  function tabCategories(params) {
+    const cats = S.getCategories();
+    const editCat = params.categorie ? S.getCategory(params.categorie) : null;
+    const editSub = params.souscategorie ? S.getSubcategory(params.souscategorie) : null;
+
+    const html =
+      '<div class="panel">' +
+      '<h2>' + (editCat ? 'Modifier la catégorie' : 'Ajouter une catégorie') + '</h2>' +
+      '<form id="cat-form" class="form form--inline">' +
+      '<input type="hidden" name="id" value="' + h(editCat ? editCat.id : '') + '">' +
+      '<label class="small">Icône<input type="text" name="emoji" maxlength="4" value="' +
+      h(editCat ? editCat.emoji : '🏷️') + '"></label>' +
+      '<label>Nom<input type="text" name="name" required value="' +
+      h(editCat ? editCat.name : '') + '"></label>' +
+      '<label class="wide">Description<input type="text" name="description" value="' +
+      h(editCat ? editCat.description : '') + '"></label>' +
+      '<div class="form__actions">' +
+      '<button type="submit" class="btn btn--primary">' + (editCat ? 'Enregistrer' : 'Ajouter') + '</button>' +
+      (editCat ? '<a class="btn btn--ghost" href="#/admin?onglet=categories">Annuler</a>' : '') +
+      '</div>' +
+      '</form>' +
+      '</div>' +
+
+      '<div class="panel">' +
+      '<h2>' + (editSub ? 'Modifier la sous-catégorie' : 'Ajouter une sous-catégorie') + '</h2>' +
+      '<form id="sub-form" class="form form--inline">' +
+      '<input type="hidden" name="id" value="' + h(editSub ? editSub.id : '') + '">' +
+      '<label>Catégorie<select name="categoryId" required>' +
+      cats
+        .map(function (c) {
+          const selected = editSub
+            ? c.id === editSub.categoryId
+            : params.categorieParente === c.id;
+          return '<option value="' + h(c.id) + '"' + (selected ? ' selected' : '') + '>' + h(c.name) + '</option>';
+        })
+        .join('') +
+      '</select></label>' +
+      '<label>Nom<input type="text" name="name" required value="' + h(editSub ? editSub.name : '') + '"></label>' +
+      '<label>Grille de tailles<select name="sizeType">' +
+      Object.keys(D.SIZE_SETS)
+        .map(function (key) {
+          const selected = editSub && editSub.sizeType === key;
+          const set = D.SIZE_SETS[key];
+          const preview = set.slice(0, 4).join(', ') + (set.length > 4 ? '…' : '');
+          return (
+            '<option value="' + h(key) + '"' + (selected ? ' selected' : '') + '>' +
+            h(SIZE_TYPE_LABELS[key] || key) + ' — ' + h(preview) + '</option>'
+          );
+        })
+        .join('') +
+      '</select></label>' +
+      '<label class="wide">Description<input type="text" name="description" value="' +
+      h(editSub ? editSub.description : '') + '"></label>' +
+      '<div class="form__actions">' +
+      '<button type="submit" class="btn btn--primary">' + (editSub ? 'Enregistrer' : 'Ajouter') + '</button>' +
+      (editSub ? '<a class="btn btn--ghost" href="#/admin?onglet=categories">Annuler</a>' : '') +
+      '</div>' +
+      '</form>' +
+      '</div>' +
+
+      '<div class="panel">' +
+      '<h2>Arborescence</h2>' +
+      '<div class="tree">' +
+      cats
+        .map(function (cat) {
+          const subs = S.getSubcategories(cat.id);
+          return (
+            '<details class="tree__cat"' + (cats.length <= 3 ? ' open' : '') + '>' +
+            '<summary>' +
+            '<span class="tree__title">' + h(cat.emoji) + ' ' + h(cat.name) + '</span>' +
+            '<span class="tree__count">' + subs.length + ' sous-catégories · ' +
+            S.countProductsInCategory(cat.id) + ' articles</span>' +
+            '</summary>' +
+            '<div class="tree__tools">' +
+            '<a class="btn btn--tiny btn--ghost" href="#/admin?onglet=categories&categorie=' + h(cat.id) + '">Modifier</a>' +
+            '<a class="btn btn--tiny btn--ghost" href="#/admin?onglet=categories&categorieParente=' + h(cat.id) + '">+ Sous-catégorie</a>' +
+            '<button type="button" class="btn btn--tiny btn--danger-ghost" data-del-cat="' + h(cat.id) + '">Supprimer</button>' +
+            '</div>' +
+            '<ul class="tree__subs">' +
+            subs
+              .map(function (sub) {
+                return (
+                  '<li>' +
+                  '<a class="tree__sub-name" href="#/sous-categorie/' + h(sub.id) + '">' + h(sub.name) + '</a>' +
+                  '<span class="tree__count">' + S.countProducts(sub.id) + ' articles</span>' +
+                  '<span class="tree__tools">' +
+                  '<a class="btn btn--tiny btn--ghost" href="#/admin?onglet=categories&souscategorie=' + h(sub.id) + '">Modifier</a>' +
+                  '<a class="btn btn--tiny btn--ghost" href="#/admin?onglet=produits&sous=' + h(sub.id) + '">Articles</a>' +
+                  '<button type="button" class="btn btn--tiny btn--danger-ghost" data-del-sub="' + h(sub.id) + '">Supprimer</button>' +
+                  '</span>' +
+                  '</li>'
+                );
+              })
+              .join('') +
+            (!subs.length ? '<li class="muted">Aucune sous-catégorie.</li>' : '') +
+            '</ul>' +
+            '</details>'
+          );
+        })
+        .join('') +
+      '</div>' +
+      '</div>';
+
+    return {
+      html: html,
+      mount: function (root, ctx) {
+        const catForm = U.el('#cat-form', root);
+        catForm.addEventListener('submit', function (event) {
+          event.preventDefault();
+          const fd = new FormData(catForm);
+          S.saveCategory({
+            id: String(fd.get('id') || '') || null,
+            name: String(fd.get('name') || '').trim(),
+            emoji: String(fd.get('emoji') || '').trim() || '🏷️',
+            description: String(fd.get('description') || '').trim()
+          });
+          U.toast('Catégorie enregistrée.', 'success');
+          ctx.navigate('#/admin?onglet=categories');
+        });
+
+        const subForm = U.el('#sub-form', root);
+        subForm.addEventListener('submit', function (event) {
+          event.preventDefault();
+          const fd = new FormData(subForm);
+          const saved = S.saveSubcategory({
+            id: String(fd.get('id') || '') || null,
+            categoryId: String(fd.get('categoryId') || ''),
+            name: String(fd.get('name') || '').trim(),
+            sizeType: String(fd.get('sizeType') || 'clothing'),
+            description: String(fd.get('description') || '').trim()
+          });
+          if (!saved) {
+            U.toast('Catégorie de rattachement introuvable.', 'error');
+            return;
+          }
+          U.toast('Sous-catégorie enregistrée.', 'success');
+          ctx.navigate('#/admin?onglet=categories');
+        });
+
+        U.els('[data-del-cat]', root).forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            const id = btn.getAttribute('data-del-cat');
+            const cat = S.getCategory(id);
+            const count = S.countProductsInCategory(id);
+            if (
+              !window.confirm(
+                'Supprimer la catégorie « ' + cat.name + ' » ?\n' +
+                  'Ses ' + cat.subcategories.length + ' sous-catégories et ' + count +
+                  ' articles seront également supprimés.'
+              )
+            )
+              return;
+            S.deleteCategory(id);
+            U.toast('Catégorie supprimée.', 'success');
+            ctx.rerender();
+          });
+        });
+
+        U.els('[data-del-sub]', root).forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            const id = btn.getAttribute('data-del-sub');
+            const sub = S.getSubcategory(id);
+            if (
+              !window.confirm(
+                'Supprimer la sous-catégorie « ' + sub.name + ' » et ses ' +
+                  S.countProducts(id) + ' articles ?'
+              )
+            )
+              return;
+            S.deleteSubcategory(id);
+            U.toast('Sous-catégorie supprimée.', 'success');
+            ctx.rerender();
+          });
+        });
+      }
+    };
+  }
+
+  /* -------------------------- Onglet : articles ---------------------- */
+
+  function tabProducts(params) {
+    const subs = S.allSubcategories();
+    const editing = params.produit ? S.getProduct(params.produit) : null;
+    const creating = params.nouveau === '1';
+    const currentSub = params.sous || (editing ? editing.subcategoryId : '');
+    const list = currentSub ? S.getProducts({ subcategoryId: currentSub }) : [];
+
+    function subOptions(selected) {
+      return S.getCategories()
+        .map(function (cat) {
+          return (
+            '<optgroup label="' + h(cat.name) + '">' +
+            S.getSubcategories(cat.id)
+              .map(function (sub) {
+                return (
+                  '<option value="' + h(sub.id) + '"' + (sub.id === selected ? ' selected' : '') + '>' +
+                  h(sub.name) + ' (' + S.countProducts(sub.id) + ')</option>'
+                );
+              })
+              .join('') +
+            '</optgroup>'
+          );
+        })
+        .join('');
+    }
+
+    let html =
+      '<div class="panel">' +
+      '<h2>Choisir une sous-catégorie</h2>' +
+      '<form class="form form--inline" id="sub-picker">' +
+      '<label class="wide">Sous-catégorie<select name="sous">' +
+      '<option value="">— Sélectionner —</option>' + subOptions(currentSub) + '</select></label>' +
+      '<div class="form__actions">' +
+      (currentSub
+        ? '<a class="btn btn--primary" href="#/admin?onglet=produits&sous=' + h(currentSub) +
+          '&nouveau=1">+ Nouvel article</a>'
+        : '') +
+      '</div>' +
+      '</form>' +
+      '</div>';
+
+    if (editing || (creating && currentSub)) {
+      html += productForm(editing, currentSub, subOptions);
+    }
+
+    if (currentSub) {
+      const sub = S.getSubcategory(currentSub);
+      html +=
+        '<div class="panel">' +
+        '<h2>' + h(sub ? sub.name : '') + ' — ' + list.length + ' article(s)</h2>' +
+        (list.length
+          ? '<table class="table"><thead><tr>' +
+            '<th>Article</th><th>Marque</th><th>Prix</th><th>Tailles</th><th>Photos</th><th>Stock</th><th></th>' +
+            '</tr></thead><tbody>' +
+            list
+              .map(function (p) {
+                return (
+                  '<tr>' +
+                  '<td><a href="#/produit/' + h(p.id) + '">' + h(p.name) + '</a></td>' +
+                  '<td>' + h(p.brand) + '</td>' +
+                  '<td>' + U.formatPrice(p.price) + '</td>' +
+                  '<td>' + h((p.sizes || []).join(', ')) + '</td>' +
+                  '<td>' + ((p.images && p.images.length) || 0) + '</td>' +
+                  '<td>' + (p.inStock ? 'Oui' : 'Non') + '</td>' +
+                  '<td class="table__actions">' +
+                  '<a class="btn btn--tiny btn--ghost" href="#/admin?onglet=produits&sous=' + h(currentSub) +
+                  '&produit=' + h(p.id) + '">Modifier</a>' +
+                  '<button type="button" class="btn btn--tiny btn--danger-ghost" data-del-prd="' + h(p.id) +
+                  '">Supprimer</button>' +
+                  '</td>' +
+                  '</tr>'
+                );
+              })
+              .join('') +
+            '</tbody></table>'
+          : '<p class="empty">Aucun article dans cette sous-catégorie.</p>') +
+        '</div>';
+    }
+
+    return {
+      html: html,
+      mount: function (root, ctx) {
+        const picker = U.el('#sub-picker select', root);
+        picker.addEventListener('change', function () {
+          ctx.navigate(
+            picker.value ? '#/admin?onglet=produits&sous=' + picker.value : '#/admin?onglet=produits'
+          );
+        });
+
+        U.els('[data-del-prd]', root).forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            const p = S.getProduct(btn.getAttribute('data-del-prd'));
+            if (!window.confirm('Supprimer l’article « ' + p.name + ' » ?')) return;
+            S.deleteProduct(p.id);
+            U.toast('Article supprimé.', 'success');
+            ctx.rerender();
+          });
+        });
+
+        bindProductForm(root, ctx, editing, currentSub);
+      }
+    };
+  }
+
+  function productForm(product, subId, subOptions) {
+    const p = product || {};
+    const sub = S.getSubcategory(product ? product.subcategoryId : subId);
+    const sizePreset = (sub && D.SIZE_SETS[sub.sizeType]) || D.SIZE_SETS.clothing;
+    const colors = p.colors || [];
+
+    return (
+      '<div class="panel" id="product-panel">' +
+      '<h2>' + (product ? 'Modifier « ' + h(p.name) + ' »' : 'Nouvel article') + '</h2>' +
+      '<form id="product-form" class="form form--grid">' +
+      '<input type="hidden" name="id" value="' + h(p.id || '') + '">' +
+      '<label>Nom<input type="text" name="name" required value="' + h(p.name || '') + '"></label>' +
+      '<label>Marque<input type="text" name="brand" list="brand-list" value="' + h(p.brand || '') + '"></label>' +
+      '<datalist id="brand-list">' +
+      D.BRANDS.map(function (b) {
+        return '<option value="' + h(b) + '"></option>';
+      }).join('') +
+      '</datalist>' +
+      '<label>Collection<input type="text" name="collection" value="' + h(p.collection || '') + '"></label>' +
+      '<label>Sous-catégorie<select name="subcategoryId" required>' +
+      subOptions(product ? product.subcategoryId : subId) + '</select></label>' +
+      '<label>Prix (€)<input type="number" step="0.01" min="0" name="price" required value="' +
+      h(p.price !== undefined ? p.price : '') + '"></label>' +
+      '<label>Prix barré (€)<input type="number" step="0.01" min="0" name="oldPrice" value="' +
+      h(p.oldPrice || '') + '"></label>' +
+      '<label>Référence<input type="text" name="reference" value="' + h(p.reference || '') + '"></label>' +
+      '<label>Matière<input type="text" name="material" value="' + h(p.material || '') + '"></label>' +
+      '<label>Coupe<input type="text" name="cut" value="' + h(p.cut || '') + '"></label>' +
+      '<label class="wide">Entretien<input type="text" name="care" value="' + h(p.care || '') + '"></label>' +
+      '<label class="wide">Description<textarea name="description" rows="4">' +
+      h(p.description || '') + '</textarea></label>' +
+
+      '<div class="field wide">' +
+      '<span class="field__label">Tailles disponibles</span>' +
+      '<input type="text" name="sizes" id="sizes-input" value="' + h((p.sizes || []).join(', ')) +
+      '" placeholder="S, M, L, XL">' +
+      '<p class="field__hint">Séparées par des virgules. Grille de la sous-catégorie :' +
+      sizePreset
+        .map(function (s) {
+          return ' <button type="button" class="chip" data-size="' + h(s) + '">' + h(s) + '</button>';
+        })
+        .join('') +
+      ' <button type="button" class="chip chip--all" data-size-all="' + h(sizePreset.join(', ')) +
+      '">Tout ajouter</button></p>' +
+      '</div>' +
+
+      '<div class="field wide">' +
+      '<span class="field__label">Couleurs disponibles</span>' +
+      '<div id="colors-rows">' +
+      (colors.length
+        ? colors.map(colorRow).join('')
+        : colorRow({ name: '', hex: '#1b1b1f' })) +
+      '</div>' +
+      '<p class="field__hint">' +
+      '<button type="button" class="chip" id="color-add">+ Ajouter une couleur</button>' +
+      D.COLOR_POOL.slice(0, 8)
+        .map(function (c) {
+          return (
+            ' <button type="button" class="chip chip--color" data-color-name="' + h(c.name) +
+            '" data-color-hex="' + h(c.hex) + '"><i style="background:' + h(c.hex) + '"></i>' +
+            h(c.name) + '</button>'
+          );
+        })
+        .join('') +
+      '</p>' +
+      '</div>' +
+
+      '<label class="check"><input type="checkbox" name="inStock"' +
+      (p.inStock === false ? '' : ' checked') + '> Disponible en boutique</label>' +
+      '<label class="check"><input type="checkbox" name="featured"' +
+      (p.featured ? ' checked' : '') + '> Mettre en avant sur l’accueil</label>' +
+
+      (product ? photosField(p) : '') +
+
+      '<div class="form__actions wide">' +
+      '<button type="submit" class="btn btn--primary">Enregistrer</button>' +
+      '<a class="btn btn--ghost" href="#/admin?onglet=produits&sous=' +
+      h(product ? product.subcategoryId : subId) + '">Annuler</a>' +
+      '</div>' +
+      '</form>' +
+      '</div>'
+    );
+  }
+
+  // Bloc de gestion des photos affiché dans le formulaire d'un article existant.
+  function photosField(p) {
+    const images = p.images || [];
+    return (
+      '<div class="field wide">' +
+      '<span class="field__label">Photos (' + images.length + ')</span>' +
+      (images.length
+        ? '<div class="admin-photos">' +
+          images
+            .map(function (src, i) {
+              return (
+                '<figure class="admin-photo"><img src="' + h(src) + '" alt="Photo ' + (i + 1) + '">' +
+                '<button type="button" class="btn btn--tiny btn--danger-ghost" ' +
+                'data-admin-photo-remove="' + i + '">Retirer</button></figure>'
+              );
+            })
+            .join('') +
+          '</div>'
+        : '<p class="muted">Aucune photo : un visuel est généré automatiquement à partir des couleurs.</p>') +
+      '<p class="field__hint">' +
+      '<label class="chip">+ Ajouter des photos' +
+      '<input type="file" id="admin-photo-file" accept="image/*" multiple hidden></label> ' +
+      '<a class="chip" href="#/produit/' + h(p.id) + '">Voir la fiche</a></p>' +
+      '</div>'
+    );
+  }
+
+  function colorRow(color) {
+    return (
+      '<div class="color-row">' +
+      '<input type="color" value="' + h(color.hex || '#1b1b1f') + '" data-color-hex>' +
+      '<input type="text" value="' + h(color.name || '') + '" placeholder="Nom de la couleur" data-color-name>' +
+      '<button type="button" class="btn btn--tiny btn--danger-ghost" data-color-remove>Retirer</button>' +
+      '</div>'
+    );
+  }
+
+  function bindProductForm(root, ctx, product, subId) {
+    const form = U.el('#product-form', root);
+    if (!form) return;
+
+    // Tailles : ajout rapide
+    const sizesInput = U.el('#sizes-input', form);
+    U.els('[data-size]', form).forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        const value = chip.getAttribute('data-size');
+        const list = U.parseList(sizesInput.value);
+        if (list.indexOf(value) === -1) list.push(value);
+        sizesInput.value = list.join(', ');
+      });
+    });
+    const allChip = U.el('[data-size-all]', form);
+    if (allChip) {
+      allChip.addEventListener('click', function () {
+        sizesInput.value = allChip.getAttribute('data-size-all');
+      });
+    }
+
+    // Couleurs
+    const rows = U.el('#colors-rows', form);
+    U.el('#color-add', form).addEventListener('click', function () {
+      rows.insertAdjacentHTML('beforeend', colorRow({ name: '', hex: '#1b1b1f' }));
+    });
+    U.els('[data-color-name][data-color-hex]', form).forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        rows.insertAdjacentHTML(
+          'beforeend',
+          colorRow({
+            name: chip.getAttribute('data-color-name'),
+            hex: chip.getAttribute('data-color-hex')
+          })
+        );
+      });
+    });
+    rows.addEventListener('click', function (event) {
+      const btn = event.target.closest('[data-color-remove]');
+      if (!btn) return;
+      const row = btn.closest('.color-row');
+      if (row) row.remove();
+    });
+
+    // Photos depuis le formulaire admin
+    const photoFile = U.el('#admin-photo-file', form);
+    if (photoFile && product) {
+      photoFile.addEventListener('change', function () {
+        const files = Array.prototype.slice.call(photoFile.files || []);
+        if (!files.length) return;
+        Promise.all(
+          files.map(function (f) {
+            return U.readImageFile(f, 1000);
+          })
+        )
+          .then(function (urls) {
+            urls.forEach(function (url) {
+              S.addProductImage(product.id, url);
+            });
+            U.toast(urls.length + ' photo(s) ajoutée(s).', 'success');
+            ctx.rerender();
+          })
+          .catch(function (err) {
+            U.toast(err.message || 'Image invalide.', 'error');
+          });
+      });
+    }
+
+    U.els('[data-admin-photo-remove]', form).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (!product) return;
+        S.removeProductImage(product.id, Number(btn.getAttribute('data-admin-photo-remove')));
+        U.toast('Photo retirée.', 'success');
+        ctx.rerender();
+      });
+    });
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const fd = new FormData(form);
+      const colors = U.els('.color-row', form)
+        .map(function (row) {
+          return {
+            name: String(U.el('[data-color-name]', row).value || '').trim(),
+            hex: U.el('[data-color-hex]', row).value
+          };
+        })
+        .filter(function (c) {
+          return c.name;
+        });
+
+      const payload = {
+        id: String(fd.get('id') || '') || null,
+        subcategoryId: String(fd.get('subcategoryId') || subId),
+        name: String(fd.get('name') || '').trim(),
+        brand: String(fd.get('brand') || '').trim(),
+        collection: String(fd.get('collection') || '').trim(),
+        price: Number(fd.get('price')) || 0,
+        oldPrice: fd.get('oldPrice') ? Number(fd.get('oldPrice')) : null,
+        reference: String(fd.get('reference') || '').trim(),
+        material: String(fd.get('material') || '').trim(),
+        cut: String(fd.get('cut') || '').trim(),
+        care: String(fd.get('care') || '').trim(),
+        description: String(fd.get('description') || '').trim(),
+        sizes: U.parseList(fd.get('sizes')),
+        colors: colors,
+        inStock: !!fd.get('inStock'),
+        featured: !!fd.get('featured')
+      };
+
+      const saved = S.saveProduct(payload);
+      if (!saved) {
+        U.toast('Sous-catégorie introuvable.', 'error');
+        return;
+      }
+      U.toast('Article enregistré.', 'success');
+      ctx.navigate('#/admin?onglet=produits&sous=' + saved.subcategoryId);
+    });
+  }
+
+  /* --------------------- Onglet : magasin et accès ------------------- */
+
+  function tabStore(params) {
+    const store = S.getStore();
+    const editPlan = params.plan ? findPlan(store, params.plan) : null;
+
+    const html =
+      '<div class="panel">' +
+      '<h2>Informations du magasin</h2>' +
+      '<form id="store-form" class="form form--grid">' +
+      '<label>Nom<input type="text" name="name" value="' + h(store.name) + '" required></label>' +
+      '<label>Accroche<input type="text" name="tagline" value="' + h(store.tagline) + '"></label>' +
+      '<label>Adresse<input type="text" name="address" value="' + h(store.address) + '"></label>' +
+      '<label>Code postal<input type="text" name="postalCode" value="' + h(store.postalCode) + '"></label>' +
+      '<label>Ville<input type="text" name="city" value="' + h(store.city) + '"></label>' +
+      '<label>Pays<input type="text" name="country" value="' + h(store.country) + '"></label>' +
+      '<label>Téléphone<input type="text" name="phone" value="' + h(store.phone) + '"></label>' +
+      '<label>E-mail<input type="email" name="email" value="' + h(store.email) + '"></label>' +
+      '<label>Latitude<input type="number" step="0.000001" name="lat" value="' + h(store.lat) + '"></label>' +
+      '<label>Longitude<input type="number" step="0.000001" name="lng" value="' + h(store.lng) + '"></label>' +
+      '<label class="wide">À propos<textarea name="about" rows="4">' + h(store.about) + '</textarea></label>' +
+      '<label class="wide">Marques en boutique<textarea name="brands" rows="3" ' +
+      'placeholder="Carhartt, Obey, Vans…">' + h((store.brands || []).join(', ')) +
+      '</textarea><span class="field__hint">Séparées par des virgules. Laisser vide pour masquer ' +
+      'la section.</span></label>' +
+      '<div class="field wide"><span class="field__label">Réseaux sociaux</span>' +
+      '<div id="social-rows">' +
+      ((store.social || []).length
+        ? store.social.map(socialRow).join('')
+        : socialRow({ label: '', url: '' })) +
+      '</div>' +
+      '<p class="field__hint"><button type="button" class="chip" id="social-add">' +
+      '+ Ajouter un réseau</button></p>' +
+      '</div>' +
+      '<div class="field wide"><span class="field__label">Horaires</span>' +
+      '<div class="hours-edit">' +
+      store.hours
+        .map(function (row, i) {
+          return (
+            '<div class="hours-edit__row">' +
+            '<input type="text" value="' + h(row.day) + '" data-hour-day="' + i + '">' +
+            '<input type="text" value="' + h(row.value) + '" data-hour-value="' + i + '">' +
+            '</div>'
+          );
+        })
+        .join('') +
+      '</div></div>' +
+      '<div class="form__actions wide"><button type="submit" class="btn btn--primary">Enregistrer</button></div>' +
+      '</form>' +
+      '</div>' +
+
+      '<div class="panel">' +
+      '<h2>' + (editPlan ? 'Modifier le plan d’accès' : 'Ajouter un plan d’accès') + '</h2>' +
+      '<form id="plan-form" class="form form--grid">' +
+      '<input type="hidden" name="id" value="' + h(editPlan ? editPlan.id : '') + '">' +
+      '<label class="small">Icône<input type="text" name="icon" maxlength="4" value="' +
+      h(editPlan ? editPlan.icon : '📍') + '"></label>' +
+      '<label>Titre<input type="text" name="title" required value="' +
+      h(editPlan ? editPlan.title : '') + '"></label>' +
+      '<label class="wide">Résumé<input type="text" name="summary" value="' +
+      h(editPlan ? editPlan.summary : '') + '"></label>' +
+      '<label class="wide">Étapes (une par ligne)<textarea name="steps" rows="4">' +
+      h(editPlan ? (editPlan.steps || []).join('\n') : '') + '</textarea></label>' +
+      '<div class="form__actions wide">' +
+      '<button type="submit" class="btn btn--primary">' + (editPlan ? 'Enregistrer' : 'Ajouter') + '</button>' +
+      (editPlan ? '<a class="btn btn--ghost" href="#/admin?onglet=magasin">Annuler</a>' : '') +
+      '</div>' +
+      '</form>' +
+      '</div>' +
+
+      '<div class="panel">' +
+      '<h2>Plans d’accès publiés</h2>' +
+      '<ul class="plan-list">' +
+      store.access
+        .map(function (plan) {
+          return (
+            '<li>' +
+            '<span class="plan-list__title">' + h(plan.icon) + ' ' + h(plan.title) + '</span>' +
+            '<span class="plan-list__summary">' + h(plan.summary) + '</span>' +
+            '<span class="plan-list__tools">' +
+            '<a class="btn btn--tiny btn--ghost" href="#/admin?onglet=magasin&plan=' + h(plan.id) + '">Modifier</a>' +
+            '<button type="button" class="btn btn--tiny btn--danger-ghost" data-del-plan="' + h(plan.id) +
+            '">Supprimer</button>' +
+            '</span>' +
+            '</li>'
+          );
+        })
+        .join('') +
+      (!store.access.length ? '<li class="muted">Aucun plan d’accès.</li>' : '') +
+      '</ul>' +
+      '<p><a class="btn btn--ghost btn--small" href="#/acces">Voir la page publique</a></p>' +
+      '</div>';
+
+    return {
+      html: html,
+      mount: function (root, ctx) {
+        const storeForm = U.el('#store-form', root);
+
+        const socialRows = U.el('#social-rows', storeForm);
+        U.el('#social-add', storeForm).addEventListener('click', function () {
+          socialRows.insertAdjacentHTML('beforeend', socialRow({ label: '', url: '' }));
+        });
+        socialRows.addEventListener('click', function (event) {
+          const btn = event.target.closest('[data-social-remove]');
+          if (!btn) return;
+          const row = btn.closest('.social-row');
+          if (row) row.remove();
+        });
+
+        storeForm.addEventListener('submit', function (event) {
+          event.preventDefault();
+          const fd = new FormData(storeForm);
+          const hours = S.getStore().hours.map(function (row, i) {
+            return {
+              day: U.el('[data-hour-day="' + i + '"]', storeForm).value,
+              value: U.el('[data-hour-value="' + i + '"]', storeForm).value
+            };
+          });
+          const social = U.els('.social-row', storeForm)
+            .map(function (row) {
+              return {
+                label: String(U.el('[data-social-label]', row).value || '').trim(),
+                url: String(U.el('[data-social-url]', row).value || '').trim()
+              };
+            })
+            .filter(function (s) {
+              return s.label && s.url;
+            });
+          S.updateStore({
+            name: String(fd.get('name') || '').trim(),
+            tagline: String(fd.get('tagline') || '').trim(),
+            address: String(fd.get('address') || '').trim(),
+            postalCode: String(fd.get('postalCode') || '').trim(),
+            city: String(fd.get('city') || '').trim(),
+            country: String(fd.get('country') || '').trim(),
+            phone: String(fd.get('phone') || '').trim(),
+            email: String(fd.get('email') || '').trim(),
+            lat: Number(fd.get('lat')) || 0,
+            lng: Number(fd.get('lng')) || 0,
+            about: String(fd.get('about') || '').trim(),
+            hours: hours,
+            brands: U.parseList(fd.get('brands')),
+            social: social
+          });
+          U.toast('Informations du magasin enregistrées.', 'success');
+          ctx.rerender();
+        });
+
+        const planForm = U.el('#plan-form', root);
+        planForm.addEventListener('submit', function (event) {
+          event.preventDefault();
+          const fd = new FormData(planForm);
+          S.saveAccessPlan({
+            id: String(fd.get('id') || '') || null,
+            icon: String(fd.get('icon') || '📍').trim(),
+            title: String(fd.get('title') || '').trim(),
+            summary: String(fd.get('summary') || '').trim(),
+            steps: String(fd.get('steps') || '')
+              .split('\n')
+              .map(function (s) {
+                return s.trim();
+              })
+              .filter(Boolean)
+          });
+          U.toast('Plan d’accès enregistré.', 'success');
+          ctx.navigate('#/admin?onglet=magasin');
+        });
+
+        U.els('[data-del-plan]', root).forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            if (!window.confirm('Supprimer ce plan d’accès ?')) return;
+            S.deleteAccessPlan(btn.getAttribute('data-del-plan'));
+            U.toast('Plan supprimé.', 'success');
+            ctx.rerender();
+          });
+        });
+      }
+    };
+  }
+
+  function socialRow(social) {
+    return (
+      '<div class="social-row">' +
+      '<input type="text" value="' + h(social.label || '') + '" placeholder="Instagram" data-social-label>' +
+      '<input type="url" value="' + h(social.url || '') + '" placeholder="https://…" data-social-url>' +
+      '<button type="button" class="btn btn--tiny btn--danger-ghost" data-social-remove>Retirer</button>' +
+      '</div>'
+    );
+  }
+
+  function findPlan(store, id) {
+    return (
+      store.access.filter(function (p) {
+        return p.id === id;
+      })[0] || null
+    );
+  }
+
+  /* ------------------------- Onglet : sécurité ----------------------- */
+
+  function tabSecurity() {
+    const info = S.adminInfo();
+    return {
+      html:
+        '<div class="panel panel--narrow">' +
+        '<h2>Changer le code administrateur</h2>' +
+        '<p class="muted">L’ancien code est toujours demandé. Il n’existe aucune récupération : ' +
+        'conservez le nouveau code en lieu sûr.</p>' +
+        changeCodeForm('Changer le code') +
+        '<ul class="checklist">' +
+        '<li>Dernière modification : ' +
+        (info.updatedAt ? h(U.formatDate(info.updatedAt)) : 'jamais') + '.</li>' +
+        '<li>Compte créé le ' + h(U.formatDate(info.createdAt)) + '.</li>' +
+        '<li>Le code est stocké haché (SHA-256 + sel aléatoire), jamais en clair.</li>' +
+        '</ul>' +
+        '<p class="warn"><b>À savoir :</b> cette application fonctionne entièrement dans le ' +
+        'navigateur. Le code protège l’accès à l’interface de gestion sur cet appareil ; il ne ' +
+        'remplace pas l’authentification d’un serveur.</p>' +
+        '</div>',
+      mount: function (root, ctx) {
+        bindChangeCode(root, ctx);
+      }
+    };
+  }
+
+  /* -------------------------- Onglet : données ----------------------- */
+
+  function tabData() {
+    const st = S.stats();
+    return {
+      html:
+        '<div class="panel">' +
+        '<h2>Exporter</h2>' +
+        '<p class="muted">Sauvegarde complète du catalogue, des avis et des informations du ' +
+        'magasin (' + st.products + ' articles).</p>' +
+        '<button type="button" class="btn btn--primary" id="data-export">Télécharger la sauvegarde JSON</button>' +
+        '</div>' +
+        '<div class="panel">' +
+        '<h2>Importer</h2>' +
+        '<p class="muted">Remplace l’intégralité des données actuelles par le contenu du fichier.</p>' +
+        '<label class="btn btn--ghost">Choisir un fichier JSON' +
+        '<input type="file" id="data-import" accept="application/json,.json" hidden></label>' +
+        '</div>' +
+        '<div class="panel">' +
+        '<h2>Réinitialiser</h2>' +
+        '<p class="muted">Restaure le catalogue de démonstration. Le code administrateur n’est ' +
+        'pas modifié.</p>' +
+        '<button type="button" class="btn btn--danger-ghost" id="data-reset">Réinitialiser le catalogue</button>' +
+        '<hr>' +
+        '<p class="muted">Réinitialisation totale : catalogue <em>et</em> code administrateur ' +
+        '(retour au code par défaut, à changer à la connexion suivante).</p>' +
+        '<button type="button" class="btn btn--danger-ghost" id="data-reset-all">Tout réinitialiser</button>' +
+        '</div>',
+      mount: function (root, ctx) {
+        U.el('#data-export', root).addEventListener('click', function () {
+          const blob = new Blob([S.exportData()], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'globo-loco-shop-' + new Date().toISOString().slice(0, 10) + '.json';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(function () {
+            URL.revokeObjectURL(url);
+          }, 1000);
+        });
+
+        U.el('#data-import', root).addEventListener('change', function (event) {
+          const file = event.target.files && event.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = function () {
+            const result = S.importData(String(reader.result));
+            if (!result.ok) {
+              U.toast(result.error, 'error');
+              return;
+            }
+            U.toast('Données importées.', 'success');
+            ctx.rerender();
+          };
+          reader.readAsText(file);
+        });
+
+        U.el('#data-reset', root).addEventListener('click', function () {
+          if (!window.confirm('Restaurer le catalogue de démonstration ? Vos modifications seront perdues.'))
+            return;
+          S.resetCatalog();
+          U.toast('Catalogue réinitialisé.', 'success');
+          ctx.rerender();
+        });
+
+        U.el('#data-reset-all', root).addEventListener('click', function () {
+          if (
+            !window.confirm(
+              'Tout réinitialiser ?\nLe catalogue ET le code administrateur reviendront à leur ' +
+                'état d’origine. Cette action est irréversible.'
+            )
+          )
+            return;
+          S.resetAll();
+          window.location.hash = '#/';
+          window.location.reload();
+        });
+      }
+    };
+  }
+
+  return { view: view };
+})(GLS_UTILS, GLS_STORE, GLS_DATA);
+
+    </script>
+    <script>
+/* =========================================================================
+   Globo Loco Shop — Routeur et coquille de l'application
+   ========================================================================= */
+
+(function (U, S, V, A) {
+  'use strict';
+
+  const root = U.el('#view');
+  const header = U.el('#site-header');
+
+  // Repère affiché en pied de page : permet de vérifier d'un coup d'œil quelle
+  // version du site on est en train de consulter.
+  const APP_REVISION = 'révision 3 — 5 septembre 2026';
+
+  /* ----------------------------- Routage ----------------------------- */
+
+  function parseHash() {
+    const raw = window.location.hash.replace(/^#/, '') || '/';
+    const parts = raw.split('?');
+    const path = parts[0].replace(/^\/+|\/+$/g, '');
+    const params = {};
+    if (parts[1]) {
+      parts[1].split('&').forEach(function (pair) {
+        if (!pair) return;
+        const kv = pair.split('=');
+        params[decodeURIComponent(kv[0])] = decodeURIComponent((kv[1] || '').replace(/\+/g, ' '));
+      });
+    }
+    return { segments: path ? path.split('/') : [], params: params };
+  }
+
+  function resolve(route) {
+    const seg = route.segments;
+    const p = route.params;
+
+    if (!seg.length) return V.home();
+    switch (seg[0]) {
+      case 'categories':
+        return V.categories();
+      case 'categorie':
+        return seg[1] ? V.category(seg[1]) : V.categories();
+      case 'sous-categorie':
+        return seg[1] ? V.subcategory(seg[1], p) : V.categories();
+      case 'produit':
+        return seg[1] ? V.product(seg[1]) : V.notFound();
+      case 'recherche':
+        return V.search(p);
+      case 'acces':
+        return V.access();
+      case 'magasin':
+        return V.storeInfo();
+      case 'admin':
+        return A.view(p);
+      default:
+        return V.notFound();
+    }
+  }
+
+  const ctx = {
+    navigate: function (hash) {
+      if (window.location.hash === hash) {
+        render();
+      } else {
+        window.location.hash = hash;
+      }
+    },
+    rerender: function (anchor) {
+      render(anchor);
+    }
+  };
+
+  let lastScroll = 0;
+
+  function render(anchor) {
+    const route = parseHash();
+    const keepScroll = !!anchor;
+    if (keepScroll) lastScroll = window.scrollY;
+
+    let view;
+    try {
+      view = resolve(route);
+    } catch (err) {
+      view = V.notFound('Une erreur est survenue : ' + err.message);
+    }
+
+    root.innerHTML = view.html;
+    const shopName = S.getStore().name;
+    document.title =
+      view.title && view.title !== shopName ? view.title + ' — ' + shopName : shopName;
+
+    if (view.mount) view.mount(root, ctx);
+    renderChrome(route);
+
+    if (anchor) {
+      const target = U.el(anchor, root);
+      if (target) {
+        target.scrollIntoView({ block: 'start' });
+      } else {
+        window.scrollTo(0, lastScroll);
+      }
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  /* ---------------------- En-tête, menus, pied ----------------------- */
+
+  function renderChrome(route) {
+    const store = S.getStore();
+    const cats = S.getCategories();
+    const admin = S.isLoggedIn();
+    const current = route.segments[0] || '';
+
+    // L'en-tête est reconstruit à chaque rendu : on mémorise la saisie et le
+    // focus de la recherche pour ne pas les perdre en cours de frappe.
+    const previousSearch = U.el('#search-form input', header);
+    const searchValue = route.params.q || (previousSearch ? previousSearch.value : '');
+    const searchFocused = !!previousSearch && document.activeElement === previousSearch;
+    const searchCaret = searchFocused ? previousSearch.selectionStart : null;
+
+    header.innerHTML =
+      '<div class="header__bar">' +
+      '<button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>' +
+      '<a class="brand" href="#/">' +
+      '<span class="brand__mark" aria-hidden="true">GL</span>' +
+      '<span class="brand__text"><b>' + U.escapeHtml(store.name) + '</b>' +
+      '<em>' + U.escapeHtml(store.address) + ' · ' + U.escapeHtml(store.city) + '</em></span>' +
+      '</a>' +
+      '<form class="search" id="search-form" role="search">' +
+      '<input type="search" name="q" placeholder="Rechercher un article, une marque…" ' +
+      'value="' + U.escapeHtml(searchValue) + '" aria-label="Rechercher">' +
+      '<button type="submit" aria-label="Lancer la recherche">⌕</button>' +
+      '</form>' +
+      '<nav class="header__links">' +
+      link('#/categories', 'Catalogue', current === 'categories' || current === 'categorie' || current === 'sous-categorie') +
+      link('#/acces', 'Plans d’accès', current === 'acces') +
+      link('#/magasin', 'La boutique', current === 'magasin') +
+      '<a class="header__admin' + (current === 'admin' ? ' is-active' : '') + '" href="#/admin">' +
+      (admin ? '● Administration' : 'Administration') + '</a>' +
+      '</nav>' +
+      '</div>' +
+      // Chaque rayon est replié : on le déplie pour voir ses sous-catégories.
+      '<nav class="megamenu" id="megamenu" hidden>' +
+      '<div class="megamenu__inner">' +
+      cats
+        .map(function (cat) {
+          const subs = S.getSubcategories(cat.id);
+          return (
+            '<details class="megamenu__group">' +
+            '<summary>' +
+            '<span class="megamenu__emoji" aria-hidden="true">' + U.escapeHtml(cat.emoji) + '</span>' +
+            '<span class="megamenu__name">' + U.escapeHtml(cat.name) + '</span>' +
+            '<span class="megamenu__count">' + subs.length + ' sous-catégories</span>' +
+            '<span class="megamenu__chevron" aria-hidden="true">▾</span>' +
+            '</summary>' +
+            '<ul>' +
+            subs
+              .map(function (sub) {
+                return (
+                  '<li><a href="#/sous-categorie/' + sub.id + '">' + U.escapeHtml(sub.name) + '</a></li>'
+                );
+              })
+              .join('') +
+            '<li class="megamenu__all"><a href="#/categorie/' + cat.id + '">Voir tout le rayon →</a></li>' +
+            '</ul>' +
+            '</details>'
+          );
+        })
+        .join('') +
+      '</div>' +
+      '</nav>';
+
+    const searchForm = U.el('#search-form', header);
+    if (searchFocused) {
+      const input = U.el('input', searchForm);
+      input.focus();
+      const caret = searchCaret === null ? input.value.length : searchCaret;
+      try {
+        input.setSelectionRange(caret, caret);
+      } catch (err) {
+        /* certains navigateurs refusent setSelectionRange sur type=search */
+      }
+    }
+    searchForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const value = String(new FormData(searchForm).get('q') || '').trim();
+      ctx.navigate(value ? '#/recherche?q=' + encodeURIComponent(value) : '#/categories');
+      closeMenu();
+    });
+
+    const burger = U.el('#burger', header);
+    burger.addEventListener('click', function () {
+      const menu = U.el('#megamenu', header);
+      const open = menu.hidden;
+      menu.hidden = !open;
+      burger.setAttribute('aria-expanded', String(open));
+      burger.textContent = open ? '✕' : '☰';
+    });
+
+    U.el('#megamenu', header).addEventListener('click', function (event) {
+      if (event.target.closest('a')) closeMenu();
+    });
+
+    // Un seul rayon déplié à la fois.
+    const groups = U.els('.megamenu__group', header);
+    groups.forEach(function (group) {
+      group.addEventListener('toggle', function () {
+        if (!group.open) return;
+        groups.forEach(function (other) {
+          if (other !== group) other.open = false;
+        });
+      });
+    });
+
+    renderFooter();
+  }
+
+  function closeMenu() {
+    const menu = U.el('#megamenu', header);
+    const burger = U.el('#burger', header);
+    if (menu) {
+      menu.hidden = true;
+      // On referme les rayons pour rouvrir le menu dans son état replié.
+      U.els('.megamenu__group', menu).forEach(function (group) {
+        group.open = false;
+      });
+    }
+    if (burger) {
+      burger.setAttribute('aria-expanded', 'false');
+      burger.textContent = '☰';
+    }
+  }
+
+  function link(href, label, active) {
+    return (
+      '<a href="' + href + '"' + (active ? ' class="is-active"' : '') + '>' + U.escapeHtml(label) + '</a>'
+    );
+  }
+
+  function renderFooter() {
+    const store = S.getStore();
+    const footer = U.el('#site-footer');
+    footer.innerHTML =
+      '<div class="footer__inner">' +
+      '<div>' +
+      '<h2>' + U.escapeHtml(store.name) + '</h2>' +
+      '<p>' + U.escapeHtml(store.address) + '<br>' +
+      U.escapeHtml(store.postalCode) + ' ' + U.escapeHtml(store.city) +
+      (store.phone ? '<br>' + U.escapeHtml(store.phone) : '') + '</p>' +
+      ((store.social || []).length
+        ? '<p class="footer__social">' +
+          store.social
+            .map(function (s) {
+              return (
+                '<a href="' + U.escapeHtml(s.url) + '" target="_blank" rel="noopener">' +
+                U.escapeHtml(s.label) + ' ↗</a>'
+              );
+            })
+            .join('') +
+          '</p>'
+        : '') +
+      '</div>' +
+      '<div>' +
+      '<h2>Rayons</h2>' +
+      '<ul>' +
+      S.getCategories()
+        .map(function (cat) {
+          return '<li><a href="#/categorie/' + cat.id + '">' + U.escapeHtml(cat.name) + '</a></li>';
+        })
+        .join('') +
+      '</ul>' +
+      '</div>' +
+      '<div>' +
+      '<h2>Infos</h2>' +
+      '<ul>' +
+      '<li><a href="#/acces">Plans d’accès</a></li>' +
+      '<li><a href="#/magasin">Horaires et contact</a></li>' +
+      '<li><a href="#/admin">Espace administrateur</a></li>' +
+      '</ul>' +
+      '</div>' +
+      '<div>' +
+      '<h2>Horaires</h2>' +
+      '<ul class="hours hours--compact">' +
+      store.hours
+        .map(function (row) {
+          return '<li><span>' + U.escapeHtml(row.day) + '</span><b>' + U.escapeHtml(row.value) + '</b></li>';
+        })
+        .join('') +
+      '</ul>' +
+      '</div>' +
+      '</div>' +
+      '<p class="footer__credit">Vous aussi, offrez un site à votre commerce. Ce site a été ' +
+      'conçu sur mesure : pour contacter le créateur du site, il suffit d’envoyer un mail à ' +
+      '<a href="mailto:Sanctimaps@gmail.com">Sanctimaps@gmail.com</a>.</p>' +
+      '<p class="footer__legal">© ' + new Date().getFullYear() + ' ' + U.escapeHtml(store.name) +
+      ' — Application de démonstration. Les données sont enregistrées localement dans ce navigateur.' +
+      ' <span class="footer__rev">' + U.escapeHtml(APP_REVISION) + '</span></p>';
+  }
+
+  /* ---------------------------- Démarrage ---------------------------- */
+
+  window.addEventListener('hashchange', function () {
+    closeMenu();
+    render();
+  });
+
+  S.init().then(function () {
+    render();
+  });
+})(GLS_UTILS, GLS_STORE, GLS_VIEWS, GLS_ADMIN);
+
+    </script>
+  </body>
+</html>

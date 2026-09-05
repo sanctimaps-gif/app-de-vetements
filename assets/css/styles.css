@@ -1123,6 +1123,14 @@ h1, h2, h3 { font-family: var(--serif); line-height: 1.2; margin: 0 0 0.4em; }
   font-size: 0.76rem;
   color: #8d8679;
 }
+.footer__rev {
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 0.05rem 0.55rem;
+  margin-left: 0.4rem;
+  color: #b8b1a3;
+}
 
 /* ------------------------------ Toast -------------------------------- */
 
