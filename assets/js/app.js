@@ -8,6 +8,10 @@
   const root = U.el('#view');
   const header = U.el('#site-header');
 
+  // Repère affiché en pied de page : permet de vérifier d'un coup d'œil quelle
+  // version du site on est en train de consulter.
+  const APP_REVISION = 'révision 3 — 5 septembre 2026';
+
   /* ----------------------------- Routage ----------------------------- */
 
   function parseHash() {
@@ -289,7 +293,8 @@
       'conçu sur mesure : pour contacter le créateur du site, il suffit d’envoyer un mail à ' +
       '<a href="mailto:Sanctimaps@gmail.com">Sanctimaps@gmail.com</a>.</p>' +
       '<p class="footer__legal">© ' + new Date().getFullYear() + ' ' + U.escapeHtml(store.name) +
-      ' — Application de démonstration. Les données sont enregistrées localement dans ce navigateur.</p>';
+      ' — Application de démonstration. Les données sont enregistrées localement dans ce navigateur.' +
+      ' <span class="footer__rev">' + U.escapeHtml(APP_REVISION) + '</span></p>';
   }
 
   /* ---------------------------- Démarrage ---------------------------- */
