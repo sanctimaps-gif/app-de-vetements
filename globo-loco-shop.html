@@ -65,6 +65,23 @@ h1, h2, h3 { font-family: var(--serif); line-height: 1.2; margin: 0 0 0.4em; }
 }
 .skip-link:focus { left: 1rem; top: 1rem; }
 
+/* --------------------------- Bandeau maquette ------------------------ */
+
+/* Mise au point affichée en haut de page : le site reprend l'identité réelle
+   d'une boutique, il doit être identifiable comme une maquette. */
+.demo-banner {
+  margin: 0;
+  padding: 0.6rem 1.25rem;
+  background: var(--ink);
+  color: #d5cfc3;
+  border-bottom: 2px solid var(--accent);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  text-align: center;
+}
+.demo-banner b { color: #fff; font-weight: 600; }
+.demo-banner a { color: #fff; text-decoration: underline; white-space: nowrap; }
+
 /* ------------------------------ En-tête ------------------------------ */
 
 .header {
@@ -1197,6 +1214,12 @@ h1, h2, h3 { font-family: var(--serif); line-height: 1.2; margin: 0 0 0.4em; }
   </head>
   <body>
     <a class="skip-link" href="#view">Aller au contenu</a>
+
+    <p class="demo-banner">
+      <b>Maquette de démonstration</b> — ce site n’est pas le site officiel de Globo Loco Shop.
+      Catalogue, prix et visuels sont fictifs. Un site sur mesure pour votre commerce&nbsp;?
+      <a href="mailto:Sanctimaps@gmail.com">Sanctimaps@gmail.com</a>
+    </p>
 
     <header class="header" id="site-header"></header>
 
