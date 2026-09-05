@@ -65,23 +65,6 @@ h1, h2, h3 { font-family: var(--serif); line-height: 1.2; margin: 0 0 0.4em; }
 }
 .skip-link:focus { left: 1rem; top: 1rem; }
 
-/* --------------------------- Bandeau maquette ------------------------ */
-
-/* Mise au point affichée en haut de page : le site reprend l'identité réelle
-   d'une boutique, il doit être identifiable comme une maquette. */
-.demo-banner {
-  margin: 0;
-  padding: 0.6rem 1.25rem;
-  background: var(--ink);
-  color: #d5cfc3;
-  border-bottom: 2px solid var(--accent);
-  font-size: 0.82rem;
-  line-height: 1.45;
-  text-align: center;
-}
-.demo-banner b { color: #fff; font-weight: 600; }
-.demo-banner a { color: #fff; text-decoration: underline; white-space: nowrap; }
-
 /* ------------------------------ En-tête ------------------------------ */
 
 .header {
@@ -132,6 +115,18 @@ h1, h2, h3 { font-family: var(--serif); line-height: 1.2; margin: 0 0 0.4em; }
   font-weight: 700;
   letter-spacing: 0.5px;
 }
+.brand__logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  flex: none;
+}
+.brand__logo img { width: 100%; height: 100%; object-fit: contain; }
 .brand__text { display: flex; flex-direction: column; line-height: 1.15; }
 .brand__text b { font-family: var(--serif); font-size: 1.12rem; }
 .brand__text em { font-style: normal; font-size: 0.74rem; color: var(--ink-mute); }
@@ -1035,6 +1030,24 @@ h1, h2, h3 { font-family: var(--serif); line-height: 1.2; margin: 0 0 0.4em; }
 .hours-edit__row { display: flex; gap: 0.5rem; }
 .hours-edit__row input { flex: 1; }
 
+.logo-edit { display: flex; gap: 1.1rem; align-items: flex-start; flex-wrap: wrap; }
+.logo-edit__preview {
+  width: 96px;
+  height: 96px;
+  flex: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.logo-edit__preview img { width: 100%; height: 100%; object-fit: contain; }
+.logo-edit__tools { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; flex: 1 1 260px; }
+.logo-edit__initials { flex: 0 0 150px; }
+.logo-edit__initials input { text-transform: uppercase; }
+.logo-edit .field__hint { flex-basis: 100%; margin: 0; }
+
 .social-row { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.4rem; }
 .social-row input[type="text"] { flex: 0 0 150px; }
 .social-row input[type="url"] { flex: 1; }
@@ -1215,12 +1228,6 @@ h1, h2, h3 { font-family: var(--serif); line-height: 1.2; margin: 0 0 0.4em; }
   <body>
     <a class="skip-link" href="#view">Aller au contenu</a>
 
-    <p class="demo-banner">
-      <b>Maquette de démonstration</b> — ce site n’est pas le site officiel de Globo Loco Shop.
-      Catalogue, prix et visuels sont fictifs. Un site sur mesure pour votre commerce&nbsp;?
-      <a href="mailto:Sanctimaps@gmail.com">Sanctimaps@gmail.com</a>
-    </p>
-
     <header class="header" id="site-header"></header>
 
     <main class="main" id="view" tabindex="-1"></main>
@@ -1256,6 +1263,10 @@ const GLS_DATA = (function () {
   const STORE = {
     name: 'Globo Loco Shop',
     tagline: 'Streetwear et prêt-à-porter depuis 1996',
+    // Logo de la boutique. Vide = le monogramme ci-dessous est affiché à la
+    // place. Les deux sont modifiables depuis l'espace administrateur.
+    logo: '',
+    logoInitials: 'GL',
     address: '59 rue Jeanne d’Arc',
     postalCode: '76000',
     city: 'Rouen',
@@ -1876,7 +1887,7 @@ const GLS_DATA = (function () {
   function defaultData() {
     const catalog = buildCatalog();
     return {
-      version: 2,
+      version: 3,
       store: JSON.parse(JSON.stringify(STORE)),
       categories: catalog.categories,
       products: catalog.products,
@@ -2099,6 +2110,52 @@ const GLS_UTILS = (function () {
     });
   }
 
+  // Lecture d'un logo. Contrairement aux photos produit, on préserve la
+  // transparence (sortie PNG, sans fond blanc) et on laisse les SVG intacts.
+  function readLogoFile(file, maxSize) {
+    const limit = maxSize || 400;
+    return new Promise(function (resolve, reject) {
+      if (!file || !/^image\//.test(file.type)) {
+        reject(new Error('Le fichier sélectionné n’est pas une image.'));
+        return;
+      }
+      const reader = new FileReader();
+      reader.onerror = function () {
+        reject(new Error('Impossible de lire le fichier.'));
+      };
+      reader.onload = function () {
+        const source = String(reader.result);
+        // Un SVG est déjà léger et se redimensionne sans perte : on le garde.
+        if (file.type === 'image/svg+xml') {
+          resolve(source);
+          return;
+        }
+        const img = new Image();
+        img.onerror = function () {
+          reject(new Error('Image illisible.'));
+        };
+        img.onload = function () {
+          let w = img.naturalWidth;
+          let h = img.naturalHeight;
+          const ratio = Math.min(1, limit / Math.max(w, h));
+          w = Math.max(1, Math.round(w * ratio));
+          h = Math.max(1, Math.round(h * ratio));
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL('image/png'));
+          } catch (err) {
+            resolve(source);
+          }
+        };
+        img.src = source;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
   /* ------------------------------ Hash ------------------------------- */
 
   // Hachage du code administrateur. SHA-256 via Web Crypto quand disponible,
@@ -2190,6 +2247,7 @@ const GLS_UTILS = (function () {
     productImages: productImages,
     productCover: productCover,
     readImageFile: readImageFile,
+    readLogoFile: readLogoFile,
     hashSecret: hashSecret,
     randomSalt: randomSalt,
     toast: toast
@@ -2327,8 +2385,17 @@ const GLS_STORE = (function (U, D) {
   }
 
   function migrate() {
-    if ((data.version || 1) >= 2) return false;
+    const from = data.version || 1;
+    if (from >= 3) return false;
     const fresh = D.defaultData().store;
+
+    if (from < 3) {
+      // Le logo devient modifiable : on installe les champs correspondants.
+      if (data.store.logo === undefined) data.store.logo = fresh.logo;
+      if (data.store.logoInitials === undefined) data.store.logoInitials = fresh.logoInitials;
+      data.version = 3;
+    }
+    if (from >= 2) return true;
 
     // La fiche « Accessibilité » a été retirée des plans d'accès.
     data.store.access = (data.store.access || []).filter(function (plan) {
@@ -2347,7 +2414,7 @@ const GLS_STORE = (function (U, D) {
       data.store.about = fresh.about;
     }
 
-    data.version = 2;
+    data.version = 3;
     return true;
   }
 
@@ -2879,6 +2946,8 @@ const GLS_STORE = (function (U, D) {
     if (!parsed.store.access) parsed.store.access = [];
     if (!parsed.store.brands) parsed.store.brands = [];
     if (!parsed.store.social) parsed.store.social = [];
+    if (parsed.store.logo === undefined) parsed.store.logo = '';
+    if (parsed.store.logoInitials === undefined) parsed.store.logoInitials = 'GL';
     data = parsed;
     persist();
     return { ok: true };
@@ -4706,6 +4775,7 @@ const GLS_ADMIN = (function (U, S, D) {
       '<div class="panel">' +
       '<h2>Informations du magasin</h2>' +
       '<form id="store-form" class="form form--grid">' +
+      logoField(store) +
       '<label>Nom<input type="text" name="name" value="' + h(store.name) + '" required></label>' +
       '<label>Accroche<input type="text" name="tagline" value="' + h(store.tagline) + '"></label>' +
       '<label>Adresse<input type="text" name="address" value="' + h(store.address) + '"></label>' +
@@ -4794,6 +4864,31 @@ const GLS_ADMIN = (function (U, S, D) {
       mount: function (root, ctx) {
         const storeForm = U.el('#store-form', root);
 
+        // Logo : import d'un fichier, puis retrait éventuel.
+        U.el('#logo-file', storeForm).addEventListener('change', function (event) {
+          const file = event.target.files && event.target.files[0];
+          if (!file) return;
+          U.readLogoFile(file, 400)
+            .then(function (dataUrl) {
+              S.updateStore({ logo: dataUrl });
+              U.toast('Logo mis à jour.', 'success');
+              ctx.rerender();
+            })
+            .catch(function (err) {
+              U.toast(err.message || 'Image invalide.', 'error');
+            });
+        });
+
+        const logoRemove = U.el('#logo-remove', storeForm);
+        if (logoRemove) {
+          logoRemove.addEventListener('click', function () {
+            if (!window.confirm('Retirer le logo ? Le monogramme sera réaffiché.')) return;
+            S.updateStore({ logo: '' });
+            U.toast('Logo retiré.', 'success');
+            ctx.rerender();
+          });
+        }
+
         const socialRows = U.el('#social-rows', storeForm);
         U.el('#social-add', storeForm).addEventListener('click', function () {
           socialRows.insertAdjacentHTML('beforeend', socialRow({ label: '', url: '' }));
@@ -4836,6 +4931,7 @@ const GLS_ADMIN = (function (U, S, D) {
             lat: Number(fd.get('lat')) || 0,
             lng: Number(fd.get('lng')) || 0,
             about: String(fd.get('about') || '').trim(),
+            logoInitials: String(fd.get('logoInitials') || '').trim().toUpperCase(),
             hours: hours,
             brands: U.parseList(fd.get('brands')),
             social: social
@@ -4874,6 +4970,37 @@ const GLS_ADMIN = (function (U, S, D) {
         });
       }
     };
+  }
+
+  // Bloc « Logo » : aperçu, import d'une image, et monogramme de repli.
+  function logoField(store) {
+    const initials = store.logoInitials || 'GL';
+    return (
+      '<div class="field wide logo-field">' +
+      '<span class="field__label">Logo de la boutique</span>' +
+      '<div class="logo-edit">' +
+      '<div class="logo-edit__preview">' +
+      (store.logo
+        ? '<img src="' + h(store.logo) + '" alt="Logo actuel">'
+        : '<span class="brand__mark">' + h(initials) + '</span>') +
+      '</div>' +
+      '<div class="logo-edit__tools">' +
+      '<label class="btn btn--small btn--ghost">' +
+      (store.logo ? 'Remplacer le logo' : 'Importer un logo') +
+      '<input type="file" id="logo-file" accept="image/*" hidden></label>' +
+      (store.logo
+        ? '<button type="button" class="btn btn--small btn--danger-ghost" id="logo-remove">' +
+          'Retirer le logo</button>'
+        : '') +
+      '<label class="logo-edit__initials">Monogramme de repli' +
+      '<input type="text" name="logoInitials" maxlength="3" value="' + h(initials) + '"></label>' +
+      '<p class="field__hint">PNG, JPEG ou SVG. La transparence est conservée et l’image est ' +
+      'réduite à 400 px. Sans logo, le monogramme est affiché. Le logo sert aussi d’icône ' +
+      'd’onglet du navigateur.</p>' +
+      '</div>' +
+      '</div>' +
+      '</div>'
+    );
   }
 
   function socialRow(social) {
@@ -4941,7 +5068,7 @@ const GLS_ADMIN = (function (U, S, D) {
         '</div>' +
         '<div class="panel">' +
         '<h2>Réinitialiser</h2>' +
-        '<p class="muted">Restaure le catalogue de démonstration. Le code administrateur n’est ' +
+        '<p class="muted">Restaure le catalogue d’origine. Le code administrateur n’est ' +
         'pas modifié.</p>' +
         '<button type="button" class="btn btn--danger-ghost" id="data-reset">Réinitialiser le catalogue</button>' +
         '<hr>' +
@@ -4981,7 +5108,7 @@ const GLS_ADMIN = (function (U, S, D) {
         });
 
         U.el('#data-reset', root).addEventListener('click', function () {
-          if (!window.confirm('Restaurer le catalogue de démonstration ? Vos modifications seront perdues.'))
+          if (!window.confirm('Restaurer le catalogue d’origine ? Vos modifications seront perdues.'))
             return;
           S.resetCatalog();
           U.toast('Catalogue réinitialisé.', 'success');
@@ -5021,7 +5148,7 @@ const GLS_ADMIN = (function (U, S, D) {
 
   // Repère affiché en pied de page : permet de vérifier d'un coup d'œil quelle
   // version du site on est en train de consulter.
-  const APP_REVISION = 'révision 3 — 5 septembre 2026';
+  const APP_REVISION = 'révision 4 — 5 septembre 2026';
 
   /* ----------------------------- Routage ----------------------------- */
 
@@ -5133,7 +5260,7 @@ const GLS_ADMIN = (function (U, S, D) {
       '<div class="header__bar">' +
       '<button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>' +
       '<a class="brand" href="#/">' +
-      '<span class="brand__mark" aria-hidden="true">GL</span>' +
+      brandMark(store) +
       '<span class="brand__text"><b>' + U.escapeHtml(store.name) + '</b>' +
       '<em>' + U.escapeHtml(store.address) + ' · ' + U.escapeHtml(store.city) + '</em></span>' +
       '</a>' +
@@ -5223,7 +5350,58 @@ const GLS_ADMIN = (function (U, S, D) {
       });
     });
 
+    applyFavicon(store);
     renderFooter();
+  }
+
+  // Logo de la boutique : image importée si elle existe, monogramme sinon.
+  function brandMark(store) {
+    if (store.logo) {
+      return (
+        '<span class="brand__logo"><img src="' + U.escapeHtml(store.logo) + '" alt="' +
+        U.escapeHtml(store.name) + '"></span>'
+      );
+    }
+    return (
+      '<span class="brand__mark" aria-hidden="true">' +
+      U.escapeHtml(store.logoInitials || initialsFrom(store.name)) +
+      '</span>'
+    );
+  }
+
+  function initialsFrom(name) {
+    return String(name || '')
+      .split(/\s+/)
+      .slice(0, 2)
+      .map(function (word) {
+        return word.charAt(0).toUpperCase();
+      })
+      .join('');
+  }
+
+  // L'icône d'onglet suit le logo choisi par la boutique.
+  function applyFavicon(store) {
+    let icon = U.el('link[rel="icon"]');
+    if (!icon) {
+      icon = document.createElement('link');
+      icon.rel = 'icon';
+      document.head.appendChild(icon);
+    }
+    if (store.logo) {
+      icon.href = store.logo;
+      return;
+    }
+    const initials = store.logoInitials || initialsFrom(store.name);
+    icon.href =
+      'data:image/svg+xml,' +
+      encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">' +
+          '<rect width="64" height="64" rx="14" fill="#b8342f"/>' +
+          '<text x="32" y="43" font-family="Georgia,serif" font-size="30" font-weight="700" ' +
+          'text-anchor="middle" fill="#fff">' +
+          U.escapeHtml(initials) +
+          '</text></svg>'
+      );
   }
 
   function closeMenu() {
@@ -5304,7 +5482,8 @@ const GLS_ADMIN = (function (U, S, D) {
       'conçu sur mesure : pour contacter le créateur du site, il suffit d’envoyer un mail à ' +
       '<a href="mailto:Sanctimaps@gmail.com">Sanctimaps@gmail.com</a>.</p>' +
       '<p class="footer__legal">© ' + new Date().getFullYear() + ' ' + U.escapeHtml(store.name) +
-      ' — Application de démonstration. Les données sont enregistrées localement dans ce navigateur.' +
+      ' — ' + U.escapeHtml(store.address) + ', ' + U.escapeHtml(store.postalCode) + ' ' +
+      U.escapeHtml(store.city) + '. Tous droits réservés.' +
       ' <span class="footer__rev">' + U.escapeHtml(APP_REVISION) + '</span></p>';
   }
 

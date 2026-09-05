@@ -127,8 +127,17 @@ const GLS_STORE = (function (U, D) {
   }
 
   function migrate() {
-    if ((data.version || 1) >= 2) return false;
+    const from = data.version || 1;
+    if (from >= 3) return false;
     const fresh = D.defaultData().store;
+
+    if (from < 3) {
+      // Le logo devient modifiable : on installe les champs correspondants.
+      if (data.store.logo === undefined) data.store.logo = fresh.logo;
+      if (data.store.logoInitials === undefined) data.store.logoInitials = fresh.logoInitials;
+      data.version = 3;
+    }
+    if (from >= 2) return true;
 
     // La fiche « Accessibilité » a été retirée des plans d'accès.
     data.store.access = (data.store.access || []).filter(function (plan) {
@@ -147,7 +156,7 @@ const GLS_STORE = (function (U, D) {
       data.store.about = fresh.about;
     }
 
-    data.version = 2;
+    data.version = 3;
     return true;
   }
 
@@ -679,6 +688,8 @@ const GLS_STORE = (function (U, D) {
     if (!parsed.store.access) parsed.store.access = [];
     if (!parsed.store.brands) parsed.store.brands = [];
     if (!parsed.store.social) parsed.store.social = [];
+    if (parsed.store.logo === undefined) parsed.store.logo = '';
+    if (parsed.store.logoInitials === undefined) parsed.store.logoInitials = 'GL';
     data = parsed;
     persist();
     return { ok: true };

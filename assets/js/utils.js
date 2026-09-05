@@ -202,6 +202,52 @@ const GLS_UTILS = (function () {
     });
   }
 
+  // Lecture d'un logo. Contrairement aux photos produit, on préserve la
+  // transparence (sortie PNG, sans fond blanc) et on laisse les SVG intacts.
+  function readLogoFile(file, maxSize) {
+    const limit = maxSize || 400;
+    return new Promise(function (resolve, reject) {
+      if (!file || !/^image\//.test(file.type)) {
+        reject(new Error('Le fichier sélectionné n’est pas une image.'));
+        return;
+      }
+      const reader = new FileReader();
+      reader.onerror = function () {
+        reject(new Error('Impossible de lire le fichier.'));
+      };
+      reader.onload = function () {
+        const source = String(reader.result);
+        // Un SVG est déjà léger et se redimensionne sans perte : on le garde.
+        if (file.type === 'image/svg+xml') {
+          resolve(source);
+          return;
+        }
+        const img = new Image();
+        img.onerror = function () {
+          reject(new Error('Image illisible.'));
+        };
+        img.onload = function () {
+          let w = img.naturalWidth;
+          let h = img.naturalHeight;
+          const ratio = Math.min(1, limit / Math.max(w, h));
+          w = Math.max(1, Math.round(w * ratio));
+          h = Math.max(1, Math.round(h * ratio));
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL('image/png'));
+          } catch (err) {
+            resolve(source);
+          }
+        };
+        img.src = source;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
   /* ------------------------------ Hash ------------------------------- */
 
   // Hachage du code administrateur. SHA-256 via Web Crypto quand disponible,
@@ -293,6 +339,7 @@ const GLS_UTILS = (function () {
     productImages: productImages,
     productCover: productCover,
     readImageFile: readImageFile,
+    readLogoFile: readLogoFile,
     hashSecret: hashSecret,
     randomSalt: randomSalt,
     toast: toast
