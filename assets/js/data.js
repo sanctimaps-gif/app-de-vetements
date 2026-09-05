@@ -18,6 +18,10 @@ const GLS_DATA = (function () {
   const STORE = {
     name: 'Globo Loco Shop',
     tagline: 'Streetwear et prêt-à-porter depuis 1996',
+    // Logo de la boutique. Vide = le monogramme ci-dessous est affiché à la
+    // place. Les deux sont modifiables depuis l'espace administrateur.
+    logo: '',
+    logoInitials: 'GL',
     address: '59 rue Jeanne d’Arc',
     postalCode: '76000',
     city: 'Rouen',
@@ -638,7 +642,7 @@ const GLS_DATA = (function () {
   function defaultData() {
     const catalog = buildCatalog();
     return {
-      version: 2,
+      version: 3,
       store: JSON.parse(JSON.stringify(STORE)),
       categories: catalog.categories,
       products: catalog.products,

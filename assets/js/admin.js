@@ -795,6 +795,7 @@ const GLS_ADMIN = (function (U, S, D) {
       '<div class="panel">' +
       '<h2>Informations du magasin</h2>' +
       '<form id="store-form" class="form form--grid">' +
+      logoField(store) +
       '<label>Nom<input type="text" name="name" value="' + h(store.name) + '" required></label>' +
       '<label>Accroche<input type="text" name="tagline" value="' + h(store.tagline) + '"></label>' +
       '<label>Adresse<input type="text" name="address" value="' + h(store.address) + '"></label>' +
@@ -883,6 +884,31 @@ const GLS_ADMIN = (function (U, S, D) {
       mount: function (root, ctx) {
         const storeForm = U.el('#store-form', root);
 
+        // Logo : import d'un fichier, puis retrait éventuel.
+        U.el('#logo-file', storeForm).addEventListener('change', function (event) {
+          const file = event.target.files && event.target.files[0];
+          if (!file) return;
+          U.readLogoFile(file, 400)
+            .then(function (dataUrl) {
+              S.updateStore({ logo: dataUrl });
+              U.toast('Logo mis à jour.', 'success');
+              ctx.rerender();
+            })
+            .catch(function (err) {
+              U.toast(err.message || 'Image invalide.', 'error');
+            });
+        });
+
+        const logoRemove = U.el('#logo-remove', storeForm);
+        if (logoRemove) {
+          logoRemove.addEventListener('click', function () {
+            if (!window.confirm('Retirer le logo ? Le monogramme sera réaffiché.')) return;
+            S.updateStore({ logo: '' });
+            U.toast('Logo retiré.', 'success');
+            ctx.rerender();
+          });
+        }
+
         const socialRows = U.el('#social-rows', storeForm);
         U.el('#social-add', storeForm).addEventListener('click', function () {
           socialRows.insertAdjacentHTML('beforeend', socialRow({ label: '', url: '' }));
@@ -925,6 +951,7 @@ const GLS_ADMIN = (function (U, S, D) {
             lat: Number(fd.get('lat')) || 0,
             lng: Number(fd.get('lng')) || 0,
             about: String(fd.get('about') || '').trim(),
+            logoInitials: String(fd.get('logoInitials') || '').trim().toUpperCase(),
             hours: hours,
             brands: U.parseList(fd.get('brands')),
             social: social
@@ -963,6 +990,37 @@ const GLS_ADMIN = (function (U, S, D) {
         });
       }
     };
+  }
+
+  // Bloc « Logo » : aperçu, import d'une image, et monogramme de repli.
+  function logoField(store) {
+    const initials = store.logoInitials || 'GL';
+    return (
+      '<div class="field wide logo-field">' +
+      '<span class="field__label">Logo de la boutique</span>' +
+      '<div class="logo-edit">' +
+      '<div class="logo-edit__preview">' +
+      (store.logo
+        ? '<img src="' + h(store.logo) + '" alt="Logo actuel">'
+        : '<span class="brand__mark">' + h(initials) + '</span>') +
+      '</div>' +
+      '<div class="logo-edit__tools">' +
+      '<label class="btn btn--small btn--ghost">' +
+      (store.logo ? 'Remplacer le logo' : 'Importer un logo') +
+      '<input type="file" id="logo-file" accept="image/*" hidden></label>' +
+      (store.logo
+        ? '<button type="button" class="btn btn--small btn--danger-ghost" id="logo-remove">' +
+          'Retirer le logo</button>'
+        : '') +
+      '<label class="logo-edit__initials">Monogramme de repli' +
+      '<input type="text" name="logoInitials" maxlength="3" value="' + h(initials) + '"></label>' +
+      '<p class="field__hint">PNG, JPEG ou SVG. La transparence est conservée et l’image est ' +
+      'réduite à 400 px. Sans logo, le monogramme est affiché. Le logo sert aussi d’icône ' +
+      'd’onglet du navigateur.</p>' +
+      '</div>' +
+      '</div>' +
+      '</div>'
+    );
   }
 
   function socialRow(social) {
@@ -1030,7 +1088,7 @@ const GLS_ADMIN = (function (U, S, D) {
         '</div>' +
         '<div class="panel">' +
         '<h2>Réinitialiser</h2>' +
-        '<p class="muted">Restaure le catalogue de démonstration. Le code administrateur n’est ' +
+        '<p class="muted">Restaure le catalogue d’origine. Le code administrateur n’est ' +
         'pas modifié.</p>' +
         '<button type="button" class="btn btn--danger-ghost" id="data-reset">Réinitialiser le catalogue</button>' +
         '<hr>' +
@@ -1070,7 +1128,7 @@ const GLS_ADMIN = (function (U, S, D) {
         });
 
         U.el('#data-reset', root).addEventListener('click', function () {
-          if (!window.confirm('Restaurer le catalogue de démonstration ? Vos modifications seront perdues.'))
+          if (!window.confirm('Restaurer le catalogue d’origine ? Vos modifications seront perdues.'))
             return;
           S.resetCatalog();
           U.toast('Catalogue réinitialisé.', 'success');

@@ -10,7 +10,7 @@
 
   // Repère affiché en pied de page : permet de vérifier d'un coup d'œil quelle
   // version du site on est en train de consulter.
-  const APP_REVISION = 'révision 3 — 5 septembre 2026';
+  const APP_REVISION = 'révision 4 — 5 septembre 2026';
 
   /* ----------------------------- Routage ----------------------------- */
 
@@ -122,7 +122,7 @@
       '<div class="header__bar">' +
       '<button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>' +
       '<a class="brand" href="#/">' +
-      '<span class="brand__mark" aria-hidden="true">GL</span>' +
+      brandMark(store) +
       '<span class="brand__text"><b>' + U.escapeHtml(store.name) + '</b>' +
       '<em>' + U.escapeHtml(store.address) + ' · ' + U.escapeHtml(store.city) + '</em></span>' +
       '</a>' +
@@ -212,7 +212,58 @@
       });
     });
 
+    applyFavicon(store);
     renderFooter();
+  }
+
+  // Logo de la boutique : image importée si elle existe, monogramme sinon.
+  function brandMark(store) {
+    if (store.logo) {
+      return (
+        '<span class="brand__logo"><img src="' + U.escapeHtml(store.logo) + '" alt="' +
+        U.escapeHtml(store.name) + '"></span>'
+      );
+    }
+    return (
+      '<span class="brand__mark" aria-hidden="true">' +
+      U.escapeHtml(store.logoInitials || initialsFrom(store.name)) +
+      '</span>'
+    );
+  }
+
+  function initialsFrom(name) {
+    return String(name || '')
+      .split(/\s+/)
+      .slice(0, 2)
+      .map(function (word) {
+        return word.charAt(0).toUpperCase();
+      })
+      .join('');
+  }
+
+  // L'icône d'onglet suit le logo choisi par la boutique.
+  function applyFavicon(store) {
+    let icon = U.el('link[rel="icon"]');
+    if (!icon) {
+      icon = document.createElement('link');
+      icon.rel = 'icon';
+      document.head.appendChild(icon);
+    }
+    if (store.logo) {
+      icon.href = store.logo;
+      return;
+    }
+    const initials = store.logoInitials || initialsFrom(store.name);
+    icon.href =
+      'data:image/svg+xml,' +
+      encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">' +
+          '<rect width="64" height="64" rx="14" fill="#b8342f"/>' +
+          '<text x="32" y="43" font-family="Georgia,serif" font-size="30" font-weight="700" ' +
+          'text-anchor="middle" fill="#fff">' +
+          U.escapeHtml(initials) +
+          '</text></svg>'
+      );
   }
 
   function closeMenu() {
@@ -293,7 +344,8 @@
       'conçu sur mesure : pour contacter le créateur du site, il suffit d’envoyer un mail à ' +
       '<a href="mailto:Sanctimaps@gmail.com">Sanctimaps@gmail.com</a>.</p>' +
       '<p class="footer__legal">© ' + new Date().getFullYear() + ' ' + U.escapeHtml(store.name) +
-      ' — Application de démonstration. Les données sont enregistrées localement dans ce navigateur.' +
+      ' — ' + U.escapeHtml(store.address) + ', ' + U.escapeHtml(store.postalCode) + ' ' +
+      U.escapeHtml(store.city) + '. Tous droits réservés.' +
       ' <span class="footer__rev">' + U.escapeHtml(APP_REVISION) + '</span></p>';
   }
 
