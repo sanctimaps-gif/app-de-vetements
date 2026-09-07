@@ -39,6 +39,18 @@ const GLS_DATA = (function () {
       'prêt-à-porter installée depuis 1996 en plein cœur de Rouen, sur la rue ' +
       'Jeanne d’Arc. Homme, femme et enfant : vêtements, chaussures, accessoires ' +
       'et bagagerie, du basique du quotidien à la pièce qui change la tenue.',
+    // Histoire de la boutique. Texte de départ à remplacer par le récit réel :
+    // il se modifie depuis l'onglet « Magasin & accès » de l'administration.
+    // Les paragraphes sont séparés par une ligne vide.
+    history:
+      'La boutique ouvre ses portes en 1996 sur la rue Jeanne d’Arc, à une époque où le ' +
+      'streetwear commence tout juste à se faire une place dans les rues de Rouen.\n\n' +
+      'Depuis, l’adresse n’a pas changé. Les collections, les marques et les silhouettes ont ' +
+      'évolué au fil des saisons, mais la manière de travailler est restée la même : ' +
+      'sélectionner des pièces que l’on porte vraiment, conseiller sans forcer, et connaître ' +
+      'ses client·es autrement que par un numéro de commande.\n\n' +
+      'Aujourd’hui, la boutique habille plusieurs générations de Rouennais·es, du premier ' +
+      'jean acheté avec ses économies à la paire que l’on vient remplacer des années plus tard.',
     hours: [
       { day: 'Lundi', value: '14h00 – 19h00' },
       { day: 'Mardi', value: '10h00 – 12h30 / 14h00 – 19h00' },
@@ -153,6 +165,235 @@ const GLS_DATA = (function () {
       }
     ]
   };
+
+  /* ---------------------------------------------------------------------
+     1 bis. Textes de l'interface
+     -------------------------------------------------------------------------
+     Tous les libellés visibles du site. Chacun est modifiable depuis l'onglet
+     « Textes » de l'espace administrateur ; les valeurs ci-dessous servent de
+     repli quand aucun texte personnalisé n'a été saisi.
+     --------------------------------------------------------------------- */
+
+  const TEXT_GROUPS = [
+    {
+      id: 'accueil',
+      label: 'Page d’accueil',
+      keys: [
+        { key: 'home.hours.title', label: 'Titre du bloc horaires', value: 'Horaires' },
+        { key: 'home.cta.catalogue', label: 'Bouton catalogue', value: 'Voir le catalogue' },
+        { key: 'home.cta.access', label: 'Bouton accès', value: 'Comment venir' },
+        { key: 'home.stats.categories', label: 'Légende « catégories »', value: 'catégories' },
+        { key: 'home.stats.subcategories', label: 'Légende « sous-catégories »', value: 'sous-catégories' },
+        { key: 'home.stats.products', label: 'Légende « articles »', value: 'articles' },
+        { key: 'home.sections.title', label: 'Titre de la liste des rayons', value: 'Nos rayons' },
+        { key: 'home.sections.link', label: 'Lien vers le catalogue', value: 'Tout parcourir →' },
+        { key: 'home.featured.title', label: 'Titre de la sélection', value: 'Coups de cœur' },
+        { key: 'home.band.title', label: 'Titre du bandeau accès', value: 'Venir à la boutique' },
+        {
+          key: 'home.band.text',
+          label: 'Texte du bandeau accès',
+          value:
+            'Métro, bus, train, voiture, vélo ou à pied : tous les plans d’accès à la boutique.',
+          long: true
+        },
+        { key: 'home.band.cta', label: 'Bouton du bandeau accès', value: 'Voir les plans d’accès' },
+        { key: 'home.social', label: 'Bouton réseaux sociaux', value: 'Suivre sur' }
+      ]
+    },
+    {
+      id: 'catalogue',
+      label: 'Catalogue',
+      keys: [
+        { key: 'catalogue.title', label: 'Titre de la page', value: 'Le catalogue' },
+        {
+          key: 'catalogue.intro',
+          label: 'Introduction',
+          value: 'Choisissez un rayon, puis une sous-catégorie pour voir les articles.',
+          long: true
+        },
+        {
+          key: 'category.note',
+          label: 'Note sur la page d’un rayon',
+          value: 'Les articles se trouvent dans les sous-catégories ci-dessous.',
+          long: true
+        },
+        { key: 'category.empty', label: 'Rayon vide', value: 'Aucune sous-catégorie pour l’instant.' },
+        { key: 'catalogue.count.suffix', label: 'Mot après le nombre d’articles', value: 'article' },
+        { key: 'filters.brand', label: 'Filtre marque', value: 'Marque' },
+        { key: 'filters.size', label: 'Filtre taille', value: 'Taille' },
+        { key: 'filters.color', label: 'Filtre couleur', value: 'Couleur' },
+        { key: 'filters.sort', label: 'Filtre tri', value: 'Trier' },
+        { key: 'filters.all', label: 'Option « toutes »', value: 'Toutes' },
+        { key: 'filters.reset', label: 'Bouton réinitialiser', value: 'Réinitialiser' },
+        { key: 'grid.empty', label: 'Aucun article', value: 'Aucun article pour le moment.' },
+        {
+          key: 'filters.empty',
+          label: 'Aucun article après filtrage',
+          value: 'Aucun article ne correspond à ces filtres.',
+          long: true
+        }
+      ]
+    },
+    {
+      id: 'produit',
+      label: 'Fiche produit',
+      keys: [
+        { key: 'product.brand', label: 'Intitulé marque', value: 'Marque' },
+        { key: 'product.sizes', label: 'Intitulé tailles', value: 'Tailles disponibles' },
+        { key: 'product.colors', label: 'Intitulé couleurs', value: 'Couleurs disponibles' },
+        { key: 'product.description', label: 'Intitulé description', value: 'Description' },
+        { key: 'product.details', label: 'Intitulé détails', value: 'Détails' },
+        { key: 'product.material', label: 'Ligne matière', value: 'Matière' },
+        { key: 'product.cut', label: 'Ligne coupe', value: 'Coupe' },
+        { key: 'product.care', label: 'Ligne entretien', value: 'Entretien' },
+        { key: 'product.reference', label: 'Ligne référence', value: 'Référence' },
+        { key: 'product.inStock', label: 'Article disponible', value: 'Disponible en boutique' },
+        { key: 'product.outStock', label: 'Article épuisé', value: 'Momentanément épuisé' },
+        { key: 'product.empty', label: 'Champ non renseigné', value: 'Non renseigné' },
+        { key: 'product.reviews.title', label: 'Titre des avis', value: 'Avis des client·es' },
+        {
+          key: 'product.reviews.empty',
+          label: 'Aucun avis',
+          value: 'Aucun avis pour l’instant. Soyez la première personne à en laisser un.',
+          long: true
+        },
+        { key: 'product.reviews.form', label: 'Titre du formulaire d’avis', value: 'Laisser un avis' },
+        { key: 'product.reviews.name', label: 'Champ prénom', value: 'Votre prénom' },
+        { key: 'product.reviews.rating', label: 'Champ note', value: 'Note' },
+        { key: 'product.reviews.comment', label: 'Champ avis', value: 'Votre avis' },
+        { key: 'product.reviews.submit', label: 'Bouton publier', value: 'Publier mon avis' },
+        { key: 'product.similar.title', label: 'Titre produits similaires', value: 'Produits similaires' },
+        {
+          key: 'product.similar.empty',
+          label: 'Aucun produit similaire',
+          value: 'Aucun produit similaire pour le moment.',
+          long: true
+        }
+      ]
+    },
+    {
+      id: 'boutique',
+      label: 'Page « La boutique »',
+      keys: [
+        { key: 'store.title', label: 'Titre de la page', value: 'La boutique' },
+        { key: 'store.about.title', label: 'Titre présentation', value: 'À propos' },
+        { key: 'store.history.title', label: 'Titre histoire', value: 'Notre histoire' },
+        { key: 'store.contact.title', label: 'Titre coordonnées', value: 'Coordonnées' },
+        { key: 'store.hours.title', label: 'Titre horaires', value: 'Horaires' },
+        { key: 'store.brands.title', label: 'Titre marques', value: 'Marques en boutique' },
+        {
+          key: 'store.brands.note',
+          label: 'Note sous les marques',
+          value: 'Sélection variable selon les arrivages.',
+          long: true
+        },
+        { key: 'store.access.cta', label: 'Bouton plans d’accès', value: 'Voir tous les plans d’accès' }
+      ]
+    },
+    {
+      id: 'acces',
+      label: 'Plans d’accès',
+      keys: [
+        { key: 'access.title', label: 'Titre de la page', value: 'Venir à la boutique' },
+        {
+          key: 'access.map.caption',
+          label: 'Légende du plan',
+          value:
+            'Plan schématique du quartier — non à l’échelle. Les distances réelles sont indiquées dans les fiches ci-dessous.',
+          long: true
+        },
+        { key: 'access.osm', label: 'Bouton OpenStreetMap', value: 'Ouvrir dans OpenStreetMap' },
+        { key: 'access.google', label: 'Bouton Google Maps', value: 'Itinéraire Google Maps' },
+        { key: 'access.apple', label: 'Bouton Plans (Apple)', value: 'Itinéraire Plans (Apple)' },
+        { key: 'access.gps', label: 'Bouton GPS', value: 'Ouvrir dans mon GPS' },
+        {
+          key: 'access.disclaimer',
+          label: 'Mention sous les plans',
+          value:
+            'Les informations de transport et de stationnement sont indicatives. Vérifiez les horaires auprès des exploitants de réseau avant votre déplacement.',
+          long: true
+        }
+      ]
+    },
+    {
+      id: 'navigation',
+      label: 'Navigation et pied de page',
+      keys: [
+        { key: 'nav.catalogue', label: 'Menu catalogue', value: 'Catalogue' },
+        { key: 'nav.access', label: 'Menu plans d’accès', value: 'Plans d’accès' },
+        { key: 'nav.store', label: 'Menu boutique', value: 'La boutique' },
+        { key: 'nav.admin', label: 'Menu administration', value: 'Administration' },
+        { key: 'nav.search', label: 'Champ de recherche', value: 'Rechercher un article, une marque…' },
+        { key: 'nav.menu.all', label: 'Lien « tout le rayon »', value: 'Voir tout le rayon →' },
+        { key: 'nav.menu.count', label: 'Compteur du menu', value: 'sous-catégories' },
+        { key: 'footer.sections', label: 'Colonne rayons', value: 'Rayons' },
+        { key: 'footer.infos', label: 'Colonne infos', value: 'Infos' },
+        { key: 'footer.hours', label: 'Colonne horaires', value: 'Horaires' },
+        { key: 'footer.access', label: 'Lien plans d’accès', value: 'Plans d’accès' },
+        { key: 'footer.contact', label: 'Lien horaires et contact', value: 'Horaires et contact' },
+        { key: 'footer.admin', label: 'Lien espace administrateur', value: 'Espace administrateur' },
+        { key: 'footer.rights', label: 'Mention de droits', value: 'Tous droits réservés.' },
+        { key: 'search.title', label: 'Titre de la recherche', value: 'Recherche' },
+        {
+          key: 'search.empty',
+          label: 'Recherche sans résultat',
+          value: 'Aucun article ne correspond à cette recherche.',
+          long: true
+        },
+        {
+          key: 'search.prompt',
+          label: 'Invitation à rechercher',
+          value: 'Saisissez un terme dans la barre de recherche.',
+          long: true
+        },
+        { key: 'notfound.title', label: 'Titre page introuvable', value: 'Page introuvable' },
+        {
+          key: 'notfound.text',
+          label: 'Texte page introuvable',
+          value: 'Cette page n’existe pas ou a été supprimée.',
+          long: true
+        },
+        { key: 'notfound.cta', label: 'Bouton retour', value: 'Retour à l’accueil' }
+      ]
+    },
+    {
+      id: 'credit',
+      label: 'Encart du créateur du site',
+      keys: [
+        {
+          key: 'credit.title',
+          label: 'Titre de l’encart',
+          value: 'Un site comme celui-ci pour votre commerce ?'
+        },
+        {
+          key: 'credit.text',
+          label: 'Texte de l’encart',
+          value:
+            'Ce site a été conçu sur mesure. Pour contacter le créateur du site, il suffit d’envoyer un mail à',
+          long: true
+        },
+        {
+          key: 'credit.footer',
+          label: 'Ligne en pied de page',
+          value:
+            'Vous aussi, offrez un site à votre commerce. Ce site a été conçu sur mesure : pour contacter le créateur du site, il suffit d’envoyer un mail à',
+          long: true
+        },
+        { key: 'credit.email', label: 'Adresse de contact', value: 'Sanctimaps@gmail.com' }
+      ]
+    }
+  ];
+
+  // Dictionnaire aplati : clé → texte par défaut.
+  function defaultTexts() {
+    const out = {};
+    TEXT_GROUPS.forEach(function (group) {
+      group.keys.forEach(function (entry) {
+        out[entry.key] = entry.value;
+      });
+    });
+    return out;
+  }
 
   /* ---------------------------------------------------------------------
      2. Catégories et sous-catégories
@@ -641,9 +882,11 @@ const GLS_DATA = (function () {
 
   function defaultData() {
     const catalog = buildCatalog();
+    const store = JSON.parse(JSON.stringify(STORE));
+    store.texts = defaultTexts();
     return {
-      version: 3,
-      store: JSON.parse(JSON.stringify(STORE)),
+      version: 4,
+      store: store,
       categories: catalog.categories,
       products: catalog.products,
       reviews: buildReviews(catalog.products)
@@ -652,6 +895,8 @@ const GLS_DATA = (function () {
 
   return {
     defaultData: defaultData,
+    defaultTexts: defaultTexts,
+    TEXT_GROUPS: TEXT_GROUPS,
     slugify: slugify,
     COLOR_POOL: COLOR_POOL,
     SIZE_SETS: SIZE_SETS,

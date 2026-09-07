@@ -29,6 +29,7 @@ const GLS_ADMIN = (function (U, S, D) {
     { id: 'categories', label: 'Catégories' },
     { id: 'produits', label: 'Articles' },
     { id: 'magasin', label: 'Magasin & accès' },
+    { id: 'textes', label: 'Textes du site' },
     { id: 'securite', label: 'Code d’accès' },
     { id: 'donnees', label: 'Données' }
   ];
@@ -197,6 +198,7 @@ const GLS_ADMIN = (function (U, S, D) {
     if (tab === 'categories') return tabCategories(params);
     if (tab === 'produits') return tabProducts(params);
     if (tab === 'magasin') return tabStore(params);
+    if (tab === 'textes') return tabTexts();
     if (tab === 'securite') return tabSecurity();
     if (tab === 'donnees') return tabData();
     return tabOverview();
@@ -806,7 +808,13 @@ const GLS_ADMIN = (function (U, S, D) {
       '<label>E-mail<input type="email" name="email" value="' + h(store.email) + '"></label>' +
       '<label>Latitude<input type="number" step="0.000001" name="lat" value="' + h(store.lat) + '"></label>' +
       '<label>Longitude<input type="number" step="0.000001" name="lng" value="' + h(store.lng) + '"></label>' +
-      '<label class="wide">À propos<textarea name="about" rows="4">' + h(store.about) + '</textarea></label>' +
+      '<label class="wide">Description de la boutique<textarea name="about" rows="4">' +
+      h(store.about) + '</textarea><span class="field__hint">Affichée sur l’accueil et sur la ' +
+      'page « La boutique ».</span></label>' +
+      '<label class="wide">Histoire de la boutique<textarea name="history" rows="9">' +
+      h(store.history || '') + '</textarea><span class="field__hint">Affichée en bas de la page ' +
+      '« La boutique ». Laissez une ligne vide entre deux paragraphes. Videz le champ pour ' +
+      'masquer la section.</span></label>' +
       '<label class="wide">Marques en boutique<textarea name="brands" rows="3" ' +
       'placeholder="Carhartt, Obey, Vans…">' + h((store.brands || []).join(', ')) +
       '</textarea><span class="field__hint">Séparées par des virgules. Laisser vide pour masquer ' +
@@ -951,6 +959,7 @@ const GLS_ADMIN = (function (U, S, D) {
             lat: Number(fd.get('lat')) || 0,
             lng: Number(fd.get('lng')) || 0,
             about: String(fd.get('about') || '').trim(),
+            history: String(fd.get('history') || '').trim(),
             logoInitials: String(fd.get('logoInitials') || '').trim().toUpperCase(),
             hours: hours,
             brands: U.parseList(fd.get('brands')),
@@ -1039,6 +1048,75 @@ const GLS_ADMIN = (function (U, S, D) {
         return p.id === id;
       })[0] || null
     );
+  }
+
+  /* -------------------------- Onglet : textes ------------------------ */
+
+  function tabTexts() {
+    const current = S.getTexts();
+    const defaults = D.defaultTexts();
+
+    const html =
+      '<div class="panel">' +
+      '<h2>Textes du site</h2>' +
+      '<p class="muted">Tous les libellés affichés aux visiteurs. Un champ vidé reprend ' +
+      'automatiquement son texte d’origine.</p>' +
+      '<form id="texts-form" class="form">' +
+      D.TEXT_GROUPS.map(function (group) {
+        return (
+          '<fieldset class="texts-group">' +
+          '<legend>' + h(group.label) + '</legend>' +
+          group.keys
+            .map(function (entry) {
+              const value = current[entry.key];
+              const modified = value !== defaults[entry.key];
+              return (
+                '<label class="texts-row' + (modified ? ' is-modified' : '') + '">' +
+                '<span class="texts-row__label">' + h(entry.label) +
+                (modified ? ' <em>modifié</em>' : '') + '</span>' +
+                (entry.long
+                  ? '<textarea name="' + h(entry.key) + '" rows="3">' + h(value) + '</textarea>'
+                  : '<input type="text" name="' + h(entry.key) + '" value="' + h(value) + '">') +
+                '</label>'
+              );
+            })
+            .join('') +
+          '</fieldset>'
+        );
+      }).join('') +
+      '<div class="form__actions">' +
+      '<button type="submit" class="btn btn--primary">Enregistrer les textes</button>' +
+      '<button type="button" class="btn btn--danger-ghost" id="texts-reset">' +
+      'Tout remettre à l’origine</button>' +
+      '</div>' +
+      '</form>' +
+      '</div>';
+
+    return {
+      html: html,
+      mount: function (root, ctx) {
+        const form = U.el('#texts-form', root);
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+          const values = {};
+          U.els('[name]', form).forEach(function (field) {
+            const value = String(field.value || '').trim();
+            // Un champ vidé revient au texte d'origine.
+            values[field.name] = value || defaults[field.name] || '';
+          });
+          S.saveTexts(values);
+          U.toast('Textes enregistrés.', 'success');
+          ctx.rerender();
+        });
+
+        U.el('#texts-reset', root).addEventListener('click', function () {
+          if (!window.confirm('Remettre tous les textes du site à leur version d’origine ?')) return;
+          S.resetTexts();
+          U.toast('Textes réinitialisés.', 'success');
+          ctx.rerender();
+        });
+      }
+    };
   }
 
   /* ------------------------- Onglet : sécurité ----------------------- */

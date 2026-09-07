@@ -1020,6 +1020,45 @@ h1, h2, h3 { font-family: var(--serif); line-height: 1.2; margin: 0 0 0.4em; }
 .hours-edit__row { display: flex; gap: 0.5rem; }
 .hours-edit__row input { flex: 1; }
 
+/* Onglet « Textes du site » */
+.texts-group {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 1.1rem 1rem;
+  margin: 0 0 1rem;
+}
+.texts-group legend {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 600;
+  padding: 0 0.4rem;
+}
+/* Deux classes : la règle doit l'emporter sur « .form label », qui met les
+   champs en colonne. */
+.form .texts-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0.8rem;
+  align-items: start;
+  padding: 0.45rem 0;
+  border-bottom: 1px dashed var(--line);
+}
+.form .texts-row:last-child { border-bottom: 0; }
+.texts-row__label { font-size: 0.85rem; color: var(--ink-soft); padding-top: 0.45rem; }
+.texts-row__label em {
+  font-style: normal;
+  font-size: 0.7rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.texts-row.is-modified .texts-row__label { color: var(--ink); font-weight: 500; }
+
+.history p { margin: 0 0 0.8rem; color: var(--ink-soft); max-width: 72ch; }
+.history p:last-child { margin-bottom: 0; }
+
 .logo-edit { display: flex; gap: 1.1rem; align-items: flex-start; flex-wrap: wrap; }
 .logo-edit__preview {
   width: 96px;
@@ -1205,6 +1244,8 @@ h1, h2, h3 { font-family: var(--serif); line-height: 1.2; margin: 0 0 0.4em; }
   .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.8rem; }
   .table { font-size: 0.8rem; }
   .table__actions { flex-direction: column; }
+  .form .texts-row { grid-template-columns: 1fr; gap: 0.25rem; }
+  .texts-row__label { padding-top: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

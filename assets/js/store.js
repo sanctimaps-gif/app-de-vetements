@@ -128,14 +128,22 @@ const GLS_STORE = (function (U, D) {
 
   function migrate() {
     const from = data.version || 1;
-    if (from >= 3) return false;
+    if (from >= 4) return false;
     const fresh = D.defaultData().store;
+
+    if (from < 4) {
+      // Tous les textes du site deviennent modifiables, et la boutique gagne
+      // une section « histoire ».
+      if (!data.store.texts) data.store.texts = D.defaultTexts();
+      if (data.store.history === undefined) data.store.history = fresh.history;
+      data.version = 4;
+    }
+    if (from >= 3) return true;
 
     if (from < 3) {
       // Le logo devient modifiable : on installe les champs correspondants.
       if (data.store.logo === undefined) data.store.logo = fresh.logo;
       if (data.store.logoInitials === undefined) data.store.logoInitials = fresh.logoInitials;
-      data.version = 3;
     }
     if (from >= 2) return true;
 
@@ -156,7 +164,7 @@ const GLS_STORE = (function (U, D) {
       data.store.about = fresh.about;
     }
 
-    data.version = 3;
+    data.version = 4;
     return true;
   }
 
@@ -179,6 +187,31 @@ const GLS_STORE = (function (U, D) {
 
   function getStore() {
     return data.store;
+  }
+
+  /* --------------------------- Textes du site ------------------------ */
+
+  // Texte affiché pour une clé : valeur saisie par la boutique, sinon valeur
+  // d'origine. Une clé inconnue renvoie une chaîne vide plutôt que la clé.
+  function text(key) {
+    const custom = data.store.texts && data.store.texts[key];
+    if (typeof custom === 'string' && custom.trim()) return custom;
+    const fallback = D.defaultTexts()[key];
+    return fallback === undefined ? '' : fallback;
+  }
+
+  function getTexts() {
+    return Object.assign({}, D.defaultTexts(), data.store.texts || {});
+  }
+
+  function saveTexts(values) {
+    data.store.texts = Object.assign({}, data.store.texts || {}, values);
+    persist();
+  }
+
+  function resetTexts() {
+    data.store.texts = D.defaultTexts();
+    persist();
   }
 
   function getCategories() {
@@ -690,6 +723,8 @@ const GLS_STORE = (function (U, D) {
     if (!parsed.store.social) parsed.store.social = [];
     if (parsed.store.logo === undefined) parsed.store.logo = '';
     if (parsed.store.logoInitials === undefined) parsed.store.logoInitials = 'GL';
+    if (!parsed.store.texts) parsed.store.texts = D.defaultTexts();
+    if (parsed.store.history === undefined) parsed.store.history = '';
     data = parsed;
     persist();
     return { ok: true };
@@ -703,6 +738,10 @@ const GLS_STORE = (function (U, D) {
     resetCatalog: resetCatalog,
 
     getStore: getStore,
+    text: text,
+    getTexts: getTexts,
+    saveTexts: saveTexts,
+    resetTexts: resetTexts,
     getCategories: getCategories,
     getCategory: getCategory,
     getSubcategories: getSubcategories,

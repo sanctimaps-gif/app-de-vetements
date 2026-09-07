@@ -10,7 +10,7 @@
 
   // Repère affiché en pied de page : permet de vérifier d'un coup d'œil quelle
   // version du site on est en train de consulter.
-  const APP_REVISION = 'révision 4 — 5 septembre 2026';
+  const APP_REVISION = 'révision 5 — 5 septembre 2026';
 
   /* ----------------------------- Routage ----------------------------- */
 
@@ -127,16 +127,16 @@
       '<em>' + U.escapeHtml(store.address) + ' · ' + U.escapeHtml(store.city) + '</em></span>' +
       '</a>' +
       '<form class="search" id="search-form" role="search">' +
-      '<input type="search" name="q" placeholder="Rechercher un article, une marque…" ' +
+      '<input type="search" name="q" placeholder="' + U.escapeHtml(S.text('nav.search')) + '" ' +
       'value="' + U.escapeHtml(searchValue) + '" aria-label="Rechercher">' +
       '<button type="submit" aria-label="Lancer la recherche">⌕</button>' +
       '</form>' +
       '<nav class="header__links">' +
-      link('#/categories', 'Catalogue', current === 'categories' || current === 'categorie' || current === 'sous-categorie') +
-      link('#/acces', 'Plans d’accès', current === 'acces') +
-      link('#/magasin', 'La boutique', current === 'magasin') +
+      link('#/categories', S.text('nav.catalogue'), current === 'categories' || current === 'categorie' || current === 'sous-categorie') +
+      link('#/acces', S.text('nav.access'), current === 'acces') +
+      link('#/magasin', S.text('nav.store'), current === 'magasin') +
       '<a class="header__admin' + (current === 'admin' ? ' is-active' : '') + '" href="#/admin">' +
-      (admin ? '● Administration' : 'Administration') + '</a>' +
+      (admin ? '● ' : '') + U.escapeHtml(S.text('nav.admin')) + '</a>' +
       '</nav>' +
       '</div>' +
       // Chaque rayon est replié : on le déplie pour voir ses sous-catégories.
@@ -150,7 +150,8 @@
             '<summary>' +
             '<span class="megamenu__emoji" aria-hidden="true">' + U.escapeHtml(cat.emoji) + '</span>' +
             '<span class="megamenu__name">' + U.escapeHtml(cat.name) + '</span>' +
-            '<span class="megamenu__count">' + subs.length + ' sous-catégories</span>' +
+            '<span class="megamenu__count">' + subs.length + ' ' +
+            U.escapeHtml(S.text('nav.menu.count')) + '</span>' +
             '<span class="megamenu__chevron" aria-hidden="true">▾</span>' +
             '</summary>' +
             '<ul>' +
@@ -161,7 +162,8 @@
                 );
               })
               .join('') +
-            '<li class="megamenu__all"><a href="#/categorie/' + cat.id + '">Voir tout le rayon →</a></li>' +
+            '<li class="megamenu__all"><a href="#/categorie/' + cat.id + '">' +
+            U.escapeHtml(S.text('nav.menu.all')) + '</a></li>' +
             '</ul>' +
             '</details>'
           );
@@ -312,7 +314,7 @@
         : '') +
       '</div>' +
       '<div>' +
-      '<h2>Rayons</h2>' +
+      '<h2>' + U.escapeHtml(S.text('footer.sections')) + '</h2>' +
       '<ul>' +
       S.getCategories()
         .map(function (cat) {
@@ -322,15 +324,15 @@
       '</ul>' +
       '</div>' +
       '<div>' +
-      '<h2>Infos</h2>' +
+      '<h2>' + U.escapeHtml(S.text('footer.infos')) + '</h2>' +
       '<ul>' +
-      '<li><a href="#/acces">Plans d’accès</a></li>' +
-      '<li><a href="#/magasin">Horaires et contact</a></li>' +
-      '<li><a href="#/admin">Espace administrateur</a></li>' +
+      '<li><a href="#/acces">' + U.escapeHtml(S.text('footer.access')) + '</a></li>' +
+      '<li><a href="#/magasin">' + U.escapeHtml(S.text('footer.contact')) + '</a></li>' +
+      '<li><a href="#/admin">' + U.escapeHtml(S.text('footer.admin')) + '</a></li>' +
       '</ul>' +
       '</div>' +
       '<div>' +
-      '<h2>Horaires</h2>' +
+      '<h2>' + U.escapeHtml(S.text('footer.hours')) + '</h2>' +
       '<ul class="hours hours--compact">' +
       store.hours
         .map(function (row) {
@@ -340,12 +342,12 @@
       '</ul>' +
       '</div>' +
       '</div>' +
-      '<p class="footer__credit">Vous aussi, offrez un site à votre commerce. Ce site a été ' +
-      'conçu sur mesure : pour contacter le créateur du site, il suffit d’envoyer un mail à ' +
-      '<a href="mailto:Sanctimaps@gmail.com">Sanctimaps@gmail.com</a>.</p>' +
+      '<p class="footer__credit">' + U.escapeHtml(S.text('credit.footer')) +
+      ' <a href="mailto:' + U.escapeHtml(S.text('credit.email')) + '">' +
+      U.escapeHtml(S.text('credit.email')) + '</a>.</p>' +
       '<p class="footer__legal">© ' + new Date().getFullYear() + ' ' + U.escapeHtml(store.name) +
       ' — ' + U.escapeHtml(store.address) + ', ' + U.escapeHtml(store.postalCode) + ' ' +
-      U.escapeHtml(store.city) + '. Tous droits réservés.' +
+      U.escapeHtml(store.city) + '. ' + U.escapeHtml(S.text('footer.rights')) +
       ' <span class="footer__rev">' + U.escapeHtml(APP_REVISION) + '</span></p>';
   }
 
