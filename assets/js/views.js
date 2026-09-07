@@ -94,7 +94,7 @@ const GLS_VIEWS = (function (U, S) {
 
   function grid(products, emptyMessage) {
     if (!products.length) {
-      return '<p class="empty">' + h(emptyMessage || 'Aucun article pour le moment.') + '</p>';
+      return '<p class="empty">' + h(emptyMessage || S.text('grid.empty')) + '</p>';
     }
     return '<div class="grid">' + products.map(productCard).join('') + '</div>';
   }
@@ -114,17 +114,17 @@ const GLS_VIEWS = (function (U, S) {
       '<p class="hero__tagline">' + h(store.tagline) + '</p>' +
       '<p class="hero__about">' + h(store.about) + '</p>' +
       '<div class="hero__actions">' +
-      '<a class="btn btn--primary" href="#/categories">Voir le catalogue</a>' +
-      '<a class="btn btn--ghost" href="#/acces">Comment venir</a>' +
+      '<a class="btn btn--primary" href="#/categories">' + h(S.text('home.cta.catalogue')) + '</a>' +
+      '<a class="btn btn--ghost" href="#/acces">' + h(S.text('home.cta.access')) + '</a>' +
       '</div>' +
       '<ul class="hero__stats">' +
-      '<li><strong>' + st.categories + '</strong><span>catégories</span></li>' +
-      '<li><strong>' + st.subcategories + '</strong><span>sous-catégories</span></li>' +
-      '<li><strong>' + st.products + '</strong><span>articles</span></li>' +
+      '<li><strong>' + st.categories + '</strong><span>' + h(S.text('home.stats.categories')) + '</span></li>' +
+      '<li><strong>' + st.subcategories + '</strong><span>' + h(S.text('home.stats.subcategories')) + '</span></li>' +
+      '<li><strong>' + st.products + '</strong><span>' + h(S.text('home.stats.products')) + '</span></li>' +
       '</ul>' +
       '</div>' +
       '<div class="hero__card">' +
-      '<h2>Horaires</h2>' +
+      '<h2>' + h(S.text('home.hours.title')) + '</h2>' +
       '<ul class="hours">' +
       store.hours
         .map(function (row) {
@@ -142,7 +142,7 @@ const GLS_VIEWS = (function (U, S) {
             .map(function (s) {
               return (
                 '<a class="btn btn--ghost btn--small" href="' + h(s.url) +
-                '" target="_blank" rel="noopener">Suivre sur ' + h(s.label) + ' ↗</a>'
+                '" target="_blank" rel="noopener">' + h(S.text('home.social')) + ' ' + h(s.label) + ' ↗</a>'
               );
             })
             .join(' ') +
@@ -151,8 +151,8 @@ const GLS_VIEWS = (function (U, S) {
       '</div>' +
       '</section>' +
       '<section class="section">' +
-      '<div class="section__head"><h2>Nos rayons</h2>' +
-      '<a class="link" href="#/categories">Tout parcourir →</a></div>' +
+      '<div class="section__head"><h2>' + h(S.text('home.sections.title')) + '</h2>' +
+      '<a class="link" href="#/categories">' + h(S.text('home.sections.link')) + '</a></div>' +
       '<div class="cats">' +
       categories
         .map(function (cat) {
@@ -169,15 +169,14 @@ const GLS_VIEWS = (function (U, S) {
       '</div>' +
       '</section>' +
       '<section class="section">' +
-      '<div class="section__head"><h2>Coups de cœur</h2></div>' +
+      '<div class="section__head"><h2>' + h(S.text('home.featured.title')) + '</h2></div>' +
       grid(S.featuredProducts(8)) +
       '</section>' +
       '<section class="section band">' +
       '<div class="band__inner">' +
-      '<div><h2>Venir à la boutique</h2>' +
-      '<p>Métro, bus, train, voiture, vélo ou à pied : tous les plans d’accès au ' +
-      h(store.address) + ', ' + h(store.postalCode) + ' ' + h(store.city) + '.</p></div>' +
-      '<a class="btn btn--primary" href="#/acces">Voir les plans d’accès</a>' +
+      '<div><h2>' + h(S.text('home.band.title')) + '</h2>' +
+      '<p>' + h(S.text('home.band.text')) + '</p></div>' +
+      '<a class="btn btn--primary" href="#/acces">' + h(S.text('home.band.cta')) + '</a>' +
       '</div>' +
       '</section>';
 
@@ -191,8 +190,8 @@ const GLS_VIEWS = (function (U, S) {
     const html =
       breadcrumb([{ label: 'Accueil', href: '#/' }, { label: 'Catalogue' }]) +
       '<header class="page-head">' +
-      '<h1>Le catalogue</h1>' +
-      '<p>Choisissez un rayon, puis une sous-catégorie pour voir les articles.</p>' +
+      '<h1>' + h(S.text('catalogue.title')) + '</h1>' +
+      '<p>' + h(S.text('catalogue.intro')) + '</p>' +
       '</header>' +
       '<div class="cats cats--large">' +
       cats
@@ -227,7 +226,7 @@ const GLS_VIEWS = (function (U, S) {
       '<header class="page-head">' +
       '<h1><span aria-hidden="true">' + h(cat.emoji) + '</span> ' + h(cat.name) + '</h1>' +
       '<p>' + h(cat.description) + '</p>' +
-      '<p class="page-head__note">Les articles se trouvent dans les sous-catégories ci-dessous.</p>' +
+      '<p class="page-head__note">' + h(S.text('category.note')) + '</p>' +
       '</header>' +
       (subs.length
         ? '<div class="subs">' +
@@ -242,7 +241,7 @@ const GLS_VIEWS = (function (U, S) {
             })
             .join('') +
           '</div>'
-        : '<p class="empty">Aucune sous-catégorie pour l’instant.</p>');
+        : '<p class="empty">' + h(S.text('category.empty')) + '</p>');
 
     return { html: html, title: cat.name };
   }
@@ -333,23 +332,28 @@ const GLS_VIEWS = (function (U, S) {
       '<p>' + h(sub.description) + '</p>' +
       '</header>' +
       '<form class="filters" id="filters" data-sub="' + h(sub.id) + '">' +
-      '<label>Marque<select name="marque"><option value="">Toutes</option>' +
+      '<label>' + h(S.text('filters.brand')) + '<select name="marque"><option value="">' +
+      h(S.text('filters.all')) + '</option>' +
       options(brands, fBrand) + '</select></label>' +
-      '<label>Taille<select name="taille"><option value="">Toutes</option>' +
+      '<label>' + h(S.text('filters.size')) + '<select name="taille"><option value="">' +
+      h(S.text('filters.all')) + '</option>' +
       options(sizes, fSize) + '</select></label>' +
-      '<label>Couleur<select name="couleur"><option value="">Toutes</option>' +
+      '<label>' + h(S.text('filters.color')) + '<select name="couleur"><option value="">' +
+      h(S.text('filters.all')) + '</option>' +
       options(colors, fColor) + '</select></label>' +
-      '<label>Trier<select name="tri">' +
+      '<label>' + h(S.text('filters.sort')) + '<select name="tri">' +
       '<option value="defaut"' + (sort === 'defaut' ? ' selected' : '') + '>Sélection</option>' +
       '<option value="prix-asc"' + (sort === 'prix-asc' ? ' selected' : '') + '>Prix croissant</option>' +
       '<option value="prix-desc"' + (sort === 'prix-desc' ? ' selected' : '') + '>Prix décroissant</option>' +
       '<option value="nom"' + (sort === 'nom' ? ' selected' : '') + '>Nom (A-Z)</option>' +
       '<option value="note"' + (sort === 'note' ? ' selected' : '') + '>Mieux notés</option>' +
       '</select></label>' +
-      '<button type="button" class="btn btn--ghost btn--small" id="filters-reset">Réinitialiser</button>' +
+      '<button type="button" class="btn btn--ghost btn--small" id="filters-reset">' +
+      h(S.text('filters.reset')) + '</button>' +
       '</form>' +
-      '<p class="result-count">' + products.length + ' article' + (products.length > 1 ? 's' : '') + '</p>' +
-      grid(products, 'Aucun article ne correspond à ces filtres.');
+      '<p class="result-count">' + products.length + ' ' + h(S.text('catalogue.count.suffix')) +
+      (products.length > 1 ? 's' : '') + '</p>' +
+      grid(products, S.text('filters.empty'));
 
     return {
       html: html,
@@ -473,11 +477,11 @@ const GLS_VIEWS = (function (U, S) {
       (rating ? ' <span>' + h(rating) + '/5 · ' + reviews.length + ' avis</span>' : ' <span>Aucun avis</span>') +
       '</p>' +
       '<p class="product__stock ' + (p.inStock ? 'in' : 'out') + '">' +
-      (p.inStock ? 'Disponible en boutique' : 'Momentanément épuisé') + '</p>' +
+      h(p.inStock ? S.text('product.inStock') : S.text('product.outStock')) + '</p>' +
 
       '<div class="specs">' +
-      '<div class="spec"><h2>Marque</h2><p>' + h(p.brand) + '</p></div>' +
-      '<div class="spec"><h2>Tailles disponibles</h2>' +
+      '<div class="spec"><h2>' + h(S.text('product.brand')) + '</h2><p>' + h(p.brand) + '</p></div>' +
+      '<div class="spec"><h2>' + h(S.text('product.sizes')) + '</h2>' +
       '<ul class="sizes">' +
       (p.sizes || [])
         .map(function (s) {
@@ -485,9 +489,9 @@ const GLS_VIEWS = (function (U, S) {
         })
         .join('') +
       '</ul>' +
-      (!(p.sizes || []).length ? '<p class="muted">Non renseigné</p>' : '') +
+      (!(p.sizes || []).length ? '<p class="muted">' + h(S.text('product.empty')) + '</p>' : '') +
       '</div>' +
-      '<div class="spec"><h2>Couleurs disponibles</h2>' +
+      '<div class="spec"><h2>' + h(S.text('product.colors')) + '</h2>' +
       '<ul class="colors">' +
       (p.colors || [])
         .map(function (c, i) {
@@ -499,15 +503,15 @@ const GLS_VIEWS = (function (U, S) {
         })
         .join('') +
       '</ul>' +
-      (!(p.colors || []).length ? '<p class="muted">Non renseigné</p>' : '') +
+      (!(p.colors || []).length ? '<p class="muted">' + h(S.text('product.empty')) + '</p>' : '') +
       '</div>' +
-      '<div class="spec spec--wide"><h2>Description</h2><p>' + h(p.description) + '</p></div>' +
+      '<div class="spec spec--wide"><h2>' + h(S.text('product.description')) + '</h2><p>' + h(p.description) + '</p></div>' +
       (p.material || p.cut || p.care || p.reference
-        ? '<div class="spec spec--wide"><h2>Détails</h2><ul class="details">' +
-          (p.material ? '<li><span>Matière</span><b>' + h(p.material) + '</b></li>' : '') +
-          (p.cut ? '<li><span>Coupe</span><b>' + h(p.cut) + '</b></li>' : '') +
-          (p.care ? '<li><span>Entretien</span><b>' + h(p.care) + '</b></li>' : '') +
-          (p.reference ? '<li><span>Référence</span><b>' + h(p.reference) + '</b></li>' : '') +
+        ? '<div class="spec spec--wide"><h2>' + h(S.text('product.details')) + '</h2><ul class="details">' +
+          (p.material ? '<li><span>' + h(S.text('product.material')) + '</span><b>' + h(p.material) + '</b></li>' : '') +
+          (p.cut ? '<li><span>' + h(S.text('product.cut')) + '</span><b>' + h(p.cut) + '</b></li>' : '') +
+          (p.care ? '<li><span>' + h(S.text('product.care')) + '</span><b>' + h(p.care) + '</b></li>' : '') +
+          (p.reference ? '<li><span>' + h(S.text('product.reference')) + '</span><b>' + h(p.reference) + '</b></li>' : '') +
           '</ul></div>'
         : '') +
       '</div>' +
@@ -520,7 +524,7 @@ const GLS_VIEWS = (function (U, S) {
 
       /* ---- Avis ---- */
       '<section class="product__reviews" id="avis">' +
-      '<h2>Avis des client·es</h2>' +
+      '<h2>' + h(S.text('product.reviews.title')) + '</h2>' +
       (reviews.length
         ? '<ul class="reviews">' +
           reviews
@@ -539,12 +543,12 @@ const GLS_VIEWS = (function (U, S) {
             })
             .join('') +
           '</ul>'
-        : '<p class="empty">Aucun avis pour l’instant. Soyez la première personne à en laisser un.</p>') +
+        : '<p class="empty">' + h(S.text('product.reviews.empty')) + '</p>') +
       '<form class="review-form" id="review-form">' +
-      '<h3>Laisser un avis</h3>' +
+      '<h3>' + h(S.text('product.reviews.form')) + '</h3>' +
       '<div class="review-form__row">' +
-      '<label>Votre prénom<input type="text" name="author" maxlength="40" placeholder="Camille" required></label>' +
-      '<label>Note<select name="rating">' +
+      '<label>' + h(S.text('product.reviews.name')) + '<input type="text" name="author" maxlength="40" placeholder="Camille" required></label>' +
+      '<label>' + h(S.text('product.reviews.rating')) + '<select name="rating">' +
       '<option value="5">★★★★★ — Excellent</option>' +
       '<option value="4">★★★★☆ — Très bien</option>' +
       '<option value="3">★★★☆☆ — Correct</option>' +
@@ -552,15 +556,15 @@ const GLS_VIEWS = (function (U, S) {
       '<option value="1">★☆☆☆☆ — Mauvais</option>' +
       '</select></label>' +
       '</div>' +
-      '<label>Votre avis<textarea name="comment" rows="3" maxlength="600" ' +
+      '<label>' + h(S.text('product.reviews.comment')) + '<textarea name="comment" rows="3" maxlength="600" ' +
       'placeholder="Taille, matière, confort…" required></textarea></label>' +
-      '<button type="submit" class="btn btn--primary">Publier mon avis</button>' +
+      '<button type="submit" class="btn btn--primary">' + h(S.text('product.reviews.submit')) + '</button>' +
       '</form>' +
       '</section>' +
 
       /* ---- Produits similaires ---- */
       '<section class="product__similar">' +
-      '<h2>Produits similaires</h2>' +
+      '<h2>' + h(S.text('product.similar.title')) + '</h2>' +
       (similar.length
         ? '<ul class="similar-list">' +
           similar
@@ -579,7 +583,7 @@ const GLS_VIEWS = (function (U, S) {
             })
             .join('') +
           '</ul>'
-        : '<p class="empty">Aucun produit similaire pour le moment.</p>') +
+        : '<p class="empty">' + h(S.text('product.similar.empty')) + '</p>') +
       '</section>' +
       '</article>';
 
@@ -749,10 +753,10 @@ const GLS_VIEWS = (function (U, S) {
     const results = query ? S.getProducts({ query: query }) : [];
     const html =
       breadcrumb([{ label: 'Accueil', href: '#/' }, { label: 'Recherche' }]) +
-      '<header class="page-head"><h1>Recherche</h1>' +
-      (query ? '<p>' + results.length + ' résultat(s) pour « ' + h(query) + ' »</p>' : '<p>Saisissez un terme dans la barre de recherche.</p>') +
+      '<header class="page-head"><h1>' + h(S.text('search.title')) + '</h1>' +
+      (query ? '<p>' + results.length + ' résultat(s) pour « ' + h(query) + ' »</p>' : '<p>' + h(S.text('search.prompt')) + '</p>') +
       '</header>' +
-      (query ? grid(results, 'Aucun article ne correspond à cette recherche.') : '');
+      (query ? grid(results, S.text('search.empty')) : '');
     return { html: html, title: 'Recherche' };
   }
 
@@ -798,7 +802,7 @@ const GLS_VIEWS = (function (U, S) {
       poi(560, 312, '#3f7a4f', 'Parking Espace du Palais') +
       poi(250, 330, '#3f7a4f', 'Parking Vieux-Marché') +
       '</svg>' +
-      '<figcaption>Plan schématique du quartier — non à l’échelle. Les distances réelles sont indiquées dans les fiches ci-dessous.</figcaption>' +
+      '<figcaption>' + h(S.text('access.map.caption')) + '</figcaption>' +
       '</figure>'
     );
   }
@@ -828,7 +832,7 @@ const GLS_VIEWS = (function (U, S) {
     const html =
       breadcrumb([{ label: 'Accueil', href: '#/' }, { label: 'Plans d’accès' }]) +
       '<header class="page-head">' +
-      '<h1>Venir à la boutique</h1>' +
+      '<h1>' + h(S.text('access.title')) + '</h1>' +
       '<p><strong>' + h(store.name) + '</strong> — ' + h(store.address) + ', ' +
       h(store.postalCode) + ' ' + h(store.city) + '</p>' +
       '</header>' +
@@ -836,12 +840,12 @@ const GLS_VIEWS = (function (U, S) {
       '<div class="itineraries">' +
       '<a class="btn btn--primary" target="_blank" rel="noopener" ' +
       'href="https://www.openstreetmap.org/?mlat=' + h(store.lat) + '&mlon=' + h(store.lng) + '#map=18/' +
-      h(store.lat) + '/' + h(store.lng) + '">Ouvrir dans OpenStreetMap</a>' +
+      h(store.lat) + '/' + h(store.lng) + '">' + h(S.text('access.osm')) + '</a>' +
       '<a class="btn btn--ghost" target="_blank" rel="noopener" ' +
-      'href="https://www.google.com/maps/dir/?api=1&destination=' + encoded + '">Itinéraire Google Maps</a>' +
+      'href="https://www.google.com/maps/dir/?api=1&destination=' + encoded + '">' + h(S.text('access.google')) + '</a>' +
       '<a class="btn btn--ghost" target="_blank" rel="noopener" ' +
-      'href="https://maps.apple.com/?daddr=' + encoded + '">Itinéraire Plans (Apple)</a>' +
-      '<a class="btn btn--ghost" href="geo:' + h(geo) + '?q=' + encoded + '">Ouvrir dans mon GPS</a>' +
+      'href="https://maps.apple.com/?daddr=' + encoded + '">' + h(S.text('access.apple')) + '</a>' +
+      '<a class="btn btn--ghost" href="geo:' + h(geo) + '?q=' + encoded + '">' + h(S.text('access.gps')) + '</a>' +
       '</div>' +
       '<div class="access-grid">' +
       store.access
@@ -862,9 +866,7 @@ const GLS_VIEWS = (function (U, S) {
         })
         .join('') +
       '</div>' +
-      '<p class="disclaimer">Les informations de transport et de stationnement sont indicatives et ' +
-      'modifiables depuis l’espace administrateur (onglet « Magasin »). Vérifiez les horaires ' +
-      'auprès des exploitants de réseau avant votre déplacement.</p>';
+      '<p class="disclaimer">' + h(S.text('access.disclaimer')) + '</p>';
 
     return { html: html, title: 'Plans d’accès' };
   }
@@ -875,10 +877,12 @@ const GLS_VIEWS = (function (U, S) {
     const store = S.getStore();
     const html =
       breadcrumb([{ label: 'Accueil', href: '#/' }, { label: 'La boutique' }]) +
-      '<header class="page-head"><h1>La boutique</h1><p>' + h(store.tagline) + '</p></header>' +
+      '<header class="page-head"><h1>' + h(S.text('store.title')) + '</h1><p>' +
+      h(store.tagline) + '</p></header>' +
       '<div class="store-grid">' +
-      '<section class="panel"><h2>À propos</h2><p>' + h(store.about) + '</p></section>' +
-      '<section class="panel"><h2>Coordonnées</h2>' +
+      '<section class="panel"><h2>' + h(S.text('store.about.title')) + '</h2><p>' +
+      h(store.about) + '</p></section>' +
+      '<section class="panel"><h2>' + h(S.text('store.contact.title')) + '</h2>' +
       '<p>' + h(store.address) + '<br>' + h(store.postalCode) + ' ' + h(store.city) + '<br>' +
       h(store.country) + '</p>' +
       '<p>' +
@@ -900,7 +904,7 @@ const GLS_VIEWS = (function (U, S) {
           '</p>'
         : '') +
       '</section>' +
-      '<section class="panel"><h2>Horaires</h2><ul class="hours">' +
+      '<section class="panel"><h2>' + h(S.text('store.hours.title')) + '</h2><ul class="hours">' +
       store.hours
         .map(function (row) {
           return '<li><span>' + h(row.day) + '</span><b>' + h(row.value) + '</b></li>';
@@ -908,7 +912,7 @@ const GLS_VIEWS = (function (U, S) {
         .join('') +
       '</ul></section>' +
       ((store.brands || []).length
-        ? '<section class="panel panel--full"><h2>Marques en boutique</h2>' +
+        ? '<section class="panel panel--full"><h2>' + h(S.text('store.brands.title')) + '</h2>' +
           '<ul class="brand-list">' +
           store.brands
             .map(function (b) {
@@ -916,13 +920,34 @@ const GLS_VIEWS = (function (U, S) {
             })
             .join('') +
           '</ul>' +
-          '<p class="muted">Sélection variable selon les arrivages.</p>' +
+          '<p class="muted">' + h(S.text('store.brands.note')) + '</p>' +
+          '</section>'
+        : '') +
+      (String(store.history || '').trim()
+        ? '<section class="panel panel--full history">' +
+          '<h2>' + h(S.text('store.history.title')) + '</h2>' +
+          paragraphs(store.history) +
           '</section>'
         : '') +
       '</div>' +
-      '<p class="cta-line"><a class="btn btn--primary" href="#/acces">Voir tous les plans d’accès</a></p>' +
+      '<p class="cta-line"><a class="btn btn--primary" href="#/acces">' +
+      h(S.text('store.access.cta')) + '</a></p>' +
       creditBlock();
     return { html: html, title: 'La boutique' };
+  }
+
+  // Texte libre saisi par la boutique : une ligne vide sépare deux paragraphes.
+  function paragraphs(value) {
+    return String(value || '')
+      .split(/\n\s*\n/)
+      .map(function (block) {
+        return block.trim();
+      })
+      .filter(Boolean)
+      .map(function (block) {
+        return '<p>' + h(block).replace(/\n/g, '<br>') + '</p>';
+      })
+      .join('');
   }
 
   /* --------------------------- Crédit / contact ---------------------- */
@@ -931,9 +956,9 @@ const GLS_VIEWS = (function (U, S) {
   function creditBlock() {
     return (
       '<aside class="credit">' +
-      '<h2>Un site comme celui-ci pour votre commerce ?</h2>' +
-      '<p>Ce site a été conçu sur mesure. Pour contacter le créateur du site, il suffit ' +
-      'd’envoyer un mail à <a href="mailto:Sanctimaps@gmail.com">Sanctimaps@gmail.com</a>.</p>' +
+      '<h2>' + h(S.text('credit.title')) + '</h2>' +
+      '<p>' + h(S.text('credit.text')) + ' <a href="mailto:' + h(S.text('credit.email')) + '">' +
+      h(S.text('credit.email')) + '</a>.</p>' +
       '</aside>'
     );
   }
@@ -943,10 +968,11 @@ const GLS_VIEWS = (function (U, S) {
   function notFound(message) {
     return {
       html:
-        '<div class="page-head"><h1>Page introuvable</h1><p>' +
-        h(message || 'Cette page n’existe pas ou a été supprimée.') +
-        '</p><p><a class="btn btn--primary" href="#/">Retour à l’accueil</a></p></div>',
-      title: 'Page introuvable'
+        '<div class="page-head"><h1>' + h(S.text('notfound.title')) + '</h1><p>' +
+        h(message || S.text('notfound.text')) +
+        '</p><p><a class="btn btn--primary" href="#/">' + h(S.text('notfound.cta')) +
+        '</a></p></div>',
+      title: S.text('notfound.title')
     };
   }
 

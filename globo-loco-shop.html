@@ -1030,6 +1030,45 @@ h1, h2, h3 { font-family: var(--serif); line-height: 1.2; margin: 0 0 0.4em; }
 .hours-edit__row { display: flex; gap: 0.5rem; }
 .hours-edit__row input { flex: 1; }
 
+/* Onglet « Textes du site » */
+.texts-group {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 1.1rem 1rem;
+  margin: 0 0 1rem;
+}
+.texts-group legend {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 600;
+  padding: 0 0.4rem;
+}
+/* Deux classes : la règle doit l'emporter sur « .form label », qui met les
+   champs en colonne. */
+.form .texts-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0.8rem;
+  align-items: start;
+  padding: 0.45rem 0;
+  border-bottom: 1px dashed var(--line);
+}
+.form .texts-row:last-child { border-bottom: 0; }
+.texts-row__label { font-size: 0.85rem; color: var(--ink-soft); padding-top: 0.45rem; }
+.texts-row__label em {
+  font-style: normal;
+  font-size: 0.7rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.texts-row.is-modified .texts-row__label { color: var(--ink); font-weight: 500; }
+
+.history p { margin: 0 0 0.8rem; color: var(--ink-soft); max-width: 72ch; }
+.history p:last-child { margin-bottom: 0; }
+
 .logo-edit { display: flex; gap: 1.1rem; align-items: flex-start; flex-wrap: wrap; }
 .logo-edit__preview {
   width: 96px;
@@ -1215,6 +1254,8 @@ h1, h2, h3 { font-family: var(--serif); line-height: 1.2; margin: 0 0 0.4em; }
   .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.8rem; }
   .table { font-size: 0.8rem; }
   .table__actions { flex-direction: column; }
+  .form .texts-row { grid-template-columns: 1fr; gap: 0.25rem; }
+  .texts-row__label { padding-top: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1223,7 +1264,7 @@ h1, h2, h3 { font-family: var(--serif); line-height: 1.2; margin: 0 0 0.4em; }
 }
 
     </style>
-    <meta name="generator" content="Globo Loco Shop — fichier unique, généré le 2026-09-05">
+    <meta name="generator" content="Globo Loco Shop — fichier unique, généré le 2026-09-07">
   </head>
   <body>
     <a class="skip-link" href="#view">Aller au contenu</a>
@@ -1284,6 +1325,18 @@ const GLS_DATA = (function () {
       'prêt-à-porter installée depuis 1996 en plein cœur de Rouen, sur la rue ' +
       'Jeanne d’Arc. Homme, femme et enfant : vêtements, chaussures, accessoires ' +
       'et bagagerie, du basique du quotidien à la pièce qui change la tenue.',
+    // Histoire de la boutique. Texte de départ à remplacer par le récit réel :
+    // il se modifie depuis l'onglet « Magasin & accès » de l'administration.
+    // Les paragraphes sont séparés par une ligne vide.
+    history:
+      'La boutique ouvre ses portes en 1996 sur la rue Jeanne d’Arc, à une époque où le ' +
+      'streetwear commence tout juste à se faire une place dans les rues de Rouen.\n\n' +
+      'Depuis, l’adresse n’a pas changé. Les collections, les marques et les silhouettes ont ' +
+      'évolué au fil des saisons, mais la manière de travailler est restée la même : ' +
+      'sélectionner des pièces que l’on porte vraiment, conseiller sans forcer, et connaître ' +
+      'ses client·es autrement que par un numéro de commande.\n\n' +
+      'Aujourd’hui, la boutique habille plusieurs générations de Rouennais·es, du premier ' +
+      'jean acheté avec ses économies à la paire que l’on vient remplacer des années plus tard.',
     hours: [
       { day: 'Lundi', value: '14h00 – 19h00' },
       { day: 'Mardi', value: '10h00 – 12h30 / 14h00 – 19h00' },
@@ -1398,6 +1451,235 @@ const GLS_DATA = (function () {
       }
     ]
   };
+
+  /* ---------------------------------------------------------------------
+     1 bis. Textes de l'interface
+     -------------------------------------------------------------------------
+     Tous les libellés visibles du site. Chacun est modifiable depuis l'onglet
+     « Textes » de l'espace administrateur ; les valeurs ci-dessous servent de
+     repli quand aucun texte personnalisé n'a été saisi.
+     --------------------------------------------------------------------- */
+
+  const TEXT_GROUPS = [
+    {
+      id: 'accueil',
+      label: 'Page d’accueil',
+      keys: [
+        { key: 'home.hours.title', label: 'Titre du bloc horaires', value: 'Horaires' },
+        { key: 'home.cta.catalogue', label: 'Bouton catalogue', value: 'Voir le catalogue' },
+        { key: 'home.cta.access', label: 'Bouton accès', value: 'Comment venir' },
+        { key: 'home.stats.categories', label: 'Légende « catégories »', value: 'catégories' },
+        { key: 'home.stats.subcategories', label: 'Légende « sous-catégories »', value: 'sous-catégories' },
+        { key: 'home.stats.products', label: 'Légende « articles »', value: 'articles' },
+        { key: 'home.sections.title', label: 'Titre de la liste des rayons', value: 'Nos rayons' },
+        { key: 'home.sections.link', label: 'Lien vers le catalogue', value: 'Tout parcourir →' },
+        { key: 'home.featured.title', label: 'Titre de la sélection', value: 'Coups de cœur' },
+        { key: 'home.band.title', label: 'Titre du bandeau accès', value: 'Venir à la boutique' },
+        {
+          key: 'home.band.text',
+          label: 'Texte du bandeau accès',
+          value:
+            'Métro, bus, train, voiture, vélo ou à pied : tous les plans d’accès à la boutique.',
+          long: true
+        },
+        { key: 'home.band.cta', label: 'Bouton du bandeau accès', value: 'Voir les plans d’accès' },
+        { key: 'home.social', label: 'Bouton réseaux sociaux', value: 'Suivre sur' }
+      ]
+    },
+    {
+      id: 'catalogue',
+      label: 'Catalogue',
+      keys: [
+        { key: 'catalogue.title', label: 'Titre de la page', value: 'Le catalogue' },
+        {
+          key: 'catalogue.intro',
+          label: 'Introduction',
+          value: 'Choisissez un rayon, puis une sous-catégorie pour voir les articles.',
+          long: true
+        },
+        {
+          key: 'category.note',
+          label: 'Note sur la page d’un rayon',
+          value: 'Les articles se trouvent dans les sous-catégories ci-dessous.',
+          long: true
+        },
+        { key: 'category.empty', label: 'Rayon vide', value: 'Aucune sous-catégorie pour l’instant.' },
+        { key: 'catalogue.count.suffix', label: 'Mot après le nombre d’articles', value: 'article' },
+        { key: 'filters.brand', label: 'Filtre marque', value: 'Marque' },
+        { key: 'filters.size', label: 'Filtre taille', value: 'Taille' },
+        { key: 'filters.color', label: 'Filtre couleur', value: 'Couleur' },
+        { key: 'filters.sort', label: 'Filtre tri', value: 'Trier' },
+        { key: 'filters.all', label: 'Option « toutes »', value: 'Toutes' },
+        { key: 'filters.reset', label: 'Bouton réinitialiser', value: 'Réinitialiser' },
+        { key: 'grid.empty', label: 'Aucun article', value: 'Aucun article pour le moment.' },
+        {
+          key: 'filters.empty',
+          label: 'Aucun article après filtrage',
+          value: 'Aucun article ne correspond à ces filtres.',
+          long: true
+        }
+      ]
+    },
+    {
+      id: 'produit',
+      label: 'Fiche produit',
+      keys: [
+        { key: 'product.brand', label: 'Intitulé marque', value: 'Marque' },
+        { key: 'product.sizes', label: 'Intitulé tailles', value: 'Tailles disponibles' },
+        { key: 'product.colors', label: 'Intitulé couleurs', value: 'Couleurs disponibles' },
+        { key: 'product.description', label: 'Intitulé description', value: 'Description' },
+        { key: 'product.details', label: 'Intitulé détails', value: 'Détails' },
+        { key: 'product.material', label: 'Ligne matière', value: 'Matière' },
+        { key: 'product.cut', label: 'Ligne coupe', value: 'Coupe' },
+        { key: 'product.care', label: 'Ligne entretien', value: 'Entretien' },
+        { key: 'product.reference', label: 'Ligne référence', value: 'Référence' },
+        { key: 'product.inStock', label: 'Article disponible', value: 'Disponible en boutique' },
+        { key: 'product.outStock', label: 'Article épuisé', value: 'Momentanément épuisé' },
+        { key: 'product.empty', label: 'Champ non renseigné', value: 'Non renseigné' },
+        { key: 'product.reviews.title', label: 'Titre des avis', value: 'Avis des client·es' },
+        {
+          key: 'product.reviews.empty',
+          label: 'Aucun avis',
+          value: 'Aucun avis pour l’instant. Soyez la première personne à en laisser un.',
+          long: true
+        },
+        { key: 'product.reviews.form', label: 'Titre du formulaire d’avis', value: 'Laisser un avis' },
+        { key: 'product.reviews.name', label: 'Champ prénom', value: 'Votre prénom' },
+        { key: 'product.reviews.rating', label: 'Champ note', value: 'Note' },
+        { key: 'product.reviews.comment', label: 'Champ avis', value: 'Votre avis' },
+        { key: 'product.reviews.submit', label: 'Bouton publier', value: 'Publier mon avis' },
+        { key: 'product.similar.title', label: 'Titre produits similaires', value: 'Produits similaires' },
+        {
+          key: 'product.similar.empty',
+          label: 'Aucun produit similaire',
+          value: 'Aucun produit similaire pour le moment.',
+          long: true
+        }
+      ]
+    },
+    {
+      id: 'boutique',
+      label: 'Page « La boutique »',
+      keys: [
+        { key: 'store.title', label: 'Titre de la page', value: 'La boutique' },
+        { key: 'store.about.title', label: 'Titre présentation', value: 'À propos' },
+        { key: 'store.history.title', label: 'Titre histoire', value: 'Notre histoire' },
+        { key: 'store.contact.title', label: 'Titre coordonnées', value: 'Coordonnées' },
+        { key: 'store.hours.title', label: 'Titre horaires', value: 'Horaires' },
+        { key: 'store.brands.title', label: 'Titre marques', value: 'Marques en boutique' },
+        {
+          key: 'store.brands.note',
+          label: 'Note sous les marques',
+          value: 'Sélection variable selon les arrivages.',
+          long: true
+        },
+        { key: 'store.access.cta', label: 'Bouton plans d’accès', value: 'Voir tous les plans d’accès' }
+      ]
+    },
+    {
+      id: 'acces',
+      label: 'Plans d’accès',
+      keys: [
+        { key: 'access.title', label: 'Titre de la page', value: 'Venir à la boutique' },
+        {
+          key: 'access.map.caption',
+          label: 'Légende du plan',
+          value:
+            'Plan schématique du quartier — non à l’échelle. Les distances réelles sont indiquées dans les fiches ci-dessous.',
+          long: true
+        },
+        { key: 'access.osm', label: 'Bouton OpenStreetMap', value: 'Ouvrir dans OpenStreetMap' },
+        { key: 'access.google', label: 'Bouton Google Maps', value: 'Itinéraire Google Maps' },
+        { key: 'access.apple', label: 'Bouton Plans (Apple)', value: 'Itinéraire Plans (Apple)' },
+        { key: 'access.gps', label: 'Bouton GPS', value: 'Ouvrir dans mon GPS' },
+        {
+          key: 'access.disclaimer',
+          label: 'Mention sous les plans',
+          value:
+            'Les informations de transport et de stationnement sont indicatives. Vérifiez les horaires auprès des exploitants de réseau avant votre déplacement.',
+          long: true
+        }
+      ]
+    },
+    {
+      id: 'navigation',
+      label: 'Navigation et pied de page',
+      keys: [
+        { key: 'nav.catalogue', label: 'Menu catalogue', value: 'Catalogue' },
+        { key: 'nav.access', label: 'Menu plans d’accès', value: 'Plans d’accès' },
+        { key: 'nav.store', label: 'Menu boutique', value: 'La boutique' },
+        { key: 'nav.admin', label: 'Menu administration', value: 'Administration' },
+        { key: 'nav.search', label: 'Champ de recherche', value: 'Rechercher un article, une marque…' },
+        { key: 'nav.menu.all', label: 'Lien « tout le rayon »', value: 'Voir tout le rayon →' },
+        { key: 'nav.menu.count', label: 'Compteur du menu', value: 'sous-catégories' },
+        { key: 'footer.sections', label: 'Colonne rayons', value: 'Rayons' },
+        { key: 'footer.infos', label: 'Colonne infos', value: 'Infos' },
+        { key: 'footer.hours', label: 'Colonne horaires', value: 'Horaires' },
+        { key: 'footer.access', label: 'Lien plans d’accès', value: 'Plans d’accès' },
+        { key: 'footer.contact', label: 'Lien horaires et contact', value: 'Horaires et contact' },
+        { key: 'footer.admin', label: 'Lien espace administrateur', value: 'Espace administrateur' },
+        { key: 'footer.rights', label: 'Mention de droits', value: 'Tous droits réservés.' },
+        { key: 'search.title', label: 'Titre de la recherche', value: 'Recherche' },
+        {
+          key: 'search.empty',
+          label: 'Recherche sans résultat',
+          value: 'Aucun article ne correspond à cette recherche.',
+          long: true
+        },
+        {
+          key: 'search.prompt',
+          label: 'Invitation à rechercher',
+          value: 'Saisissez un terme dans la barre de recherche.',
+          long: true
+        },
+        { key: 'notfound.title', label: 'Titre page introuvable', value: 'Page introuvable' },
+        {
+          key: 'notfound.text',
+          label: 'Texte page introuvable',
+          value: 'Cette page n’existe pas ou a été supprimée.',
+          long: true
+        },
+        { key: 'notfound.cta', label: 'Bouton retour', value: 'Retour à l’accueil' }
+      ]
+    },
+    {
+      id: 'credit',
+      label: 'Encart du créateur du site',
+      keys: [
+        {
+          key: 'credit.title',
+          label: 'Titre de l’encart',
+          value: 'Un site comme celui-ci pour votre commerce ?'
+        },
+        {
+          key: 'credit.text',
+          label: 'Texte de l’encart',
+          value:
+            'Ce site a été conçu sur mesure. Pour contacter le créateur du site, il suffit d’envoyer un mail à',
+          long: true
+        },
+        {
+          key: 'credit.footer',
+          label: 'Ligne en pied de page',
+          value:
+            'Vous aussi, offrez un site à votre commerce. Ce site a été conçu sur mesure : pour contacter le créateur du site, il suffit d’envoyer un mail à',
+          long: true
+        },
+        { key: 'credit.email', label: 'Adresse de contact', value: 'Sanctimaps@gmail.com' }
+      ]
+    }
+  ];
+
+  // Dictionnaire aplati : clé → texte par défaut.
+  function defaultTexts() {
+    const out = {};
+    TEXT_GROUPS.forEach(function (group) {
+      group.keys.forEach(function (entry) {
+        out[entry.key] = entry.value;
+      });
+    });
+    return out;
+  }
 
   /* ---------------------------------------------------------------------
      2. Catégories et sous-catégories
@@ -1886,9 +2168,11 @@ const GLS_DATA = (function () {
 
   function defaultData() {
     const catalog = buildCatalog();
+    const store = JSON.parse(JSON.stringify(STORE));
+    store.texts = defaultTexts();
     return {
-      version: 3,
-      store: JSON.parse(JSON.stringify(STORE)),
+      version: 4,
+      store: store,
       categories: catalog.categories,
       products: catalog.products,
       reviews: buildReviews(catalog.products)
@@ -1897,6 +2181,8 @@ const GLS_DATA = (function () {
 
   return {
     defaultData: defaultData,
+    defaultTexts: defaultTexts,
+    TEXT_GROUPS: TEXT_GROUPS,
     slugify: slugify,
     COLOR_POOL: COLOR_POOL,
     SIZE_SETS: SIZE_SETS,
@@ -2386,14 +2672,22 @@ const GLS_STORE = (function (U, D) {
 
   function migrate() {
     const from = data.version || 1;
-    if (from >= 3) return false;
+    if (from >= 4) return false;
     const fresh = D.defaultData().store;
+
+    if (from < 4) {
+      // Tous les textes du site deviennent modifiables, et la boutique gagne
+      // une section « histoire ».
+      if (!data.store.texts) data.store.texts = D.defaultTexts();
+      if (data.store.history === undefined) data.store.history = fresh.history;
+      data.version = 4;
+    }
+    if (from >= 3) return true;
 
     if (from < 3) {
       // Le logo devient modifiable : on installe les champs correspondants.
       if (data.store.logo === undefined) data.store.logo = fresh.logo;
       if (data.store.logoInitials === undefined) data.store.logoInitials = fresh.logoInitials;
-      data.version = 3;
     }
     if (from >= 2) return true;
 
@@ -2414,7 +2708,7 @@ const GLS_STORE = (function (U, D) {
       data.store.about = fresh.about;
     }
 
-    data.version = 3;
+    data.version = 4;
     return true;
   }
 
@@ -2437,6 +2731,31 @@ const GLS_STORE = (function (U, D) {
 
   function getStore() {
     return data.store;
+  }
+
+  /* --------------------------- Textes du site ------------------------ */
+
+  // Texte affiché pour une clé : valeur saisie par la boutique, sinon valeur
+  // d'origine. Une clé inconnue renvoie une chaîne vide plutôt que la clé.
+  function text(key) {
+    const custom = data.store.texts && data.store.texts[key];
+    if (typeof custom === 'string' && custom.trim()) return custom;
+    const fallback = D.defaultTexts()[key];
+    return fallback === undefined ? '' : fallback;
+  }
+
+  function getTexts() {
+    return Object.assign({}, D.defaultTexts(), data.store.texts || {});
+  }
+
+  function saveTexts(values) {
+    data.store.texts = Object.assign({}, data.store.texts || {}, values);
+    persist();
+  }
+
+  function resetTexts() {
+    data.store.texts = D.defaultTexts();
+    persist();
   }
 
   function getCategories() {
@@ -2948,6 +3267,8 @@ const GLS_STORE = (function (U, D) {
     if (!parsed.store.social) parsed.store.social = [];
     if (parsed.store.logo === undefined) parsed.store.logo = '';
     if (parsed.store.logoInitials === undefined) parsed.store.logoInitials = 'GL';
+    if (!parsed.store.texts) parsed.store.texts = D.defaultTexts();
+    if (parsed.store.history === undefined) parsed.store.history = '';
     data = parsed;
     persist();
     return { ok: true };
@@ -2961,6 +3282,10 @@ const GLS_STORE = (function (U, D) {
     resetCatalog: resetCatalog,
 
     getStore: getStore,
+    text: text,
+    getTexts: getTexts,
+    saveTexts: saveTexts,
+    resetTexts: resetTexts,
     getCategories: getCategories,
     getCategory: getCategory,
     getSubcategories: getSubcategories,
@@ -3104,7 +3429,7 @@ const GLS_VIEWS = (function (U, S) {
 
   function grid(products, emptyMessage) {
     if (!products.length) {
-      return '<p class="empty">' + h(emptyMessage || 'Aucun article pour le moment.') + '</p>';
+      return '<p class="empty">' + h(emptyMessage || S.text('grid.empty')) + '</p>';
     }
     return '<div class="grid">' + products.map(productCard).join('') + '</div>';
   }
@@ -3124,17 +3449,17 @@ const GLS_VIEWS = (function (U, S) {
       '<p class="hero__tagline">' + h(store.tagline) + '</p>' +
       '<p class="hero__about">' + h(store.about) + '</p>' +
       '<div class="hero__actions">' +
-      '<a class="btn btn--primary" href="#/categories">Voir le catalogue</a>' +
-      '<a class="btn btn--ghost" href="#/acces">Comment venir</a>' +
+      '<a class="btn btn--primary" href="#/categories">' + h(S.text('home.cta.catalogue')) + '</a>' +
+      '<a class="btn btn--ghost" href="#/acces">' + h(S.text('home.cta.access')) + '</a>' +
       '</div>' +
       '<ul class="hero__stats">' +
-      '<li><strong>' + st.categories + '</strong><span>catégories</span></li>' +
-      '<li><strong>' + st.subcategories + '</strong><span>sous-catégories</span></li>' +
-      '<li><strong>' + st.products + '</strong><span>articles</span></li>' +
+      '<li><strong>' + st.categories + '</strong><span>' + h(S.text('home.stats.categories')) + '</span></li>' +
+      '<li><strong>' + st.subcategories + '</strong><span>' + h(S.text('home.stats.subcategories')) + '</span></li>' +
+      '<li><strong>' + st.products + '</strong><span>' + h(S.text('home.stats.products')) + '</span></li>' +
       '</ul>' +
       '</div>' +
       '<div class="hero__card">' +
-      '<h2>Horaires</h2>' +
+      '<h2>' + h(S.text('home.hours.title')) + '</h2>' +
       '<ul class="hours">' +
       store.hours
         .map(function (row) {
@@ -3152,7 +3477,7 @@ const GLS_VIEWS = (function (U, S) {
             .map(function (s) {
               return (
                 '<a class="btn btn--ghost btn--small" href="' + h(s.url) +
-                '" target="_blank" rel="noopener">Suivre sur ' + h(s.label) + ' ↗</a>'
+                '" target="_blank" rel="noopener">' + h(S.text('home.social')) + ' ' + h(s.label) + ' ↗</a>'
               );
             })
             .join(' ') +
@@ -3161,8 +3486,8 @@ const GLS_VIEWS = (function (U, S) {
       '</div>' +
       '</section>' +
       '<section class="section">' +
-      '<div class="section__head"><h2>Nos rayons</h2>' +
-      '<a class="link" href="#/categories">Tout parcourir →</a></div>' +
+      '<div class="section__head"><h2>' + h(S.text('home.sections.title')) + '</h2>' +
+      '<a class="link" href="#/categories">' + h(S.text('home.sections.link')) + '</a></div>' +
       '<div class="cats">' +
       categories
         .map(function (cat) {
@@ -3179,15 +3504,14 @@ const GLS_VIEWS = (function (U, S) {
       '</div>' +
       '</section>' +
       '<section class="section">' +
-      '<div class="section__head"><h2>Coups de cœur</h2></div>' +
+      '<div class="section__head"><h2>' + h(S.text('home.featured.title')) + '</h2></div>' +
       grid(S.featuredProducts(8)) +
       '</section>' +
       '<section class="section band">' +
       '<div class="band__inner">' +
-      '<div><h2>Venir à la boutique</h2>' +
-      '<p>Métro, bus, train, voiture, vélo ou à pied : tous les plans d’accès au ' +
-      h(store.address) + ', ' + h(store.postalCode) + ' ' + h(store.city) + '.</p></div>' +
-      '<a class="btn btn--primary" href="#/acces">Voir les plans d’accès</a>' +
+      '<div><h2>' + h(S.text('home.band.title')) + '</h2>' +
+      '<p>' + h(S.text('home.band.text')) + '</p></div>' +
+      '<a class="btn btn--primary" href="#/acces">' + h(S.text('home.band.cta')) + '</a>' +
       '</div>' +
       '</section>';
 
@@ -3201,8 +3525,8 @@ const GLS_VIEWS = (function (U, S) {
     const html =
       breadcrumb([{ label: 'Accueil', href: '#/' }, { label: 'Catalogue' }]) +
       '<header class="page-head">' +
-      '<h1>Le catalogue</h1>' +
-      '<p>Choisissez un rayon, puis une sous-catégorie pour voir les articles.</p>' +
+      '<h1>' + h(S.text('catalogue.title')) + '</h1>' +
+      '<p>' + h(S.text('catalogue.intro')) + '</p>' +
       '</header>' +
       '<div class="cats cats--large">' +
       cats
@@ -3237,7 +3561,7 @@ const GLS_VIEWS = (function (U, S) {
       '<header class="page-head">' +
       '<h1><span aria-hidden="true">' + h(cat.emoji) + '</span> ' + h(cat.name) + '</h1>' +
       '<p>' + h(cat.description) + '</p>' +
-      '<p class="page-head__note">Les articles se trouvent dans les sous-catégories ci-dessous.</p>' +
+      '<p class="page-head__note">' + h(S.text('category.note')) + '</p>' +
       '</header>' +
       (subs.length
         ? '<div class="subs">' +
@@ -3252,7 +3576,7 @@ const GLS_VIEWS = (function (U, S) {
             })
             .join('') +
           '</div>'
-        : '<p class="empty">Aucune sous-catégorie pour l’instant.</p>');
+        : '<p class="empty">' + h(S.text('category.empty')) + '</p>');
 
     return { html: html, title: cat.name };
   }
@@ -3343,23 +3667,28 @@ const GLS_VIEWS = (function (U, S) {
       '<p>' + h(sub.description) + '</p>' +
       '</header>' +
       '<form class="filters" id="filters" data-sub="' + h(sub.id) + '">' +
-      '<label>Marque<select name="marque"><option value="">Toutes</option>' +
+      '<label>' + h(S.text('filters.brand')) + '<select name="marque"><option value="">' +
+      h(S.text('filters.all')) + '</option>' +
       options(brands, fBrand) + '</select></label>' +
-      '<label>Taille<select name="taille"><option value="">Toutes</option>' +
+      '<label>' + h(S.text('filters.size')) + '<select name="taille"><option value="">' +
+      h(S.text('filters.all')) + '</option>' +
       options(sizes, fSize) + '</select></label>' +
-      '<label>Couleur<select name="couleur"><option value="">Toutes</option>' +
+      '<label>' + h(S.text('filters.color')) + '<select name="couleur"><option value="">' +
+      h(S.text('filters.all')) + '</option>' +
       options(colors, fColor) + '</select></label>' +
-      '<label>Trier<select name="tri">' +
+      '<label>' + h(S.text('filters.sort')) + '<select name="tri">' +
       '<option value="defaut"' + (sort === 'defaut' ? ' selected' : '') + '>Sélection</option>' +
       '<option value="prix-asc"' + (sort === 'prix-asc' ? ' selected' : '') + '>Prix croissant</option>' +
       '<option value="prix-desc"' + (sort === 'prix-desc' ? ' selected' : '') + '>Prix décroissant</option>' +
       '<option value="nom"' + (sort === 'nom' ? ' selected' : '') + '>Nom (A-Z)</option>' +
       '<option value="note"' + (sort === 'note' ? ' selected' : '') + '>Mieux notés</option>' +
       '</select></label>' +
-      '<button type="button" class="btn btn--ghost btn--small" id="filters-reset">Réinitialiser</button>' +
+      '<button type="button" class="btn btn--ghost btn--small" id="filters-reset">' +
+      h(S.text('filters.reset')) + '</button>' +
       '</form>' +
-      '<p class="result-count">' + products.length + ' article' + (products.length > 1 ? 's' : '') + '</p>' +
-      grid(products, 'Aucun article ne correspond à ces filtres.');
+      '<p class="result-count">' + products.length + ' ' + h(S.text('catalogue.count.suffix')) +
+      (products.length > 1 ? 's' : '') + '</p>' +
+      grid(products, S.text('filters.empty'));
 
     return {
       html: html,
@@ -3483,11 +3812,11 @@ const GLS_VIEWS = (function (U, S) {
       (rating ? ' <span>' + h(rating) + '/5 · ' + reviews.length + ' avis</span>' : ' <span>Aucun avis</span>') +
       '</p>' +
       '<p class="product__stock ' + (p.inStock ? 'in' : 'out') + '">' +
-      (p.inStock ? 'Disponible en boutique' : 'Momentanément épuisé') + '</p>' +
+      h(p.inStock ? S.text('product.inStock') : S.text('product.outStock')) + '</p>' +
 
       '<div class="specs">' +
-      '<div class="spec"><h2>Marque</h2><p>' + h(p.brand) + '</p></div>' +
-      '<div class="spec"><h2>Tailles disponibles</h2>' +
+      '<div class="spec"><h2>' + h(S.text('product.brand')) + '</h2><p>' + h(p.brand) + '</p></div>' +
+      '<div class="spec"><h2>' + h(S.text('product.sizes')) + '</h2>' +
       '<ul class="sizes">' +
       (p.sizes || [])
         .map(function (s) {
@@ -3495,9 +3824,9 @@ const GLS_VIEWS = (function (U, S) {
         })
         .join('') +
       '</ul>' +
-      (!(p.sizes || []).length ? '<p class="muted">Non renseigné</p>' : '') +
+      (!(p.sizes || []).length ? '<p class="muted">' + h(S.text('product.empty')) + '</p>' : '') +
       '</div>' +
-      '<div class="spec"><h2>Couleurs disponibles</h2>' +
+      '<div class="spec"><h2>' + h(S.text('product.colors')) + '</h2>' +
       '<ul class="colors">' +
       (p.colors || [])
         .map(function (c, i) {
@@ -3509,15 +3838,15 @@ const GLS_VIEWS = (function (U, S) {
         })
         .join('') +
       '</ul>' +
-      (!(p.colors || []).length ? '<p class="muted">Non renseigné</p>' : '') +
+      (!(p.colors || []).length ? '<p class="muted">' + h(S.text('product.empty')) + '</p>' : '') +
       '</div>' +
-      '<div class="spec spec--wide"><h2>Description</h2><p>' + h(p.description) + '</p></div>' +
+      '<div class="spec spec--wide"><h2>' + h(S.text('product.description')) + '</h2><p>' + h(p.description) + '</p></div>' +
       (p.material || p.cut || p.care || p.reference
-        ? '<div class="spec spec--wide"><h2>Détails</h2><ul class="details">' +
-          (p.material ? '<li><span>Matière</span><b>' + h(p.material) + '</b></li>' : '') +
-          (p.cut ? '<li><span>Coupe</span><b>' + h(p.cut) + '</b></li>' : '') +
-          (p.care ? '<li><span>Entretien</span><b>' + h(p.care) + '</b></li>' : '') +
-          (p.reference ? '<li><span>Référence</span><b>' + h(p.reference) + '</b></li>' : '') +
+        ? '<div class="spec spec--wide"><h2>' + h(S.text('product.details')) + '</h2><ul class="details">' +
+          (p.material ? '<li><span>' + h(S.text('product.material')) + '</span><b>' + h(p.material) + '</b></li>' : '') +
+          (p.cut ? '<li><span>' + h(S.text('product.cut')) + '</span><b>' + h(p.cut) + '</b></li>' : '') +
+          (p.care ? '<li><span>' + h(S.text('product.care')) + '</span><b>' + h(p.care) + '</b></li>' : '') +
+          (p.reference ? '<li><span>' + h(S.text('product.reference')) + '</span><b>' + h(p.reference) + '</b></li>' : '') +
           '</ul></div>'
         : '') +
       '</div>' +
@@ -3530,7 +3859,7 @@ const GLS_VIEWS = (function (U, S) {
 
       /* ---- Avis ---- */
       '<section class="product__reviews" id="avis">' +
-      '<h2>Avis des client·es</h2>' +
+      '<h2>' + h(S.text('product.reviews.title')) + '</h2>' +
       (reviews.length
         ? '<ul class="reviews">' +
           reviews
@@ -3549,12 +3878,12 @@ const GLS_VIEWS = (function (U, S) {
             })
             .join('') +
           '</ul>'
-        : '<p class="empty">Aucun avis pour l’instant. Soyez la première personne à en laisser un.</p>') +
+        : '<p class="empty">' + h(S.text('product.reviews.empty')) + '</p>') +
       '<form class="review-form" id="review-form">' +
-      '<h3>Laisser un avis</h3>' +
+      '<h3>' + h(S.text('product.reviews.form')) + '</h3>' +
       '<div class="review-form__row">' +
-      '<label>Votre prénom<input type="text" name="author" maxlength="40" placeholder="Camille" required></label>' +
-      '<label>Note<select name="rating">' +
+      '<label>' + h(S.text('product.reviews.name')) + '<input type="text" name="author" maxlength="40" placeholder="Camille" required></label>' +
+      '<label>' + h(S.text('product.reviews.rating')) + '<select name="rating">' +
       '<option value="5">★★★★★ — Excellent</option>' +
       '<option value="4">★★★★☆ — Très bien</option>' +
       '<option value="3">★★★☆☆ — Correct</option>' +
@@ -3562,15 +3891,15 @@ const GLS_VIEWS = (function (U, S) {
       '<option value="1">★☆☆☆☆ — Mauvais</option>' +
       '</select></label>' +
       '</div>' +
-      '<label>Votre avis<textarea name="comment" rows="3" maxlength="600" ' +
+      '<label>' + h(S.text('product.reviews.comment')) + '<textarea name="comment" rows="3" maxlength="600" ' +
       'placeholder="Taille, matière, confort…" required></textarea></label>' +
-      '<button type="submit" class="btn btn--primary">Publier mon avis</button>' +
+      '<button type="submit" class="btn btn--primary">' + h(S.text('product.reviews.submit')) + '</button>' +
       '</form>' +
       '</section>' +
 
       /* ---- Produits similaires ---- */
       '<section class="product__similar">' +
-      '<h2>Produits similaires</h2>' +
+      '<h2>' + h(S.text('product.similar.title')) + '</h2>' +
       (similar.length
         ? '<ul class="similar-list">' +
           similar
@@ -3589,7 +3918,7 @@ const GLS_VIEWS = (function (U, S) {
             })
             .join('') +
           '</ul>'
-        : '<p class="empty">Aucun produit similaire pour le moment.</p>') +
+        : '<p class="empty">' + h(S.text('product.similar.empty')) + '</p>') +
       '</section>' +
       '</article>';
 
@@ -3759,10 +4088,10 @@ const GLS_VIEWS = (function (U, S) {
     const results = query ? S.getProducts({ query: query }) : [];
     const html =
       breadcrumb([{ label: 'Accueil', href: '#/' }, { label: 'Recherche' }]) +
-      '<header class="page-head"><h1>Recherche</h1>' +
-      (query ? '<p>' + results.length + ' résultat(s) pour « ' + h(query) + ' »</p>' : '<p>Saisissez un terme dans la barre de recherche.</p>') +
+      '<header class="page-head"><h1>' + h(S.text('search.title')) + '</h1>' +
+      (query ? '<p>' + results.length + ' résultat(s) pour « ' + h(query) + ' »</p>' : '<p>' + h(S.text('search.prompt')) + '</p>') +
       '</header>' +
-      (query ? grid(results, 'Aucun article ne correspond à cette recherche.') : '');
+      (query ? grid(results, S.text('search.empty')) : '');
     return { html: html, title: 'Recherche' };
   }
 
@@ -3808,7 +4137,7 @@ const GLS_VIEWS = (function (U, S) {
       poi(560, 312, '#3f7a4f', 'Parking Espace du Palais') +
       poi(250, 330, '#3f7a4f', 'Parking Vieux-Marché') +
       '</svg>' +
-      '<figcaption>Plan schématique du quartier — non à l’échelle. Les distances réelles sont indiquées dans les fiches ci-dessous.</figcaption>' +
+      '<figcaption>' + h(S.text('access.map.caption')) + '</figcaption>' +
       '</figure>'
     );
   }
@@ -3838,7 +4167,7 @@ const GLS_VIEWS = (function (U, S) {
     const html =
       breadcrumb([{ label: 'Accueil', href: '#/' }, { label: 'Plans d’accès' }]) +
       '<header class="page-head">' +
-      '<h1>Venir à la boutique</h1>' +
+      '<h1>' + h(S.text('access.title')) + '</h1>' +
       '<p><strong>' + h(store.name) + '</strong> — ' + h(store.address) + ', ' +
       h(store.postalCode) + ' ' + h(store.city) + '</p>' +
       '</header>' +
@@ -3846,12 +4175,12 @@ const GLS_VIEWS = (function (U, S) {
       '<div class="itineraries">' +
       '<a class="btn btn--primary" target="_blank" rel="noopener" ' +
       'href="https://www.openstreetmap.org/?mlat=' + h(store.lat) + '&mlon=' + h(store.lng) + '#map=18/' +
-      h(store.lat) + '/' + h(store.lng) + '">Ouvrir dans OpenStreetMap</a>' +
+      h(store.lat) + '/' + h(store.lng) + '">' + h(S.text('access.osm')) + '</a>' +
       '<a class="btn btn--ghost" target="_blank" rel="noopener" ' +
-      'href="https://www.google.com/maps/dir/?api=1&destination=' + encoded + '">Itinéraire Google Maps</a>' +
+      'href="https://www.google.com/maps/dir/?api=1&destination=' + encoded + '">' + h(S.text('access.google')) + '</a>' +
       '<a class="btn btn--ghost" target="_blank" rel="noopener" ' +
-      'href="https://maps.apple.com/?daddr=' + encoded + '">Itinéraire Plans (Apple)</a>' +
-      '<a class="btn btn--ghost" href="geo:' + h(geo) + '?q=' + encoded + '">Ouvrir dans mon GPS</a>' +
+      'href="https://maps.apple.com/?daddr=' + encoded + '">' + h(S.text('access.apple')) + '</a>' +
+      '<a class="btn btn--ghost" href="geo:' + h(geo) + '?q=' + encoded + '">' + h(S.text('access.gps')) + '</a>' +
       '</div>' +
       '<div class="access-grid">' +
       store.access
@@ -3872,9 +4201,7 @@ const GLS_VIEWS = (function (U, S) {
         })
         .join('') +
       '</div>' +
-      '<p class="disclaimer">Les informations de transport et de stationnement sont indicatives et ' +
-      'modifiables depuis l’espace administrateur (onglet « Magasin »). Vérifiez les horaires ' +
-      'auprès des exploitants de réseau avant votre déplacement.</p>';
+      '<p class="disclaimer">' + h(S.text('access.disclaimer')) + '</p>';
 
     return { html: html, title: 'Plans d’accès' };
   }
@@ -3885,10 +4212,12 @@ const GLS_VIEWS = (function (U, S) {
     const store = S.getStore();
     const html =
       breadcrumb([{ label: 'Accueil', href: '#/' }, { label: 'La boutique' }]) +
-      '<header class="page-head"><h1>La boutique</h1><p>' + h(store.tagline) + '</p></header>' +
+      '<header class="page-head"><h1>' + h(S.text('store.title')) + '</h1><p>' +
+      h(store.tagline) + '</p></header>' +
       '<div class="store-grid">' +
-      '<section class="panel"><h2>À propos</h2><p>' + h(store.about) + '</p></section>' +
-      '<section class="panel"><h2>Coordonnées</h2>' +
+      '<section class="panel"><h2>' + h(S.text('store.about.title')) + '</h2><p>' +
+      h(store.about) + '</p></section>' +
+      '<section class="panel"><h2>' + h(S.text('store.contact.title')) + '</h2>' +
       '<p>' + h(store.address) + '<br>' + h(store.postalCode) + ' ' + h(store.city) + '<br>' +
       h(store.country) + '</p>' +
       '<p>' +
@@ -3910,7 +4239,7 @@ const GLS_VIEWS = (function (U, S) {
           '</p>'
         : '') +
       '</section>' +
-      '<section class="panel"><h2>Horaires</h2><ul class="hours">' +
+      '<section class="panel"><h2>' + h(S.text('store.hours.title')) + '</h2><ul class="hours">' +
       store.hours
         .map(function (row) {
           return '<li><span>' + h(row.day) + '</span><b>' + h(row.value) + '</b></li>';
@@ -3918,7 +4247,7 @@ const GLS_VIEWS = (function (U, S) {
         .join('') +
       '</ul></section>' +
       ((store.brands || []).length
-        ? '<section class="panel panel--full"><h2>Marques en boutique</h2>' +
+        ? '<section class="panel panel--full"><h2>' + h(S.text('store.brands.title')) + '</h2>' +
           '<ul class="brand-list">' +
           store.brands
             .map(function (b) {
@@ -3926,13 +4255,34 @@ const GLS_VIEWS = (function (U, S) {
             })
             .join('') +
           '</ul>' +
-          '<p class="muted">Sélection variable selon les arrivages.</p>' +
+          '<p class="muted">' + h(S.text('store.brands.note')) + '</p>' +
+          '</section>'
+        : '') +
+      (String(store.history || '').trim()
+        ? '<section class="panel panel--full history">' +
+          '<h2>' + h(S.text('store.history.title')) + '</h2>' +
+          paragraphs(store.history) +
           '</section>'
         : '') +
       '</div>' +
-      '<p class="cta-line"><a class="btn btn--primary" href="#/acces">Voir tous les plans d’accès</a></p>' +
+      '<p class="cta-line"><a class="btn btn--primary" href="#/acces">' +
+      h(S.text('store.access.cta')) + '</a></p>' +
       creditBlock();
     return { html: html, title: 'La boutique' };
+  }
+
+  // Texte libre saisi par la boutique : une ligne vide sépare deux paragraphes.
+  function paragraphs(value) {
+    return String(value || '')
+      .split(/\n\s*\n/)
+      .map(function (block) {
+        return block.trim();
+      })
+      .filter(Boolean)
+      .map(function (block) {
+        return '<p>' + h(block).replace(/\n/g, '<br>') + '</p>';
+      })
+      .join('');
   }
 
   /* --------------------------- Crédit / contact ---------------------- */
@@ -3941,9 +4291,9 @@ const GLS_VIEWS = (function (U, S) {
   function creditBlock() {
     return (
       '<aside class="credit">' +
-      '<h2>Un site comme celui-ci pour votre commerce ?</h2>' +
-      '<p>Ce site a été conçu sur mesure. Pour contacter le créateur du site, il suffit ' +
-      'd’envoyer un mail à <a href="mailto:Sanctimaps@gmail.com">Sanctimaps@gmail.com</a>.</p>' +
+      '<h2>' + h(S.text('credit.title')) + '</h2>' +
+      '<p>' + h(S.text('credit.text')) + ' <a href="mailto:' + h(S.text('credit.email')) + '">' +
+      h(S.text('credit.email')) + '</a>.</p>' +
       '</aside>'
     );
   }
@@ -3953,10 +4303,11 @@ const GLS_VIEWS = (function (U, S) {
   function notFound(message) {
     return {
       html:
-        '<div class="page-head"><h1>Page introuvable</h1><p>' +
-        h(message || 'Cette page n’existe pas ou a été supprimée.') +
-        '</p><p><a class="btn btn--primary" href="#/">Retour à l’accueil</a></p></div>',
-      title: 'Page introuvable'
+        '<div class="page-head"><h1>' + h(S.text('notfound.title')) + '</h1><p>' +
+        h(message || S.text('notfound.text')) +
+        '</p><p><a class="btn btn--primary" href="#/">' + h(S.text('notfound.cta')) +
+        '</a></p></div>',
+      title: S.text('notfound.title')
     };
   }
 
@@ -4009,6 +4360,7 @@ const GLS_ADMIN = (function (U, S, D) {
     { id: 'categories', label: 'Catégories' },
     { id: 'produits', label: 'Articles' },
     { id: 'magasin', label: 'Magasin & accès' },
+    { id: 'textes', label: 'Textes du site' },
     { id: 'securite', label: 'Code d’accès' },
     { id: 'donnees', label: 'Données' }
   ];
@@ -4177,6 +4529,7 @@ const GLS_ADMIN = (function (U, S, D) {
     if (tab === 'categories') return tabCategories(params);
     if (tab === 'produits') return tabProducts(params);
     if (tab === 'magasin') return tabStore(params);
+    if (tab === 'textes') return tabTexts();
     if (tab === 'securite') return tabSecurity();
     if (tab === 'donnees') return tabData();
     return tabOverview();
@@ -4786,7 +5139,13 @@ const GLS_ADMIN = (function (U, S, D) {
       '<label>E-mail<input type="email" name="email" value="' + h(store.email) + '"></label>' +
       '<label>Latitude<input type="number" step="0.000001" name="lat" value="' + h(store.lat) + '"></label>' +
       '<label>Longitude<input type="number" step="0.000001" name="lng" value="' + h(store.lng) + '"></label>' +
-      '<label class="wide">À propos<textarea name="about" rows="4">' + h(store.about) + '</textarea></label>' +
+      '<label class="wide">Description de la boutique<textarea name="about" rows="4">' +
+      h(store.about) + '</textarea><span class="field__hint">Affichée sur l’accueil et sur la ' +
+      'page « La boutique ».</span></label>' +
+      '<label class="wide">Histoire de la boutique<textarea name="history" rows="9">' +
+      h(store.history || '') + '</textarea><span class="field__hint">Affichée en bas de la page ' +
+      '« La boutique ». Laissez une ligne vide entre deux paragraphes. Videz le champ pour ' +
+      'masquer la section.</span></label>' +
       '<label class="wide">Marques en boutique<textarea name="brands" rows="3" ' +
       'placeholder="Carhartt, Obey, Vans…">' + h((store.brands || []).join(', ')) +
       '</textarea><span class="field__hint">Séparées par des virgules. Laisser vide pour masquer ' +
@@ -4931,6 +5290,7 @@ const GLS_ADMIN = (function (U, S, D) {
             lat: Number(fd.get('lat')) || 0,
             lng: Number(fd.get('lng')) || 0,
             about: String(fd.get('about') || '').trim(),
+            history: String(fd.get('history') || '').trim(),
             logoInitials: String(fd.get('logoInitials') || '').trim().toUpperCase(),
             hours: hours,
             brands: U.parseList(fd.get('brands')),
@@ -5019,6 +5379,75 @@ const GLS_ADMIN = (function (U, S, D) {
         return p.id === id;
       })[0] || null
     );
+  }
+
+  /* -------------------------- Onglet : textes ------------------------ */
+
+  function tabTexts() {
+    const current = S.getTexts();
+    const defaults = D.defaultTexts();
+
+    const html =
+      '<div class="panel">' +
+      '<h2>Textes du site</h2>' +
+      '<p class="muted">Tous les libellés affichés aux visiteurs. Un champ vidé reprend ' +
+      'automatiquement son texte d’origine.</p>' +
+      '<form id="texts-form" class="form">' +
+      D.TEXT_GROUPS.map(function (group) {
+        return (
+          '<fieldset class="texts-group">' +
+          '<legend>' + h(group.label) + '</legend>' +
+          group.keys
+            .map(function (entry) {
+              const value = current[entry.key];
+              const modified = value !== defaults[entry.key];
+              return (
+                '<label class="texts-row' + (modified ? ' is-modified' : '') + '">' +
+                '<span class="texts-row__label">' + h(entry.label) +
+                (modified ? ' <em>modifié</em>' : '') + '</span>' +
+                (entry.long
+                  ? '<textarea name="' + h(entry.key) + '" rows="3">' + h(value) + '</textarea>'
+                  : '<input type="text" name="' + h(entry.key) + '" value="' + h(value) + '">') +
+                '</label>'
+              );
+            })
+            .join('') +
+          '</fieldset>'
+        );
+      }).join('') +
+      '<div class="form__actions">' +
+      '<button type="submit" class="btn btn--primary">Enregistrer les textes</button>' +
+      '<button type="button" class="btn btn--danger-ghost" id="texts-reset">' +
+      'Tout remettre à l’origine</button>' +
+      '</div>' +
+      '</form>' +
+      '</div>';
+
+    return {
+      html: html,
+      mount: function (root, ctx) {
+        const form = U.el('#texts-form', root);
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+          const values = {};
+          U.els('[name]', form).forEach(function (field) {
+            const value = String(field.value || '').trim();
+            // Un champ vidé revient au texte d'origine.
+            values[field.name] = value || defaults[field.name] || '';
+          });
+          S.saveTexts(values);
+          U.toast('Textes enregistrés.', 'success');
+          ctx.rerender();
+        });
+
+        U.el('#texts-reset', root).addEventListener('click', function () {
+          if (!window.confirm('Remettre tous les textes du site à leur version d’origine ?')) return;
+          S.resetTexts();
+          U.toast('Textes réinitialisés.', 'success');
+          ctx.rerender();
+        });
+      }
+    };
   }
 
   /* ------------------------- Onglet : sécurité ----------------------- */
@@ -5148,7 +5577,7 @@ const GLS_ADMIN = (function (U, S, D) {
 
   // Repère affiché en pied de page : permet de vérifier d'un coup d'œil quelle
   // version du site on est en train de consulter.
-  const APP_REVISION = 'révision 4 — 5 septembre 2026';
+  const APP_REVISION = 'révision 5 — 5 septembre 2026';
 
   /* ----------------------------- Routage ----------------------------- */
 
@@ -5265,16 +5694,16 @@ const GLS_ADMIN = (function (U, S, D) {
       '<em>' + U.escapeHtml(store.address) + ' · ' + U.escapeHtml(store.city) + '</em></span>' +
       '</a>' +
       '<form class="search" id="search-form" role="search">' +
-      '<input type="search" name="q" placeholder="Rechercher un article, une marque…" ' +
+      '<input type="search" name="q" placeholder="' + U.escapeHtml(S.text('nav.search')) + '" ' +
       'value="' + U.escapeHtml(searchValue) + '" aria-label="Rechercher">' +
       '<button type="submit" aria-label="Lancer la recherche">⌕</button>' +
       '</form>' +
       '<nav class="header__links">' +
-      link('#/categories', 'Catalogue', current === 'categories' || current === 'categorie' || current === 'sous-categorie') +
-      link('#/acces', 'Plans d’accès', current === 'acces') +
-      link('#/magasin', 'La boutique', current === 'magasin') +
+      link('#/categories', S.text('nav.catalogue'), current === 'categories' || current === 'categorie' || current === 'sous-categorie') +
+      link('#/acces', S.text('nav.access'), current === 'acces') +
+      link('#/magasin', S.text('nav.store'), current === 'magasin') +
       '<a class="header__admin' + (current === 'admin' ? ' is-active' : '') + '" href="#/admin">' +
-      (admin ? '● Administration' : 'Administration') + '</a>' +
+      (admin ? '● ' : '') + U.escapeHtml(S.text('nav.admin')) + '</a>' +
       '</nav>' +
       '</div>' +
       // Chaque rayon est replié : on le déplie pour voir ses sous-catégories.
@@ -5288,7 +5717,8 @@ const GLS_ADMIN = (function (U, S, D) {
             '<summary>' +
             '<span class="megamenu__emoji" aria-hidden="true">' + U.escapeHtml(cat.emoji) + '</span>' +
             '<span class="megamenu__name">' + U.escapeHtml(cat.name) + '</span>' +
-            '<span class="megamenu__count">' + subs.length + ' sous-catégories</span>' +
+            '<span class="megamenu__count">' + subs.length + ' ' +
+            U.escapeHtml(S.text('nav.menu.count')) + '</span>' +
             '<span class="megamenu__chevron" aria-hidden="true">▾</span>' +
             '</summary>' +
             '<ul>' +
@@ -5299,7 +5729,8 @@ const GLS_ADMIN = (function (U, S, D) {
                 );
               })
               .join('') +
-            '<li class="megamenu__all"><a href="#/categorie/' + cat.id + '">Voir tout le rayon →</a></li>' +
+            '<li class="megamenu__all"><a href="#/categorie/' + cat.id + '">' +
+            U.escapeHtml(S.text('nav.menu.all')) + '</a></li>' +
             '</ul>' +
             '</details>'
           );
@@ -5450,7 +5881,7 @@ const GLS_ADMIN = (function (U, S, D) {
         : '') +
       '</div>' +
       '<div>' +
-      '<h2>Rayons</h2>' +
+      '<h2>' + U.escapeHtml(S.text('footer.sections')) + '</h2>' +
       '<ul>' +
       S.getCategories()
         .map(function (cat) {
@@ -5460,15 +5891,15 @@ const GLS_ADMIN = (function (U, S, D) {
       '</ul>' +
       '</div>' +
       '<div>' +
-      '<h2>Infos</h2>' +
+      '<h2>' + U.escapeHtml(S.text('footer.infos')) + '</h2>' +
       '<ul>' +
-      '<li><a href="#/acces">Plans d’accès</a></li>' +
-      '<li><a href="#/magasin">Horaires et contact</a></li>' +
-      '<li><a href="#/admin">Espace administrateur</a></li>' +
+      '<li><a href="#/acces">' + U.escapeHtml(S.text('footer.access')) + '</a></li>' +
+      '<li><a href="#/magasin">' + U.escapeHtml(S.text('footer.contact')) + '</a></li>' +
+      '<li><a href="#/admin">' + U.escapeHtml(S.text('footer.admin')) + '</a></li>' +
       '</ul>' +
       '</div>' +
       '<div>' +
-      '<h2>Horaires</h2>' +
+      '<h2>' + U.escapeHtml(S.text('footer.hours')) + '</h2>' +
       '<ul class="hours hours--compact">' +
       store.hours
         .map(function (row) {
@@ -5478,12 +5909,12 @@ const GLS_ADMIN = (function (U, S, D) {
       '</ul>' +
       '</div>' +
       '</div>' +
-      '<p class="footer__credit">Vous aussi, offrez un site à votre commerce. Ce site a été ' +
-      'conçu sur mesure : pour contacter le créateur du site, il suffit d’envoyer un mail à ' +
-      '<a href="mailto:Sanctimaps@gmail.com">Sanctimaps@gmail.com</a>.</p>' +
+      '<p class="footer__credit">' + U.escapeHtml(S.text('credit.footer')) +
+      ' <a href="mailto:' + U.escapeHtml(S.text('credit.email')) + '">' +
+      U.escapeHtml(S.text('credit.email')) + '</a>.</p>' +
       '<p class="footer__legal">© ' + new Date().getFullYear() + ' ' + U.escapeHtml(store.name) +
       ' — ' + U.escapeHtml(store.address) + ', ' + U.escapeHtml(store.postalCode) + ' ' +
-      U.escapeHtml(store.city) + '. Tous droits réservés.' +
+      U.escapeHtml(store.city) + '. ' + U.escapeHtml(S.text('footer.rights')) +
       ' <span class="footer__rev">' + U.escapeHtml(APP_REVISION) + '</span></p>';
   }
 
